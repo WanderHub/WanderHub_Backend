@@ -31,10 +31,16 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+      - name: Add permission # 권한 추가 쟉업
+        run: chmod +x gradlew # 실행 권한 추가
+      - name: init with Gradle
+        uses: gradle/gradle-build-action@v2
+      - run: gradle init
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          arguments: build
+          gradle-version: 7.6.1 # gradle 버전
+          arguments: build      # build
 
       # build한 후 프로젝트를 압축합니다.
       - name: Make zip file
