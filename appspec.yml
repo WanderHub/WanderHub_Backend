@@ -4,7 +4,7 @@ version: 0.0
 os: linux
 files:
   - source:  /
-    destination: /home/ubuntu/wanderHub-back  # 배포가 진행 되는 디렉터리
+    destination: /home/ubuntu/WanderHub_Backend  # 배포가 진행 되는 디렉터리
     overwrite: yes
 
 permissions:
