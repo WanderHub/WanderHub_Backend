@@ -65,4 +65,3 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name WanderHub-Backend-G
           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=wanderHub-backend-deploy.zip
-
