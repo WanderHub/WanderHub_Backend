@@ -31,8 +31,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - name: Add permission # 권한 추가 쟉업
-        run: chmod +x gradlew # 실행 권한 추가
       - name: init with Gradle
         uses: gradle/gradle-build-action@v2
       - run: gradle init
@@ -67,7 +65,4 @@ jobs:
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name WanderHub-Backend-G
           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=wanderHub-backend-deploy.zip
-          
-          
-          
-          
+
