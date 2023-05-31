@@ -31,8 +31,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - name: Add permission # 권한 추가 쟉업
-        run: chmod +x gradlew # 실행 권한 추가
       - name: init with Gradle
         uses: gradle/gradle-build-action@v2
       - run: gradle init
