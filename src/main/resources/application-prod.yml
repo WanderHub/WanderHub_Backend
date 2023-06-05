@@ -22,7 +22,6 @@ spring:
               - profile
           kakao: # 카카오는 스프링이 지원하는 서비스가 아니기 때문에, 보다 자세한 정보로 설정해줘야 한다. # https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html 여기서 확인 가능
             clientId: ${K_CLIENT_ID}          # 카카오 클라이언트 ID
-            clientSecret: ${K_CLIENT_SECRET}  # 카카오 시크릿 키
             redirect-uri: "http://localhost:8080/login/oauth2/code/kakao" # 카카오에서 설정한 Redirect-uri # 인가 서버가 Backend 애플리케이션 쪽으로 인가코드를 전송할 Redirect URI
             authorization-grant-type: authorization_code  # 권한부여의 타입을 인가코드로 설정
             client-authentication-method: client_secret_post            # 제공자와 클라이언트를 인증하는 데 사용되는 방법 : HTTP Post방식 (ID와 시크릿을 POST 요청의 본문에 사용)
