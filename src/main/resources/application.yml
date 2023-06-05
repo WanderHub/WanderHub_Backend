@@ -31,6 +31,7 @@ spring:
             client-name: Kakao                            # 클라이언트에 사용되는 설명 이름
             scope: # 클라이언트가 요청하는 범위
               - profile_nickname                            # 닉네임
+              - account_email                               # 이메일
         provider: # OAuth 공급자 세부 정보.
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize  # 권한 부여 서버에 대한 권한 부여 endPoint URI
