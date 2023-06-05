@@ -1,0 +1,19 @@
+spring:
+  h2:
+    console:
+      enabled: true           # 콘솔 활성화 여부
+      path: /h2               # 콘솔을 사용할 수 있는 경로
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test     # 데이터베이스의 JDBC URL
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    hibernate:                # jpa의 구현체로 hibernate 사용
+      ddl-auto: create        # DDL 모드.
+    show-sql: true            # SQL 문의 로깅 활성화 여부.
+    properties:               # JPA 공급자에 설정할 추가 기본 속성입니다.
+      hibernate:              # jpa 내부의 Hibernate의 추가적인 속성 설정
+        format_sql: true      # 로그 및 콘솔에서 SQL을 예쁘게 인쇄합니다. (기본값 false)
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql # 데이터베이스에 적용할 데이터(DML) 스크립트의 위치입니다.
