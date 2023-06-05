@@ -10,8 +10,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration  // 구성정보 클래스
 public class SecurityConfiguration {
-    private String vender = "kakao";
-
 
     @Bean   // 스프링에서 관리하는 빈으로 설정
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
