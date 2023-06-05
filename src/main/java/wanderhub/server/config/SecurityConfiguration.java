@@ -12,8 +12,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     private String vender = "kakao";
 
-    @Value("${spring.security.oauth2.client.registration."+vender+".clientId}")
-    private String clientId;
 
     @Bean   // 스프링에서 관리하는 빈으로 설정
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
