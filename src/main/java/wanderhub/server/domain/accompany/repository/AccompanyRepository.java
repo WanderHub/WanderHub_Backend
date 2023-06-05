@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface AccompanyRepository extends JpaRepository<Accompany, Long> {
 
     List<Accompany> findAll();
-
-    @Override
     Optional<Accompany> findById(Long id);
 
 

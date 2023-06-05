@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import wanderhub.server.domain.accompany.entity.Accompany;
-import wanderhub.server.domain.accompany.repository.AccompanyRepository;
 
 import java.util.List;
 
@@ -21,14 +20,14 @@ public class AccompanyRepositoryTest {
     }
 
     @Test
-    public void create() {
+    public void save() {
         Accompany accompany = new Accompany(null, 4L, "hi1", "서울", 3, "제목", "내용", true);
         repo.save(accompany);
         assertThat(accompany.getAccompanyTitle()).isEqualTo("제목");
     }
 
     @Test
-    public void selectAll() {
+    public void findAll() {
         Accompany accompany = new Accompany(null, 4L, "hi2", "대전", 4, "제목2", "내용2", true);
         repo.save(accompany);
 
@@ -36,7 +35,6 @@ public class AccompanyRepositoryTest {
 
         Accompany accompanies = list.get(0);
         assertThat(accompanies.getAccompanyTitle()).isEqualTo("제목2");
-        System.out.println("accompanies = " + accompanies.getAccompanyLocal());
     }
 
 }

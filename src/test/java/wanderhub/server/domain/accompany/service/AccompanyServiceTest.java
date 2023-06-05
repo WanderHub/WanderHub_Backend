@@ -22,7 +22,7 @@ public class AccompanyServiceTest {
     }
 
     @Test
-    void create() {
+    void createAccompany() {
         Accompany accompany = new Accompany(null, 4L, "hi2", "대전", 4, "제목2", "내용2", true);
         accompanyService.createAccompany(accompany);
 

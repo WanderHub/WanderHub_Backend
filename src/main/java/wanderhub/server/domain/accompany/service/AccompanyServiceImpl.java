@@ -35,8 +35,7 @@ public class AccompanyServiceImpl implements AccompanyService {
     public Optional<Accompany> findById(Long id) {
         return accompanyRepository.findById(id);
     }
-//    @Override
-//    public Accompany findById(Long id) {
-//        return accompanyRepository.findById(id);
-//    }
+
+
+
 }

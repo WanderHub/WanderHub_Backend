@@ -10,6 +10,5 @@ public interface AccompanyService {
     Accompany createAccompany(Accompany accompany);
     List<Accompany> findAll();
     Optional<Accompany> findById(Long id);
-//    Accompany findById(Long id);
 
 }
