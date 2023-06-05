@@ -19,4 +19,5 @@ else
 fi
 
 echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/wanderHub-back/log/deploy.log
-sudo nohup java -jar $BUILD_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
+cd /home/ubuntu/WanderHub_Backend/build/libs/
+sudo nohup java -jar -Dspring.profiles.active=prod server-0.0.1-SNAPSHOT.jar >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
