@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: ${profile}
   jpa:
     hibernate:
       ddl-auto: create # 후에 none으로 바꾸기
