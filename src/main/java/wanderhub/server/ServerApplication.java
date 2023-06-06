@@ -10,8 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ServerApplication {
 
+    @Value("${profile}")
+    @Getter
+    static String profile;
+
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
+        log.info("profile = {}", ServerApplication.profile);
     }
 
 }
