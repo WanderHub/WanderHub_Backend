@@ -17,10 +17,10 @@ public class SecurityConfiguration {
         http
                 .formLogin().disable()  // formLogin 비활성화 // 우리 프로젝트에 자체 회원가입은 후순위
                 .httpBasic().disable()  // request전송마다 Username/Password 정보를 Header에 실어서 인증하는 방식 // 사용 안 하므로 disable
-                .oauth2Login(withDefaults());   //  OAuth2Login 인증 활성화
-
-//        http
-//                .authorizeRequests() // 접근 허용 request 설정해야함.
+                .authorizeRequests(authorize -> authorize
+                        .anyRequest().permitAll()   // 인증된 요청에 대해서만 접근을 허용한다.
+                )
+                .oauth2Login();   //  OAuth2Login 인증 활성화
 
         return http.build(); // SecurityFilterChain 구성
     }
