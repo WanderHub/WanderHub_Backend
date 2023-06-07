@@ -1,5 +1,4 @@
 #!/bin/bash
-# 빌드 파일의 이름이 콘텐츠와 다르다면 다음 줄의 .jar 파일 이름을 수정하시기 바랍니다.
 BUILD_JAR=$(ls /home/ubuntu/WanderHub_Backend/build/libs/server-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
@@ -7,8 +6,11 @@ echo "> 현재 시간: $(date)" >> /home/ubuntu/wanderHub-back/log/deploy.log
 
 echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/wanderHub-back/log/deploy.log
 
-echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/deploy.log
+echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/log/deploy.log
 DEPLOY_PATH=/home/ubuntu/wanderHub-back/
+echo $LOCATION
+echo $LOCATION_YML
+echo "> yml 복사 " >> /home/ubuntu/wanderHub-back/log/deploy.log
 cp $LOCATION $LOCATION_YML
 cp $BUILD_JAR $DEPLOY_PATH
 
@@ -26,5 +28,4 @@ fi
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/wanderHub-back/log/deploy.log
-sudo nohup java -jar -Dspring.profiles.active=prod $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
-
+sudo nohup java -jar $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
