@@ -28,17 +28,15 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
       - name: write G_CLIENT_ID
-        run: echo "G_CLIENT_ID=${{secrets.G_CLIENT_ID}}" >> application-prod.yml
-        working-directory: ./src/main/resources
+        run: echo "export G_CLIENT_ID="${{secrets.G_CLIENT_ID}}"" >> ~/.bashrc
       - name: write G_CLIENT_SECRET
-        run: echo "G_CLIENT_SECRET=${{secrets.G_CLIENT_SECRET}}" >> application-prod.yml
-        working-directory: ./src/main/resources
+        run: echo "export G_CLIENT_SECRET="${{secrets.G_CLIENT_SECRET}}"" >> ~/.bashrc
       - name: write K_CLIENT_ID
-        run: echo "K_CLIENT_ID=${{secrets.K_CLIENT_ID}}" >> application-prod.yml
-        working-directory: ./src/main/resources
+        run: echo "export K_CLIENT_ID=${{secrets.K_CLIENT_ID}}"" >> ~/.bashrc
       - name: write K_CLIENT_SECRET
-        run: echo "K_CLIENT_SECRET=${{secrets.K_CLIENT_SECRET}}" >> application-prod.yml
-        working-directory: ./src/main/resources
+        run: echo "export K_CLIENT_SECRET=${{secrets.K_CLIENT_SECRET}}"" >> ~/.bashrc
+      - name: write variable
+        run: source ~/.bashrc
       - name: init with Gradle
         uses: gradle/gradle-build-action@v2
       - run: gradle init
