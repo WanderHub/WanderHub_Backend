@@ -3,14 +3,12 @@ BUILD_JAR=$(ls /home/ubuntu/WanderHub_Backend/build/libs/server-0.0.1-SNAPSHOT.j
 JAR_NAME=$(basename $BUILD_JAR)
 
 echo "> 현재 시간: $(date)" >> /home/ubuntu/wanderHub-back/log/deploy.log
-
 echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/wanderHub-back/log/deploy.log
-
 echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/log/deploy.log
 DEPLOY_PATH=/home/ubuntu/wanderHub-back/
-echo "> LOCATION " > /home/ubuntu/wanderHub-back/log/deploy.log
+echo "> LOCATION $LOCATION" > /home/ubuntu/wanderHub-back/log/deploy.log
 echo $LOCATION >> /home/ubuntu/wanderHub-back/log/deploy.log
-echo "> LOCATION_YML " > /home/ubuntu/wanderHub-back/log/deploy.log
+echo "> LOCATION_YML $LOCATION_YML" > /home/ubuntu/wanderHub-back/log/deploy.log
 echo $LOCATION_YML >> /home/ubuntu/wanderHub-back/log/deploy.log
 echo "> yml 복사 " >> /home/ubuntu/wanderHub-back/log/deploy.log
 cp $LOCATION $LOCATION_YML
