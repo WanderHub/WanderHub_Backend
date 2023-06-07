@@ -17,15 +17,15 @@ spring:
       client:
         registration:
           google:
-            clientId: ${G_CLIENT_ID}
-            clientSecret: ${G_CLIENT_SECRET}
+            clientId: $(echo $G_CLIENT_ID)
+            clientSecret: $(echo $G_CLIENT_SECRET)
             scope:
               - email
               - profile
             redirect-uri: "https://server.wanderhub.kro.kr/login/oauth2/code/google"
           kakao:
-            clientId: ${K_CLIENT_ID}
-            client-secret: ${K_CLIENT_SECRET}
+            clientId: $(echo $K_CLIENT_ID)
+            client-secret: $(echo $K_CLIENT_SECRET)
             redirect-uri: "https://server.wanderhub.kro.kr/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post
