@@ -23,4 +23,5 @@ fi
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포 " >> /home/ubuntu/wanderHub-back/log/deploy.log
-sudo nohup java -jar -Dspring.profiles.active=$profile $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
+echo $profile >> /home/ubuntu/wanderHub-back/log/deploy.log
+sudo nohup java -jar -Dspring.profiles.active=prod $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
