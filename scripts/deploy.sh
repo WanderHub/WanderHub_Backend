@@ -8,8 +8,10 @@ echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/wanderHub-back/log/deploy.lo
 
 echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/log/deploy.log
 DEPLOY_PATH=/home/ubuntu/wanderHub-back/
-echo $LOCATION
-echo $LOCATION_YML
+echo "> LOCATION " > /home/ubuntu/wanderHub-back/log/deploy.log
+echo $LOCATION >> /home/ubuntu/wanderHub-back/log/deploy.log
+echo "> LOCATION_YML " > /home/ubuntu/wanderHub-back/log/deploy.log
+echo $LOCATION_YML >> /home/ubuntu/wanderHub-back/log/deploy.log
 echo "> yml 복사 " >> /home/ubuntu/wanderHub-back/log/deploy.log
 cp $LOCATION $LOCATION_YML
 cp $BUILD_JAR $DEPLOY_PATH
