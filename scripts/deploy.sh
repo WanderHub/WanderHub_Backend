@@ -2,17 +2,12 @@
 BUILD_JAR=$(ls /home/ubuntu/WanderHub_Backend/build/libs/server-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
-echo "> 현재 시간: $(date)" >> /home/ubuntu/wanderHub-back/log/deploy.log
-echo "> build 파일명: $JAR_NAME" >> /home/ubuntu/wanderHub-back/log/deploy.log
+echo "> 현재 시간: $(date) " >> /home/ubuntu/wanderHub-back/log/deploy.log
+echo "> build 파일명: $JAR_NAME " >> /home/ubuntu/wanderHub-back/log/deploy.log
 echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/log/deploy.log
 DEPLOY_PATH=/home/ubuntu/wanderHub-back/
-echo "> LOCATION $LOCATION" > /home/ubuntu/wanderHub-back/log/deploy.log
-echo $LOCATION >> /home/ubuntu/wanderHub-back/log/deploy.log
-echo "> LOCATION_YML $LOCATION_YML" > /home/ubuntu/wanderHub-back/log/deploy.log
-echo $LOCATION_YML >> /home/ubuntu/wanderHub-back/log/deploy.log
-echo "> yml 복사 " >> /home/ubuntu/wanderHub-back/log/deploy.log
-cp $LOCATION $LOCATION_YML
 cp $BUILD_JAR $DEPLOY_PATH
+
 
 echo "> 현재 실행중인 애플리케이션 pid 확인" >> /home/ubuntu/wanderHub-back/log/deploy.log
 CURRENT_PID=$(pgrep -f $JAR_NAME)
@@ -27,5 +22,5 @@ else
 fi
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/wanderHub-back/log/deploy.log
-sudo nohup java -jar $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
+echo "> DEPLOY_JAR 배포 " >> /home/ubuntu/wanderHub-back/log/deploy.log
+sudo nohup java -jar --spring.profile.active=$profile $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
