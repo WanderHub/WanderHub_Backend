@@ -28,7 +28,9 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+
       - name: Set prod yml
+        uses: ./github/actions/set_prod_yml
         with:
           files: ${{ env.RESOURCE_PATH }}
         env:
