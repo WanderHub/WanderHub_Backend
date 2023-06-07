@@ -30,7 +30,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Set prod yml
-        uses: ./github/actions/set_prod_yml
+        uses: actions/setup-java@v3
         with:
           files: ${{ env.RESOURCE_PATH }}
         env:
