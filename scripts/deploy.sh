@@ -8,6 +8,7 @@ echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/log/deploy.log
 DEPLOY_PATH=/home/ubuntu/wanderHub-back/
 cp $BUILD_JAR $DEPLOY_PATH
 
+
 echo "> 현재 실행중인 애플리케이션 pid 확인" >> /home/ubuntu/wanderHub-back/log/deploy.log
 CURRENT_PID=$(pgrep -f $JAR_NAME)
 
