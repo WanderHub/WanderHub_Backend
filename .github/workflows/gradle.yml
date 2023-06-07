@@ -10,20 +10,17 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 permissions:
   contents: read
 
 env:
   S3_BUCKET_NAME: wanderhub.backend
+  RESOURCE_PATH: ./src/main/resources/application-prod.yml
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -31,6 +28,17 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+
+      - name: Set prod yml
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{ env.RESOURCE_PATH }}
+        env:
+          spring.security.oauth2.client.registration.google.clientId: ${{secrets.G_CLIENT_ID}}
+          spring.security.oauth2.client.registration.google.clientSecret: ${{secrets.G_CLIENT_SECRET}}
+          spring.security.oauth2.client.registration.kakao.clientId: ${{secrets.K_CLIENT_ID}}
+          spring.security.oauth2.client.registration.kakao.client-secret: ${{secrets.K_CLIENT_SECRET}}
+
       - name: init with Gradle
         uses: gradle/gradle-build-action@v2
       - run: gradle init
