@@ -32,9 +32,9 @@ jobs:
       - name: write G_CLIENT_SECRET
         run: echo "export G_CLIENT_SECRET="${{secrets.G_CLIENT_SECRET}}"" >> ~/.bashrc
       - name: write K_CLIENT_ID
-        run: echo "export K_CLIENT_ID=${{secrets.K_CLIENT_ID}}"" >> ~/.bashrc
+        run: echo "export K_CLIENT_ID="${{secrets.K_CLIENT_ID}}"" >> ~/.bashrc
       - name: write K_CLIENT_SECRET
-        run: echo "export K_CLIENT_SECRET=${{secrets.K_CLIENT_SECRET}}"" >> ~/.bashrc
+        run: echo "export K_CLIENT_SECRET="${{secrets.K_CLIENT_SECRET}}"" >> ~/.bashrc
       - name: write variable
         run: source ~/.bashrc
       - name: init with Gradle
