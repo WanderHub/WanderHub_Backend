@@ -17,6 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -63,30 +64,30 @@ public class SecurityConfiguration {
     }
 
     @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
-    private String clientId;
+    private Optional<String> clientId;
 
     @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
-    private String clientSecret;
+    private Optional<String> clientSecret;
 
 
     @Value("${spring.security.oauth2.client.registration.kakao.clientId}")  // (1)
-    private String kclientId;
+    private Optional<String> kclientId;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") // (2)
-    private String kclientSecret;
+    private Optional<String> kclientSecret;
 
     @PostConstruct
     private ClientRegistration clientRegistration() {
-        System.out.println("clientId = " + clientId);
-        System.out.println("clientSecret = " + clientSecret);
-        System.out.println("kclientId = " + kclientId);
-        System.out.println("kclientSecret = " + kclientSecret);
+        System.out.println("clientId = " + clientId.isPresent());
+        System.out.println("clientSecret = " + clientSecret.isPresent());
+        System.out.println("kclientId = " + kclientId.isPresent());
+        System.out.println("kclientSecret = " + kclientSecret.isPresent());
 
         return CommonOAuth2Provider
                 .GOOGLE
                 .getBuilder("google")
-                .clientId(clientId)
-                .clientSecret(clientSecret)
+                .clientId(clientId.get())
+                .clientSecret(clientSecret.get())
                 .build();
     }
 
