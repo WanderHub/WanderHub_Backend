@@ -29,16 +29,16 @@ jobs:
           distribution: 'temurin'
       - name: write G_CLIENT_ID
         run: echo "G_CLIENT_ID=${{secrets.G_CLIENT_ID}}" >> application-prod.yml
-        working-directory: /src/main/resources
+        working-directory: ./src/main/resources
       - name: write G_CLIENT_SECRET
         run: echo "G_CLIENT_SECRET=${{secrets.G_CLIENT_SECRET}}" >> application-prod.yml
-        working-directory: /src/main/resources
+        working-directory: ./src/main/resources
       - name: write K_CLIENT_ID
         run: echo "K_CLIENT_ID=${{secrets.K_CLIENT_ID}}" >> application-prod.yml
-        working-directory: /src/main/resources
+        working-directory: ./src/main/resources
       - name: write K_CLIENT_SECRET
         run: echo "K_CLIENT_SECRET=${{secrets.K_CLIENT_SECRET}}" >> application-prod.yml
-        working-directory: /src/main/resources
+        working-directory: ./src/main/resources
       - name: init with Gradle
         uses: gradle/gradle-build-action@v2
       - run: gradle init
