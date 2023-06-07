@@ -16,6 +16,7 @@ permissions:
 
 env:
   S3_BUCKET_NAME: wanderhub.backend
+  RESOURCE_PATH: ./src/main/resources/application-prod.yml
 
 jobs:
   build:
@@ -27,18 +28,15 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - name: write G_CLIENT_ID
-        run: echo "G_CLIENT_ID=${{secrets.G_CLIENT_ID}}" >> application-prod.yml
-        working-directory: ./src/main/resources
-      - name: write G_CLIENT_SECRET
-        run: echo "G_CLIENT_SECRET=${{secrets.G_CLIENT_SECRET}}" >> application-prod.yml
-        working-directory: ./src/main/resources
-      - name: write K_CLIENT_ID
-        run: echo "K_CLIENT_ID=${{secrets.K_CLIENT_ID}}" >> application-prod.yml
-        working-directory: ./src/main/resources
-      - name: write K_CLIENT_SECRET
-        run: echo "K_CLIENT_SECRET=${{secrets.K_CLIENT_SECRET}}" >> application-prod.yml
-        working-directory: ./src/main/resources
+      - name: Set prod yml
+        with:
+          files: ${{ env.RESOURCE_PATH }}
+        env:
+          spring.security.oauth2.client.registration.google.clientId: ${{secrets.G_CLIENT_ID}}
+          spring.security.oauth2.client.registration.google.clientSecret: ${{secrets.G_CLIENT_SECRET}}
+          spring.security.oauth2.client.registration.kakao.clientId: ${{secrets.K_CLIENT_ID}}
+          spring.security.oauth2.client.registration.kakao.client-secret: ${{secrets.K_CLIENT_SECRET}}
+
       - name: init with Gradle
         uses: gradle/gradle-build-action@v2
       - run: gradle init
