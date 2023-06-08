@@ -10,7 +10,8 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "test/OAuth" ]
-
+  pull_requests:
+    branches: [ "test/OAuth" ]
 
 permissions:
   contents: read
