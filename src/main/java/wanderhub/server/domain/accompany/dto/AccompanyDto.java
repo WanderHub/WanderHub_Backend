@@ -1,41 +1,59 @@
 package wanderhub.server.domain.accompany.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AccompanyDto {
     private Long id;
     private Long memberId;
-    private String displayName;
-    private String local;
+    private String writerName;
+    private String accompanyLocal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate accompanyDate;
     private int maxNum;
-    private String title;
-    private String content;
-    private boolean status;
-    private Date createDate;
-    private Date modifyDate;
+    private String accompanyTitle;
+    private String accompanyContent;
+    private boolean openStatus=true;
 
-/*
+/* 수동방법
+    //dto -> entity
     public Accompany toEntity() {
         return Accompany.builder()
                 .id(id)
                 .memberId(memberId)
-                .displayName(displayName)
-                .local(local)
+                .writerName(writerName)
+                .accompanyLocal(accompanyLocal)
+                .accompanyDate(accompanyDate)
                 .maxNum(maxNum)
-                .title(title)
-                .content(content)
-                .status(status)
-                .createDate(createDate)
-                .modifyDate(modifyDate)
+                .accompanyTitle(accompanyTitle)
+                .accompanyContent(accompanyContent)
+                .openStatus(openStatus)
+                .build();
+    }
+
+    //entity -> dto
+    public static AccompanyDto fromEntity(Accompany accompany) {
+        return AccompanyDto.builder()
+                .id(accompany.getId())
+                .memberId(accompany.getMemberId())
+                .writerName(accompany.getWriterName())
+                .accompanyLocal(accompany.getAccompanyLocal())
+                .accompanyDate(accompany.accompanyDate)
+                .maxNum(accompany.getMaxNum())
+                .accompanyTitle(accompany.getAccompanyTitle())
+                .accompanyContent(accompany.getAccompanyContent())
+                .openStatus(accompany.isOpenStatus())
                 .build();
     }*/
 
