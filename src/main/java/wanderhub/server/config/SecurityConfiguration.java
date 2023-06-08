@@ -1,5 +1,6 @@
 package wanderhub.server.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration  // 구성정보 클래스
+@Slf4j
 public class SecurityConfiguration {
 
     @Bean   // 스프링에서 관리하는 빈으로 설정
@@ -61,25 +63,25 @@ public class SecurityConfiguration {
         return new InMemoryClientRegistrationRepository(clientRegistration);
     }
 
-    @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
+    @Value("${spring.security.oauth2.client.registration.google.clientId}")
     private Optional<String> clientId;
 
-    @Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
+    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
     private Optional<String> clientSecret;
 
 
-    @Value("${spring.security.oauth2.client.registration.kakao.clientId}")  // (1)
+    @Value("${spring.security.oauth2.client.registration.kakao.clientId}")
     private Optional<String> kclientId;
 
-    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") // (2)
+    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
     private Optional<String> kclientSecret;
 
     @PostConstruct
     private ClientRegistration clientRegistration() {
-        System.out.println("clientId = " + clientId.isPresent());
-        System.out.println("clientSecret = " + clientSecret.isPresent());
-        System.out.println("kclientId = " + kclientId.isPresent());
-        System.out.println("kclientSecret = " + kclientSecret.isPresent());
+        log.info("clientId = {}", clientId.isPresent());
+        log.info("clientSecret = {}", clientSecret.isPresent());
+        log.info("kclientId = {}", kclientId.isPresent());
+        log.info("kclientSecret = {}", kclientSecret.isPresent());
 
         return CommonOAuth2Provider
                 .GOOGLE
