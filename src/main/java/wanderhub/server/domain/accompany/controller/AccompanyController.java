@@ -23,13 +23,13 @@ public class AccompanyController {
         return accompanyService.createAccompany(accompanyDto);
     }
 
-    //전체 조회
+    //전체 조회. 필요한가?
     @GetMapping("/")
     public List<AccompanyResponseDto> findAll() {
         return accompanyService.findAll();
     }
 
-    //accompanyId로 조회
+    //accompanyId로 조회. 필요한가?
     @GetMapping("/{id}")
     public Optional<AccompanyResponseDto> findById(@PathVariable Long id) {
         return accompanyService.findById(id);
@@ -41,17 +41,27 @@ public class AccompanyController {
         return accompanyService.findByLocal(local);
     }
 
-//    //일
-//    @GetMapping("/bydate/{date}") //날짜로 조회 테스트(되면 아래꺼랑 합칠거임)
-//    public List<AccompanyResponseDto> findByDate(@PathVariable String date) {
-//        return accompanyService.findByDate(date);
-//    }
+    //일
+    @GetMapping("/bydate/{date}") //날짜로 조회 테스트(되면 아래꺼랑 합칠거임)
+    public List<AccompanyResponseDto> findByDate(@PathVariable String date) {
+        return accompanyService.findByDate(date);
+    }
 
-    //지역&날짜로 조회
+    //지역->날짜로 조회
     @GetMapping("/bylocalanddate/{local}/{date}")
     public List<AccompanyResponseDto> findByLocalAndDate(@PathVariable String local, @PathVariable String date) {
         return accompanyService.findByLocalAndDate(local, date);
     }
 
+    //생성한 사람 id로 조회
+    @GetMapping("/bymemberid/{memberId}")
+    public List<AccompanyResponseDto> findByMemberId(@PathVariable Long memberId) {
+        return accompanyService.findByMemberId(memberId);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAccompany(@PathVariable Long id) {
+        accompanyService.deleteAccompany(id);
+    }
 
 }

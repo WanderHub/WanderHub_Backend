@@ -73,6 +73,21 @@ public class AccompanyServiceImpl implements AccompanyService {
         return dtolist;
     }
 
+    @Override
+    public List<AccompanyResponseDto> findByMemberId(Long memberId) {
+        List<Accompany> entityList = accompanyRepository.findByMemberId(memberId);
+        List<AccompanyResponseDto> dtolist = AccompanyMapper.INSTANCE.toDtoList(entityList);
+        return dtolist;
+    }
+
+    @Override
+    public void deleteAccompany(Long id) {
+        Accompany entity = accompanyRepository.findById(id)
+                .orElseThrow(NullPointerException::new);
+
+        accompanyRepository.delete(entity);
+    }
+
 
 //    //수동방법
 //    public List<AccompanyDto> findAllByManual() {

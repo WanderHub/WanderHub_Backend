@@ -17,9 +17,7 @@ public interface AccompanyService {
     List<AccompanyResponseDto> findByLocal(String accompanyLocal);
     List<AccompanyResponseDto> findByDate(String accompanyDate);
     List<AccompanyResponseDto> findByLocalAndDate(String accompanyLocal, String accompanyDate);
+    List<AccompanyResponseDto> findByMemberId(Long memberId);
 
-
-
-
-
+    void deleteAccompany(Long id);
 }
