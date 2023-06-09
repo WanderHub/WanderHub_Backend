@@ -1,6 +1,7 @@
 package wanderhub.server.domain.accompany.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
@@ -19,6 +20,7 @@ public class AccompanyController {
 
     //생성
     @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
     public AccompanyResponseDto create(@RequestBody AccompanyDto accompanyDto) {
         return accompanyService.createAccompany(accompanyDto);
     }
@@ -60,6 +62,7 @@ public class AccompanyController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccompany(@PathVariable Long id) {
         accompanyService.deleteAccompany(id);
     }

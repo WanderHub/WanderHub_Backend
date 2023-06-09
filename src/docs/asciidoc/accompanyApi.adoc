@@ -9,7 +9,6 @@ endif::[]
 :toclevels: 3
 :sectlinks:
 
-
 == create (생성하기)
 
 === Request Sample
@@ -41,7 +40,7 @@ include::{snippets}/accompany-findById/response-fields.adoc[]
 include::{snippets}/accompany-findByLocal/path-parameters.adoc[]
 
 === Request Sample
-(parameter에 한글 입력이 깨져서 전체 조회되긴 하는데 실제로는 잘 작동)
+(parameter에 한글이 깨지긴 하는데 실제로는 잘 작동)
 include::{snippets}/accompany-findByLocal/http-request.adoc[]
 
 === Response Sample
@@ -78,3 +77,13 @@ include::{snippets}/accompany-findByLocalAndDate/http-response.adoc[]
 include::{snippets}/accompany-findByLocalAndDate/response-fields.adoc[]
 
 
+== delete
+
+=== path-parameter
+include::{snippets}/accompany-delete/path-parameters.adoc[]
+
+=== Request Sample
+include::{snippets}/accompany-delete/http-request.adoc[]
+
+=== Response Sample
+include::{snippets}/accompany-delete/http-response.adoc[]
