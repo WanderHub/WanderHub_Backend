@@ -25,13 +25,6 @@ public class AccompanyRepositoryTest {
     public void save() {
         Accompany accompany = new Accompany(null, 4L, "hi1", "서울", LocalDate.parse("2023-06-05"), 3, "제목", "내용", true);
         repo.save(accompany);
-        System.out.println("accompanyDate = " + accompany.getAccompanyDate());
-//        LocalDate d = LocalDate.parse("2023-05-01");
-//        String s = "2023-05-02";
-//        System.out.println(Integer.parseInt(s.substring(0,4)));
-//        System.out.println(d.getYear());
-//        System.out.println(Integer.parseInt(s.substring(5,7)));
-//        System.out.println(d.getMonthValue());
         assertThat(accompany.getAccompanyTitle()).isEqualTo("제목");
     }
 

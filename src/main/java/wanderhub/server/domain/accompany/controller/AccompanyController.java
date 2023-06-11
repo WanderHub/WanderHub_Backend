@@ -7,7 +7,6 @@ import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.service.AccompanyService;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,13 +24,13 @@ public class AccompanyController {
         return accompanyService.createAccompany(accompanyDto);
     }
 
-    //전체 조회. 필요한가?
+    //전체 조회
     @GetMapping("/")
     public List<AccompanyResponseDto> findAll() {
         return accompanyService.findAll();
     }
 
-    //accompanyId로 조회. 필요한가?
+    //accompanyId로 조회
     @GetMapping("/{id}")
     public Optional<AccompanyResponseDto> findById(@PathVariable Long id) {
         return accompanyService.findById(id);
@@ -44,7 +43,7 @@ public class AccompanyController {
     }
 
     //일
-    @GetMapping("/bydate/{date}") //날짜로 조회 테스트(되면 아래꺼랑 합칠거임)
+    @GetMapping("/bydate/{date}")
     public List<AccompanyResponseDto> findByDate(@PathVariable String date) {
         return accompanyService.findByDate(date);
     }

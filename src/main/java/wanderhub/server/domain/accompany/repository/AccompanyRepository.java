@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+//@Repository
 public interface AccompanyRepository extends JpaRepository<Accompany, Long> {
 
     List<Accompany> findByAccompanyLocal(String local);
