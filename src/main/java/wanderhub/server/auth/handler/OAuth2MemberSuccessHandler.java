@@ -112,7 +112,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .newInstance()
                 .scheme("https")
                 .host("backwander.kro.kr")
-                .port(443)
                 .path("/oauth")
                 .queryParams(queryParams)
                 .build()
