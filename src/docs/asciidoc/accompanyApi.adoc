@@ -77,6 +77,20 @@ include::{snippets}/accompany-findByLocalAndDate/http-response.adoc[]
 include::{snippets}/accompany-findByLocalAndDate/response-fields.adoc[]
 
 
+== findByLocalAndDate2 (지역&날짜 쿼리문으로 조회)
+
+=== path-parameter
+include::{snippets}/accompany-findByLocalAndDate2/request-parameters.adoc[]
+
+=== Request Sample
+include::{snippets}/accompany-findByLocalAndDate2/http-request.adoc[]
+
+=== Response Sample
+include::{snippets}/accompany-findByLocalAndDate2/http-response.adoc[]
+=== Response Fields
+include::{snippets}/accompany-findByLocalAndDate2/response-fields.adoc[]
+
+
 == delete
 
 === path-parameter

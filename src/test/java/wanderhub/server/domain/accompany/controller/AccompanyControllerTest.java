@@ -26,8 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,11 +51,9 @@ public class AccompanyControllerTest {
     public void findAll() throws Exception {
         Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
         Accompany accompany2 = new Accompany(2L, 7L, "hi2", "서울", LocalDate.parse("2023-07-05"), 3, "제목2", "내용2", true);
-        AccompanyResponseDto a1 = AccompanyMapper.INSTANCE.toDto(accompany1);
-        AccompanyResponseDto a2 = AccompanyMapper.INSTANCE.toDto(accompany2);
-        List<AccompanyResponseDto> list = new ArrayList<>();
-        list.add(a1);
-        list.add(a2);
+        List<Accompany> list = new ArrayList<>();
+        list.add(accompany1);
+        list.add(accompany2);
 
         when(accompanyService.findAll()).thenReturn(list);
 
@@ -97,7 +94,7 @@ public class AccompanyControllerTest {
                 .openStatus(true)
                 .build();
 
-        this.mockMvc.perform(post("/accompany/create")
+        this.mockMvc.perform(post("/accompany/")
                         .content(mapper.writeValueAsString(accompany1))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -124,11 +121,10 @@ public class AccompanyControllerTest {
     @DisplayName("동행글 식별자로 조회")
     public void findById() throws Exception {
         Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
-        AccompanyResponseDto a1 = AccompanyMapper.INSTANCE.toDto(accompany1);
 
-        when(accompanyService.findById(anyLong())).thenReturn(Optional.of(a1));
+        when(accompanyService.findById(anyLong())).thenReturn(Optional.of(accompany1));
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/{id}", a1.getId()) //pathParameters 쓰려면 RestDocumentationRequestBuilders 사용해야 함
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/{id}", accompany1.getId()) //pathParameters 쓰려면 RestDocumentationRequestBuilders 사용해야 함
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -158,14 +154,12 @@ public class AccompanyControllerTest {
     public void findByLocal() throws Exception {
         Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
         Accompany accompany2 = new Accompany(2L, 7L, "hi2", "서울", LocalDate.parse("2023-07-05"), 3, "제목2", "내용2", true);
-        AccompanyResponseDto a1 = AccompanyMapper.INSTANCE.toDto(accompany1);
-        AccompanyResponseDto a2 = AccompanyMapper.INSTANCE.toDto(accompany2);
-        List<AccompanyResponseDto> list = new ArrayList<>();
-        list.add(a1); list.add(a2);
+        List<Accompany> list = new ArrayList<>();
+        list.add(accompany1); list.add(accompany2);
 
         when(accompanyService.findByLocal("서울")).thenReturn(list);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocal/{accompanyLocal}", a1.getAccompanyLocal())
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocal/{accompanyLocal}", accompany1.getAccompanyLocal())
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -195,14 +189,12 @@ public class AccompanyControllerTest {
     public void findByDate() throws Exception {
         Accompany accompany3 = new Accompany(3L, 9L, "hi9", "제주", LocalDate.parse("2023-07-10"), 2, "제목3", "내용3", true);
         Accompany accompany4 = new Accompany(4L, 8L, "hi8", "제주", LocalDate.parse("2023-07-10"), 4, "제목4", "내용4", true);
-        AccompanyResponseDto a3 = AccompanyMapper.INSTANCE.toDto(accompany3);
-        AccompanyResponseDto a4 = AccompanyMapper.INSTANCE.toDto(accompany4);
-        List<AccompanyResponseDto> list = new ArrayList<>();
-        list.add(a3); list.add(a4);
+        List<Accompany> list = new ArrayList<>();
+        list.add(accompany3); list.add(accompany4);
 
         when(accompanyService.findByDate("2023-07-10")).thenReturn(list);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bydate/{accompanyDate}", a3.getAccompanyDate())
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bydate/{accompanyDate}", accompany3.getAccompanyDate())
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -226,19 +218,18 @@ public class AccompanyControllerTest {
                                 fieldWithPath("[].modifiedAt").description("수정된 날짜")
                         )));
     }
+
     @Test
     @DisplayName("지역&날짜 별 조회")
     public void findByLocalAndDate() throws Exception {
         Accompany accompany3 = new Accompany(3L, 9L, "hi9", "제주", LocalDate.parse("2023-07-10"), 2, "제목3", "내용3", true);
         Accompany accompany4 = new Accompany(4L, 8L, "hi8", "제주", LocalDate.parse("2023-07-10"), 4, "제목4", "내용4", true);
-        AccompanyResponseDto a3 = AccompanyMapper.INSTANCE.toDto(accompany3);
-        AccompanyResponseDto a4 = AccompanyMapper.INSTANCE.toDto(accompany4);
-        List<AccompanyResponseDto> list = new ArrayList<>();
-        list.add(a3); list.add(a4);
+        List<Accompany> list = new ArrayList<>();
+        list.add(accompany3); list.add(accompany4);
 
         when(accompanyService.findByLocalAndDate("제주","2023-07-10")).thenReturn(list);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocalanddate/{accompanyLocal}/{accompanyDate}", a3.getAccompanyLocal(), a3.getAccompanyDate())
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocalanddate/{accompanyLocal}/{accompanyDate}", accompany3.getAccompanyLocal(), accompany4.getAccompanyDate())
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -263,6 +254,43 @@ public class AccompanyControllerTest {
                                 fieldWithPath("[].modifiedAt").description("수정된 날짜")
                         )));
     }
+
+    @Test
+    @DisplayName("지역&날짜 별 조회, 쿼리스트링으로")
+    public void findByLocalAndDate2() throws Exception {
+        Accompany accompany3 = new Accompany(3L, 9L, "hi9", "제주", LocalDate.parse("2023-07-10"), 2, "제목3", "내용3", true);
+        Accompany accompany4 = new Accompany(4L, 8L, "hi8", "제주", LocalDate.parse("2023-07-10"), 4, "제목4", "내용4", true);
+        List<Accompany> list = new ArrayList<>();
+        list.add(accompany3); list.add(accompany4);
+
+        when(accompanyService.findByLocalAndDate("제주","2023-07-10")).thenReturn(list);
+
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocalanddate2?accompanyLocal=제주&accompanyDate=2023-07-10")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("accompany-findByLocalAndDate2",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestParameters(
+                                parameterWithName("accompanyLocal").description("동행 지역"),
+                                parameterWithName("accompanyDate").description("동행 날짜")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].id").description("accompany id (PK)"),
+                                fieldWithPath("[].memberId").description("글 생성자 id"),
+                                fieldWithPath("[].writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("[].accompanyLocal").description("동행할 지역"),
+                                fieldWithPath("[].accompanyDate").description("동행할 날짜"),
+                                fieldWithPath("[].maxNum").description("동행할 최대 인원"),
+                                fieldWithPath("[].accompanyTitle").description("동행글 제목"),
+                                fieldWithPath("[].accompanyContent").description("동행글 본문"),
+                                fieldWithPath("[].openStatus").description("모집 상태"),
+                                fieldWithPath("[].createdAt").description("생성된 날짜"),
+                                fieldWithPath("[].modifiedAt").description("수정된 날짜")
+                        )));
+    }
+
 
     @Test
     @DisplayName("삭제")

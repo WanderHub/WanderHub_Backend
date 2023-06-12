@@ -503,7 +503,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_request_sample"><a class="link" href="#_request_sample">Request Sample</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /accompany/create HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /accompany/ HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 283
 Host: localhost:8080
@@ -628,7 +628,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 Content-Length: 283
 
 {
@@ -751,7 +751,7 @@ Content-Length: 283
 <div class="sect2">
 <h3 id="_request_sample_3"><a class="link" href="#_request_sample_3">Request Sample</a></h3>
 <div class="paragraph">
-<p>(parameter에 한글 입력이 깨져서 전체 조회되긴 하는데 실제로는 잘 작동)</p>
+<p>(parameter에 한글이 깨지긴 하는데 실제로는 잘 작동)</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -766,7 +766,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 Content-Length: 572
 
 [ {
@@ -913,7 +913,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 Content-Length: 572
 
 [ {
@@ -1064,7 +1064,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 Content-Length: 572
 
 [ {
@@ -1219,7 +1219,7 @@ Host: localhost:8080</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-09 23:05:13 +0900
+Last updated 2023-06-12 12:14:14 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

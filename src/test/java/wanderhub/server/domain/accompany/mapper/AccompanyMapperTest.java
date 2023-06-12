@@ -27,10 +27,6 @@ public class AccompanyMapperTest {
         Accompany accompany = new Accompany(null, 4L, "hi1", "서울", LocalDate.parse("2023-06-01"), 3, "제목", "내용", true);
         repo.save(accompany);
         AccompanyResponseDto accompanyDto = AccompanyMapper.INSTANCE.toDto(accompany);
-        System.out.println("accompanyDto = " + accompanyDto);
-
-//        Accompany nextAccompany = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
-//        System.out.println("nextAccompany = " + nextAccompany);
     }
 
     @Test
@@ -44,9 +40,6 @@ public class AccompanyMapperTest {
         List<Accompany> entityList = repo.findAll();
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
         System.out.println("dtoList = " + dtoList);
-
-//        List<Accompany> nextEntityList = AccompanyMapper.INSTANCE.toEntityList(dtoList);
-//        System.out.println("nextEntityList = " + nextEntityList);
     }
 
 

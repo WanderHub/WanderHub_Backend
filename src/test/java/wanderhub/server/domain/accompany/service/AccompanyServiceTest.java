@@ -2,49 +2,36 @@ package wanderhub.server.domain.accompany.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import wanderhub.server.domain.accompany.dto.AccompanyDto;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
-import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.repository.AccompanyRepository;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-//@SpringBootTest
-@DataJpaTest
 @ExtendWith(MockitoExtension.class)
 public class AccompanyServiceTest {
 
-    @MockBean
-    private final AccompanyService accompanyService;
-
-    @Autowired
-    public AccompanyServiceTest(AccompanyService accompanyService) {
-        this.accompanyService = accompanyService;
-    }
+    @Mock
+    private AccompanyRepository accompanyRepository;
 
     @Test
     void createAccompany() {
-        Accompany accompany = new Accompany(1L, 4L, "hi2", "대전", LocalDate.parse("2023-06-05"), 4, "제목2", "내용2", true);
-        AccompanyDto dto = AccompanyMapper.INSTANCE.toRequestDto(accompany);
-        System.out.println("dto = " + dto);
-        accompanyService.createAccompany(dto);
-        //System.out.println("res = " + res);
+        AccompanyService accompanyService = new AccompanyServiceImpl(accompanyRepository);
 
-        //미결!!!!!!!!!!!!
-        Optional<AccompanyResponseDto> byId = accompanyService.findById(1L);
-        System.out.println("byId = " + byId);
+        Accompany accompany = new Accompany(null, 4L, "hi2", "대전", LocalDate.parse("2023-06-05"), 4, "제목2", "내용2", true);
+        when(accompanyRepository.save(any(Accompany.class))).thenReturn(accompany);
+        accompanyService.createAccompany(accompany);
 
-        assertThat(dto.getWriterName()).isEqualTo("hi2");
+        when(accompanyRepository.findById(1L)).thenReturn(Optional.of(accompany));
+        Optional<Accompany> res = accompanyService.findById(1L);
+
+        assertThat(res.get().getWriterName()).isEqualTo("hi2");
     }
-
 
 }
