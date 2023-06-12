@@ -19,5 +19,4 @@ spring:
       data-locations: classpath*:db/h2/data.sql # 데이터베이스에 적용할 데이터(DML) 스크립트의 위치입니다.
 
 
-# 한글 깨지는 것때문에 임시
-server.servlet.encoding.force-response: true
+

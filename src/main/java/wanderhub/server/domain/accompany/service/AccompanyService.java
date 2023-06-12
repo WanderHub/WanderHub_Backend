@@ -10,9 +10,7 @@ import java.util.Optional;
 public interface AccompanyService {
 
     AccompanyResponseDto createAccompany(AccompanyDto accompanyDto);
-//    List<AccompanyDto> findAllByManual(); //수동방법
-//    List<AccompanyDto> findAllByModelMapper(); //ModelMapper
-    List<AccompanyResponseDto> findAll(); //mapStruct
+    List<AccompanyResponseDto> findAll();
     Optional<AccompanyResponseDto> findById(Long id);
     List<AccompanyResponseDto> findByLocal(String accompanyLocal);
     List<AccompanyResponseDto> findByDate(String accompanyDate);

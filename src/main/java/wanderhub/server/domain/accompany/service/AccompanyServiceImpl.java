@@ -19,7 +19,6 @@ import java.util.Optional;
 public class AccompanyServiceImpl implements AccompanyService {
 
     private final AccompanyRepository accompanyRepository;
-//    private final ModelMapper modelMapper; //modelMapper
 
     @Override
     public AccompanyResponseDto createAccompany(AccompanyDto accompanyDto) {
@@ -87,24 +86,6 @@ public class AccompanyServiceImpl implements AccompanyService {
 
         accompanyRepository.delete(entity);
     }
-
-
-//    //수동방법
-//    public List<AccompanyDto> findAllByManual() {
-//        return accompanyRepository.findAll()
-//                .stream()
-//                .map(AccompanyDto::fromEntity)
-//                .collect(Collectors.toList());
-//    }
-
-//    //ModelMapper
-//    public List<AccompanyDto> findAllByModelMapper() {
-//        return accompanyRepository.findAll()
-//                .stream()
-//                .map(accompany -> modelMapper.map(accompany, AccompanyDto.class))
-//                .collect(Collectors.toList());
-//    }
-
 
 
 
