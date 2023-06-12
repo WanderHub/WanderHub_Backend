@@ -18,7 +18,7 @@ public class AccompanyController {
     private final AccompanyService accompanyService;
 
     //생성
-    @PostMapping("/create")
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public AccompanyResponseDto create(@RequestBody AccompanyDto accompanyDto) {
         return accompanyService.createAccompany(accompanyDto);
@@ -52,12 +52,6 @@ public class AccompanyController {
     @GetMapping("/bylocalanddate/{local}/{date}")
     public List<AccompanyResponseDto> findByLocalAndDate(@PathVariable String local, @PathVariable String date) {
         return accompanyService.findByLocalAndDate(local, date);
-    }
-
-    //생성한 사람 id로 조회
-    @GetMapping("/bymemberid/{memberId}")
-    public List<AccompanyResponseDto> findByMemberId(@PathVariable Long memberId) {
-        return accompanyService.findByMemberId(memberId);
     }
 
     @DeleteMapping("/{id}")
