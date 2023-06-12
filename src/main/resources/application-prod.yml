@@ -39,5 +39,20 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-#
 
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+
+admin:
+  email: ${ADMIN_EMAILS}
+
+
+jwt:
+  key:
+    secret: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 1440
