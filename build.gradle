@@ -10,6 +10,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
+    asciidoctorExtensions //dependencies에서 적용한 것 추가 (의존성 설정 명시)
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -25,13 +26,8 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // Spring Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    // thymeleaf
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // OAuth 2
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -39,10 +35,19 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
-    // JWT 기능을 위한 jjwt 라이브러리
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //ModelMapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
+    //mapStruct
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    //rest docs
+    //.adoc 파일을 html로 만들어 export 해줌
+    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
 tasks.named('test') {
@@ -51,11 +56,40 @@ tasks.named('test') {
 }
 
 tasks.named('asciidoctor') {
+    configurations 'asciidoctorExtensions' //위에서 작성한 configuration 적용
     inputs.dir snippetsDir
-    dependsOn test
+    dependsOn test //test 작업 이후에 작동하도록 설정
 }
 
-bootRun {
-    String activeProfile = System.properties['spring.profiles.active']
-    systemProperty "spring.profiles.active", activeProfile
+//test {
+//    outputs.dir snippetsDir
+//    useJUnitPlatform()
+//}
+//asciidoctor {
+//    inputs.dir snippetsDir
+//    configurations 'asciidoctorExtensions' //위에서 작성한 configuration 적용
+//    dependsOn test //gradle build 시 test->asciidoctor 순으로 수행
+//}
+
+//소스코드에 html 파일 복사
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    doFirst {
+        delete file('src/main/resources/static/docs')
+    }
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
 }
+
+build { //build의 의존작업 명시
+    dependsOn copyDocument
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}") { //gradle build 시, /build/asciidoc에 html 파일생성
+        into 'static/docs' //html 파일이 jar 안의 /static/docs/ 폴더로 복사됨
+    }
+}
+
+
