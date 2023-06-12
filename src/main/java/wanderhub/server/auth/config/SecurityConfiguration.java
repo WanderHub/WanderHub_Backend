@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 )
                 .userInfoEndpoint()
                 .userService(customOAuth2MemberService);
-        ;
+
 
 
         return http.build(); // SecurityFilterChain 구성
