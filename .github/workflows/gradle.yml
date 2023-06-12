@@ -41,7 +41,7 @@ jobs:
           spring.security.oauth2.client.registration.google.clientSecret: ${{secrets.G_CLIENT_SECRET}}
           spring.security.oauth2.client.registration.kakao.clientId: ${{secrets.K_CLIENT_ID}}
           spring.security.oauth2.client.registration.kakao.client-secret: ${{secrets.K_CLIENT_SECRET}}
-          jwt.key: ${{secrets.JWT_SECRET_KEY}}
+          jwt.key.secret: ${{secrets.JWT_SECRET_KEY}}
           admin.email: ${{secrets.ADMIN_EMAILS}}
 
       - name: init with Gradle
