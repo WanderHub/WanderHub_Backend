@@ -1,6 +1,7 @@
 package wanderhub.server.auth.handler;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.*;
 
+@Slf4j
 @RequiredArgsConstructor
 public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler { //  Redirect를 손쉽게 할 수 있게 SimpleUrlAuthenticationSuccessHandler 상속
     private final JwtTokenizer jwtTokenizer;
@@ -37,6 +39,11 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         // 이메일로 멤버를 확인한다.
         // 없다면 이메일을 통해서 Member를 생성한다.
+        log.info("useremailuseremailuseremailuseremail =  {}", email);
+        log.info("useremailuseremailuseremailuseremail =  {}", email);
+        log.info("useremailuseremailuseremailuseremail =  {}", email);
+        log.info("useremailuseremailuseremailuseremail =  {}", email);
+
         if(!memberService.findByEmail(email).isPresent()) {
             Member member = new Member(email);
             memberService.createMember(member);
