@@ -2,7 +2,7 @@
 BUILD_JAR=$(ls /home/ubuntu/WanderHub_Backend/build/libs/server-0.0.1-SNAPSHOT.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 
-echo "> 현재 시간: $(date) " >> /home/ubuntu/wanderHub-back/log/deploy.log
+echo "> 현 재 시 간: $(date) " >> /home/ubuntu/wanderHub-back/log/deploy.log
 echo "> build 파일명: $JAR_NAME " >> /home/ubuntu/wanderHub-back/log/deploy.log
 echo "> build 파일 복사" >> /home/ubuntu/wanderHub-back/log/deploy.log
 DEPLOY_PATH=/home/ubuntu/wanderHub-back/
@@ -21,7 +21,7 @@ else
   sleep 5
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
+
 echo "> DEPLOY_JAR 배포 " >> /home/ubuntu/wanderHub-back/log/deploy.log
-echo " $($profile) " >> /home/ubuntu/wanderHub-back/log/deploy.log
-sudo nohup java -jar -Dspring.profiles.active=prod $DEPLOY_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
+
+sudo nohup java -jar -Dspring.profiles.active=prod $BUILD_JAR >> /home/ubuntu/wanderHub-back/log/deploy.log 2>/home/ubuntu/wanderHub-back/log/deploy_err.log &
