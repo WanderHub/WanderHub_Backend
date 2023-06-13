@@ -27,7 +27,12 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 **/application-local.yml
+<<<<<<< HEAD
+
+=======
 **/application.yml
+>>>>>>> fc5d75f0e8c1a97f9f8d23f340adb51b9c61b194
+
 
 ### NetBeans ###
 /nbproject/private/
