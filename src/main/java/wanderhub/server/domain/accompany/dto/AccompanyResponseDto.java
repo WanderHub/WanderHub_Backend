@@ -26,5 +26,4 @@ public class AccompanyResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-
 }

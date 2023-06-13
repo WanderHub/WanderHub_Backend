@@ -46,6 +46,7 @@ public class Accompany extends Auditable {
     private String accompanyContent;
 
     @Column(name="STATUS", columnDefinition = "boolean default true")
+    @Setter
     private boolean openStatus;
 
 }

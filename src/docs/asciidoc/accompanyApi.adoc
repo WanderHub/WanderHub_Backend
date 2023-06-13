@@ -63,20 +63,6 @@ include::{snippets}/accompany-findByDate/http-response.adoc[]
 include::{snippets}/accompany-findByDate/response-fields.adoc[]
 
 
-== findByLocalAndDate (지역&날짜로 조회)
-
-=== path-parameter
-include::{snippets}/accompany-findByLocalAndDate/path-parameters.adoc[]
-
-=== Request Sample
-include::{snippets}/accompany-findByLocalAndDate/http-request.adoc[]
-
-=== Response Sample
-include::{snippets}/accompany-findByLocalAndDate/http-response.adoc[]
-=== Response Fields
-include::{snippets}/accompany-findByLocalAndDate/response-fields.adoc[]
-
-
 == findByLocalAndDate2 (지역&날짜 쿼리문으로 조회)
 
 === path-parameter

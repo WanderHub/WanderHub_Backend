@@ -18,6 +18,7 @@ import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.service.AccompanyService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +49,8 @@ public class AccompanyControllerTest {
 
     @MockBean
     private AccompanyService accompanyService;
+
+    private static final LocalDateTime time = LocalDateTime.now();
 
     @Test
     @DisplayName("전체 조회")
