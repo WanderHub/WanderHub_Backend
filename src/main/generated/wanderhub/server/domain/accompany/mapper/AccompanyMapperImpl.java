@@ -59,6 +59,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompanyDto.accompanyTitle( entity.getAccompanyTitle() );
         accompanyDto.accompanyContent( entity.getAccompanyContent() );
 
+
         return accompanyDto.build();
     }
 
@@ -106,7 +107,6 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompany.maxNum( dto.getMaxNum() );
         accompany.accompanyTitle( dto.getAccompanyTitle() );
         accompany.accompanyContent( dto.getAccompanyContent() );
-
         return accompany.build();
     }
 
