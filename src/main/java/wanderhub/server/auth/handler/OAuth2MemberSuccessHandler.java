@@ -110,17 +110,16 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .newInstance()
 //                .scheme("http")
 //                .host("localhost")
-//                .port(8080) // 기본값 80
+//                .port(8080)
 //                .path("/receive-token")
 //                .queryParams(queryParams)
 //                .build()
 //                .toUri();
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("https") // 안되면 http
-                .host("backwander.kro.kr")
-                .port(443)
-                .path("/receive-token")
+                .scheme("http")
+                .host("wanderHub.kro.kr")
+                .path("/oauth")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
