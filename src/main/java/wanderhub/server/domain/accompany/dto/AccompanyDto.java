@@ -5,8 +5,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Builder
 @Getter
@@ -24,37 +22,5 @@ public class AccompanyDto {
     private int maxNum;
     private String accompanyTitle;
     private String accompanyContent;
-    private boolean openStatus=true;
-
-/* 수동방법
-    //dto -> entity
-    public Accompany toEntity() {
-        return Accompany.builder()
-                .id(id)
-                .memberId(memberId)
-                .writerName(writerName)
-                .accompanyLocal(accompanyLocal)
-                .accompanyDate(accompanyDate)
-                .maxNum(maxNum)
-                .accompanyTitle(accompanyTitle)
-                .accompanyContent(accompanyContent)
-                .openStatus(openStatus)
-                .build();
-    }
-
-    //entity -> dto
-    public static AccompanyDto fromEntity(Accompany accompany) {
-        return AccompanyDto.builder()
-                .id(accompany.getId())
-                .memberId(accompany.getMemberId())
-                .writerName(accompany.getWriterName())
-                .accompanyLocal(accompany.getAccompanyLocal())
-                .accompanyDate(accompany.accompanyDate)
-                .maxNum(accompany.getMaxNum())
-                .accompanyTitle(accompany.getAccompanyTitle())
-                .accompanyContent(accompany.getAccompanyContent())
-                .openStatus(accompany.isOpenStatus())
-                .build();
-    }*/
 
 }

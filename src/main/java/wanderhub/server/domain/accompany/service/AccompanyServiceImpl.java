@@ -22,6 +22,7 @@ public class AccompanyServiceImpl implements AccompanyService {
 
     @Override
     public void createAccompany(Accompany accompany) {
+        accompany.setOpenStatus(true);
         accompanyRepository.save(accompany);
     }
 

@@ -13,7 +13,7 @@ import wanderhub.server.domain.accompany.entity.Accompany.AccompanyBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-13T12:22:26+0900",
+    date = "2023-06-13T14:50:09+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Amazon.com Inc.)"
 )
 @Component
@@ -58,7 +58,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompanyDto.maxNum( entity.getMaxNum() );
         accompanyDto.accompanyTitle( entity.getAccompanyTitle() );
         accompanyDto.accompanyContent( entity.getAccompanyContent() );
-        accompanyDto.openStatus( entity.isOpenStatus() );
+
 
         return accompanyDto.build();
     }
@@ -107,8 +107,6 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompany.maxNum( dto.getMaxNum() );
         accompany.accompanyTitle( dto.getAccompanyTitle() );
         accompany.accompanyContent( dto.getAccompanyContent() );
-        accompany.openStatus( dto.isOpenStatus() );
-
         return accompany.build();
     }
 
