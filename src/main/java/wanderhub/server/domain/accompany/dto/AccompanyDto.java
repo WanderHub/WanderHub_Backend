@@ -24,5 +24,4 @@ public class AccompanyDto {
     private String accompanyContent;
     private boolean openStatus;
 
-
 }

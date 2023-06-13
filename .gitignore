@@ -28,7 +28,6 @@ out/
 **/application-local.yml
 **/application.yml
 
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
