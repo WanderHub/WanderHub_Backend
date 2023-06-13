@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // OAuth 2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -40,7 +41,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
+<<<<<<< HEAD
+    // google의 gson 라이브러리
+    implementation 'com.google.code.gson:gson'
+=======
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+>>>>>>> fc5d75f0e8c1a97f9f8d23f340adb51b9c61b194
     // JWT 기능을 위한 jjwt 라이브러리
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
