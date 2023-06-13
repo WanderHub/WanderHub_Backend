@@ -9,14 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ServerApplication {
 
-    @Value("${}")
-    private static String st;
-
     public static void main(String[] args) {
-
         SpringApplication.run(ServerApplication.class, args);
-        log.info("st = {}", st);
-
     }
 
 }
