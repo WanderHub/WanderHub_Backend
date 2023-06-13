@@ -60,6 +60,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompanyDto.accompanyContent( entity.getAccompanyContent() );
         accompanyDto.openStatus( entity.isOpenStatus() );
 
+
         return accompanyDto.build();
     }
 
