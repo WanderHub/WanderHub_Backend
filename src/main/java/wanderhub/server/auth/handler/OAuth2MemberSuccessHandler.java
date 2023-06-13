@@ -110,9 +110,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .toUri();
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("https")
+                .scheme("https") // 안되면 http
                 .host("backwander.kro.kr")
-                .path("/oauth")
+                .path("/oauth")  //
                 .queryParams(queryParams)
                 .build()
                 .toUri();

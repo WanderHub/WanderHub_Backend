@@ -2,6 +2,11 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${DATA_BASE_NAME}?useSSL=false
+    username: ${MYSQL_USER_NAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
@@ -9,9 +14,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  sql:
-    init:
-      data-locations: classpath*:db/h2/data.sql
+        dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전
   security:
     oauth2:
       client:
