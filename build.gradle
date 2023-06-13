@@ -26,8 +26,13 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    // OAuth 2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -36,12 +41,14 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-
+    // JWT 기능을 위한 jjwt 라이브러리
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
     //mapStruct
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
     //rest docs
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
@@ -56,16 +63,6 @@ tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
 }
-
-//test {
-//    outputs.dir snippetsDir
-//    useJUnitPlatform()
-//}
-//asciidoctor {
-//    inputs.dir snippetsDir
-//    configurations 'asciidoctorExtensions'
-//    dependsOn test
-//}
 
 task copyDocument(type: Copy) {
     dependsOn asciidoctor
@@ -87,4 +84,7 @@ bootJar {
     }
 }
 
-
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
