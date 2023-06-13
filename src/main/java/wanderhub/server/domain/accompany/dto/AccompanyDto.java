@@ -22,5 +22,7 @@ public class AccompanyDto {
     private int maxNum;
     private String accompanyTitle;
     private String accompanyContent;
+    private boolean openStatus;
+
 
 }
