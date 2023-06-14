@@ -1,4 +1,4 @@
-package wanderhub.server.global.uils;
+package wanderhub.server.global.utils;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
