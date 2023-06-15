@@ -1,7 +1,6 @@
 package wanderhub.server.domain.member.entity;
 
 import lombok.*;
-import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -49,8 +48,8 @@ public class Member extends Auditable {
     @Column(length = 16)
     private MemberStatus memberStatus;
 
-    @OneToMany(mappedBy = "member")
-    List<Accompany> accompanies = new ArrayList<>();
+//    @OneToMany(mappedBy = "member")
+//    List<Accompany> accompanies = new ArrayList<>();
 
 
     public Member(String email) {   // 이메일로 멤버 생성
