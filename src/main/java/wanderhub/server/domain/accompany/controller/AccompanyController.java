@@ -1,30 +1,46 @@
 package wanderhub.server.domain.accompany.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.service.AccompanyService;
+import wanderhub.server.domain.member.entity.Member;
+import wanderhub.server.domain.member.service.MemberService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/accompany")
 @RequiredArgsConstructor
+@Slf4j
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
+    private AccompanyMapper accompanyMapper;
+    private final MemberService memberService;
 
     //생성
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody AccompanyDto accompanyDto) {
-        Accompany entity = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
-        accompanyService.createAccompany(entity);
+    public ResponseEntity create(Principal principal, @RequestBody AccompanyDto accompanyDto) {
+        String nickName = memberService.findMember(accompanyDto.getMemberId()).getNickName();
+
+        Accompany entity = accompanyMapper.INSTANCE.toEntity(accompanyDto);
+        entity.setNickname(nickName);
+        log.info("entity = {}" , entity);
+        Accompany accompany = accompanyService.createAccompany(entity);
+        log.info("accompany = {}", accompany);
+        AccompanyResponseDto accompanyResponseDto = accompanyMapper.INSTANCE.toDto(accompany);
+
+        return new ResponseEntity(accompanyResponseDto, HttpStatus.CREATED);
     }
 
     //전체 조회

@@ -60,7 +60,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
 
 
     private Map<String, Object> verifyJws(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer ,", "");     //  request의 header에서 JWT를 얻음. // jws는 서명된 JWT를 의미함.
+////////////////////////////////////////////////////////////////// "Bearer ," << 콤마이거 개 도그 베이비 shake it "///////////////
+//        String jws = request.getHeader("Authorization").replace("Bearer ,", "");     //  request의 header에서 JWT를 얻음. // jws는 서명된 JWT를 의미함.
+        String jws = request.getHeader("Authorization").replace("Bearer ", "");     //  request의 header에서 JWT를 얻음. // jws는 서명된 JWT를 의미함.
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());  // 서명을 검증하기위한 SecretKey를 얻는다.
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody(); // Claims를 파싱한다.
 

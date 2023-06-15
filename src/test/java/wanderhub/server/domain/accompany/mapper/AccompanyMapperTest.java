@@ -3,13 +3,11 @@ package wanderhub.server.domain.accompany.mapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.repository.AccompanyRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @DataJpaTest

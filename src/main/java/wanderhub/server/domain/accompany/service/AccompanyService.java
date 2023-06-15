@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface AccompanyService {
 
-    void createAccompany(Accompany accompany);
+    Accompany createAccompany(Accompany accompany);
     List<Accompany> findAll();
     Optional<Accompany> findById(Long id);
     List<Accompany> findByLocal(String accompanyLocal);

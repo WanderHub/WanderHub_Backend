@@ -3,6 +3,7 @@ package wanderhub.server.domain.accompany.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import wanderhub.server.domain.member.entity.Member;
 
 import java.time.LocalDate;
 
@@ -12,9 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 public class AccompanyDto {
-    private Long id;
-    private Long memberId;
-    private String writerName;
+    private long memberId;
     private String accompanyLocal;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -22,6 +21,4 @@ public class AccompanyDto {
     private int maxNum;
     private String accompanyTitle;
     private String accompanyContent;
-    private boolean openStatus;
-
 }
