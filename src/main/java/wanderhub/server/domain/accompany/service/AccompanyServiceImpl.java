@@ -3,10 +3,7 @@ package wanderhub.server.domain.accompany.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wanderhub.server.domain.accompany.dto.AccompanyDto;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
-import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.repository.AccompanyRepository;
 
 import java.time.LocalDate;

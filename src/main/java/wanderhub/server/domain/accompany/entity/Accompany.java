@@ -27,7 +27,7 @@ public class Accompany extends Auditable {
     @Column(name="MEMBER_ID", nullable=false)
     private Long memberId;
 
-    @Column(name="WRITER_NAME", nullable=false)
+    @Column(name="NICKNAME", nullable=false)
     private String writerName;
 
     @Column(name="LOCAL", nullable=false)
@@ -48,5 +48,7 @@ public class Accompany extends Auditable {
     @Column(name="STATUS", columnDefinition = "boolean default true")
     @Setter
     private boolean openStatus;
+
+
 
 }

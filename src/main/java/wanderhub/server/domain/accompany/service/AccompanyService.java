@@ -1,10 +1,7 @@
 package wanderhub.server.domain.accompany.service;
 
-import wanderhub.server.domain.accompany.dto.AccompanyDto;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

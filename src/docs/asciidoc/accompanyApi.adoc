@@ -9,81 +9,81 @@ endif::[]
 :toclevels: 3
 :sectlinks:
 
-== create (생성하기)
+== 생성
 
 === Request Sample
-include::{snippets}/accompany-create/http-request.adoc[]
+include::{snippets}/accompany/create/http-request.adoc[]
 === Request Fields
-include::{snippets}/accompany-create/request-fields.adoc[]
+include::{snippets}/accompany/create/request-fields.adoc[]
 
 === Response Sample
-include::{snippets}/accompany-create/http-response.adoc[]
+include::{snippets}/accompany/create/http-response.adoc[]
 
 
-== findById (동행글 식별자로 조회)
+== 식별자 조회
 
 === path-parameter
-include::{snippets}/accompany-findById/path-parameters.adoc[]
+include::{snippets}/accompany/findById/path-parameters.adoc[]
 
 === Request Sample
-include::{snippets}/accompany-findById/http-request.adoc[]
+include::{snippets}/accompany/findById/http-request.adoc[]
 
 === Response Sample
-include::{snippets}/accompany-findById/http-response.adoc[]
+include::{snippets}/accompany/findById/http-response.adoc[]
 === Response Fields
-include::{snippets}/accompany-findById/response-fields.adoc[]
+include::{snippets}/accompany/findById/response-fields.adoc[]
 
 
-== findByLocal (지역으로 조회)
+== 지역 조회
 
 === path-parameter
-include::{snippets}/accompany-findByLocal/path-parameters.adoc[]
+include::{snippets}/accompany/findByLocal/request-parameters.adoc[]
 
 === Request Sample
-(parameter에 한글이 깨지긴 하는데 실제로는 잘 작동)
-include::{snippets}/accompany-findByLocal/http-request.adoc[]
+(parameter에 한글 깨지는데 실제로는 잘 작동)
+include::{snippets}/accompany/findByLocal/http-request.adoc[]
 
 === Response Sample
-include::{snippets}/accompany-findByLocal/http-response.adoc[]
+include::{snippets}/accompany/findByLocal/http-response.adoc[]
 === Response Fields
-include::{snippets}/accompany-findByLocal/response-fields.adoc[]
+include::{snippets}/accompany/findByLocal/response-fields.adoc[]
 
 
-== findByDate (날짜로 조회)
+== 날짜 조회
 
 === path-parameter
-include::{snippets}/accompany-findByDate/path-parameters.adoc[]
+include::{snippets}/accompany/findByDate/request-parameters.adoc[]
 
 === Request Sample
-include::{snippets}/accompany-findByDate/http-request.adoc[]
+include::{snippets}/accompany/findByDate/http-request.adoc[]
 
 === Response Sample
-include::{snippets}/accompany-findByDate/http-response.adoc[]
+include::{snippets}/accompany/findByDate/http-response.adoc[]
 === Response Fields
-include::{snippets}/accompany-findByDate/response-fields.adoc[]
+include::{snippets}/accompany/findByDate/response-fields.adoc[]
 
 
-== findByLocalAndDate2 (지역&날짜 쿼리문으로 조회)
+== 지역&날짜 조회
 
 === path-parameter
-include::{snippets}/accompany-findByLocalAndDate2/request-parameters.adoc[]
+include::{snippets}/accompany/findByLocalAndDate/request-parameters.adoc[]
 
 === Request Sample
-include::{snippets}/accompany-findByLocalAndDate2/http-request.adoc[]
+include::{snippets}/accompany/findByLocalAndDate/http-request.adoc[]
 
 === Response Sample
-include::{snippets}/accompany-findByLocalAndDate2/http-response.adoc[]
+include::{snippets}/accompany/findByLocalAndDate/http-response.adoc[]
 === Response Fields
-include::{snippets}/accompany-findByLocalAndDate2/response-fields.adoc[]
+include::{snippets}/accompany/findByLocalAndDate/response-fields.adoc[]
 
 
 == delete
 
 === path-parameter
-include::{snippets}/accompany-delete/path-parameters.adoc[]
+include::{snippets}/accompany/delete/path-parameters.adoc[]
 
 === Request Sample
-include::{snippets}/accompany-delete/http-request.adoc[]
+include::{snippets}/accompany/delete/http-request.adoc[]
 
 === Response Sample
-include::{snippets}/accompany-delete/http-response.adoc[]
+include::{snippets}/accompany/delete/http-response.adoc[]
