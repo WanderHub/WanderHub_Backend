@@ -66,14 +66,14 @@ class MemberServiceImplTest {
         // given
         Member member = Member.builder()
                                 .email(EMAIL)
-                                .displayName("쌩수")
+                                .nickName("쌩수")
                                 .build();
 
         memberService.createMember(member);     // 닉네임을 가진 유저가 DB에 저장된다. // 닉네임 변경예외를 처리하기 위한 테스트라 그냥 생성하면서 DB에 저장하도록한다.
 
         Member patch = Member.builder()          // patchDto 정보로 사용자 정보를 수정하려고 할때,
                 .name("이름")
-                .displayName("쌩수 아닌 다른 닉네임")
+                .nickName("쌩수 아닌 다른 닉네임")
                 .local("부산")
                 .build();
         // when // than // 닉네임을 재설정 할 수 없기 때문에 예외가 발생한다.
@@ -91,14 +91,14 @@ class MemberServiceImplTest {
 //        // given
 //        Member member1 = Member.builder()
 //                .email(EMAIL)
-//                .displayName("쌩수")
+//                .nickName("쌩수")
 //                .build();
 //
 //        memberService.createMember(member1);
 //
 //        Member patch = Member.builder()
 //                .name("이름")
-//                .displayName("쌩수가 아님")
+//                .nickName("쌩수가 아님")
 //                .local("부산")
 //                .build();
 //        // when
