@@ -1,17 +1,17 @@
-package wanderhub.server.domain.accompany.mapper;
-
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-import wanderhub.server.domain.accompany.dto.AccompanyDto;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
-import wanderhub.server.domain.accompany.entity.Accompany;
-
-import java.util.List;
-
-@Mapper(componentModel = "spring")
-public interface AccompanyMapper {
-
-    AccompanyMapper INSTANCE = Mappers.getMapper(AccompanyMapper.class);
+//package wanderhub.server.domain.accompany.mapper;
+//
+//import org.mapstruct.Mapper;
+//import org.mapstruct.factory.Mappers;
+//import wanderhub.server.domain.accompany.dto.AccompanyDto;
+//import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
+//import wanderhub.server.domain.accompany.entity.Accompany;
+//
+//import java.util.List;
+//
+//@Mapper(componentModel = "spring")
+//public interface AccompanyMapper {
+//
+//    AccompanyMapper INSTANCE = Mappers.getMapper(AccompanyMapper.class);
 
     //Entity -> Dto
 //    AccompanyResponseDto toDto(Accompany entity);
