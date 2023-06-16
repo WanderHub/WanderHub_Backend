@@ -9,6 +9,9 @@ import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.service.AccompanyService;
+import wanderhub.server.domain.member.entity.Member;
+import wanderhub.server.domain.member.entity.MemberStatus;
+import wanderhub.server.domain.member.service.MemberService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +22,15 @@ import java.util.Optional;
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
+    private final MemberService memberService;
 
     //생성
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody AccompanyDto accompanyDto) {
+        Member m = new Member(1L, "name", "22@gmail.com", "nickname","img","local", MemberStatus.ACTIVE,null,null);
+        memberService.createMember(m);
+
         Accompany entity = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
         accompanyService.createAccompany(entity);
     }

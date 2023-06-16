@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Builder
 @Getter
@@ -16,7 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="accompany")
 public class Accompany extends Auditable {
 
     @Id
@@ -24,11 +23,12 @@ public class Accompany extends Auditable {
     @Column(name="ACCOMPANY_ID")
     private Long id;
 
-    @Column(name="MEMBER_ID", nullable=false)
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Column(name="NICKNAME", nullable=false)
-    private String writerName;
+    private String nickname;
 
     @Column(name="LOCAL", nullable=false)
     private String accompanyLocal;

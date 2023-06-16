@@ -13,7 +13,7 @@ import wanderhub.server.domain.accompany.entity.Accompany.AccompanyBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-13T15:09:02+0900",
+    date = "2023-06-15T17:12:18+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Amazon.com Inc.)"
 )
 @Component
@@ -28,8 +28,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         AccompanyResponseDtoBuilder accompanyResponseDto = AccompanyResponseDto.builder();
 
         accompanyResponseDto.id( entity.getId() );
-        accompanyResponseDto.memberId( entity.getMemberId() );
-        accompanyResponseDto.writerName( entity.getWriterName() );
+        accompanyResponseDto.nickname( entity.getNickname() );
         accompanyResponseDto.accompanyLocal( entity.getAccompanyLocal() );
         accompanyResponseDto.accompanyDate( entity.getAccompanyDate() );
         accompanyResponseDto.maxNum( entity.getMaxNum() );
@@ -51,8 +50,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         AccompanyDtoBuilder accompanyDto = AccompanyDto.builder();
 
         accompanyDto.id( entity.getId() );
-        accompanyDto.memberId( entity.getMemberId() );
-        accompanyDto.writerName( entity.getWriterName() );
+        accompanyDto.nickname( entity.getNickname() );
         accompanyDto.accompanyLocal( entity.getAccompanyLocal() );
         accompanyDto.accompanyDate( entity.getAccompanyDate() );
         accompanyDto.maxNum( entity.getMaxNum() );
@@ -100,8 +98,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         AccompanyBuilder accompany = Accompany.builder();
 
         accompany.id( dto.getId() );
-        accompany.memberId( dto.getMemberId() );
-        accompany.writerName( dto.getWriterName() );
+        accompany.nickname( dto.getNickname() );
         accompany.accompanyLocal( dto.getAccompanyLocal() );
         accompany.accompanyDate( dto.getAccompanyDate() );
         accompany.maxNum( dto.getMaxNum() );

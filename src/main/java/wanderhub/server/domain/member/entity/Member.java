@@ -1,8 +1,7 @@
 package wanderhub.server.domain.member.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -11,7 +10,9 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
+@Builder
 public class Member extends Auditable {
 
     @Id
@@ -27,7 +28,7 @@ public class Member extends Auditable {
 
     @Setter
     @Column(length = 50)
-    private String displayName;
+    private String nickname;
 
     @Lob
     @Setter
@@ -52,5 +53,8 @@ public class Member extends Auditable {
     public Member(String email) {
         this.email = email;
     }
+
+    @OneToMany(mappedBy = "member")
+    List<Accompany> accompanies = new ArrayList<>();
 
 }

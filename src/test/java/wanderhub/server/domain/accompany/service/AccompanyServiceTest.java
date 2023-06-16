@@ -31,7 +31,7 @@ public class AccompanyServiceTest {
         when(accompanyRepository.findById(1L)).thenReturn(Optional.of(accompany));
         Optional<Accompany> res = accompanyService.findById(1L);
 
-        assertThat(res.get().getWriterName()).isEqualTo("hi2");
+        assertThat(res.get().getNickname()).isEqualTo("hi2");
     }
 
 }

@@ -60,7 +60,7 @@ public class AccompanyControllerTest {
         Accompany accompany1 = Accompany.builder()
                 .id(1L)
                 .memberId(4L)
-                .writerName("hi1")
+                .nickname("hi1")
                 .accompanyLocal("서울")
                 .accompanyDate(LocalDate.parse("2023-06-05"))
                 .maxNum(2)

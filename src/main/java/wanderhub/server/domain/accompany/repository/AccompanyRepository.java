@@ -14,6 +14,5 @@ public interface AccompanyRepository extends JpaRepository<Accompany, Long> {
     List<Accompany> findByAccompanyLocal(String local);
     List<Accompany> findByAccompanyDate(LocalDate date);
     List<Accompany> findByAccompanyLocalAndAccompanyDate(String local, LocalDate date);
-    List<Accompany> findByMemberId(Long memberId);
 
 }

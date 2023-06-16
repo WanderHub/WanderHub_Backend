@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class AccompanyResponseDto {
     private Long id;
     private Long memberId;
-    private String writerName;
+    private String nickname;
     private String accompanyLocal;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate accompanyDate;
