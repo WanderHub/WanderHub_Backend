@@ -12,9 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 public class AccompanyDto {
-    private Long id;
+//    private Long id;
     private Long memberId;
-    private String nickname;
+//    private String nickname;
     private String accompanyLocal;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -22,32 +22,5 @@ public class AccompanyDto {
     private int maxNum;
     private String accompanyTitle;
     private String accompanyContent;
-    private boolean openStatus;
-
 }
-
-//package wanderhub.server.domain.accompany.dto;
-//
-//import com.fasterxml.jackson.annotation.JsonFormat;
-//import lombok.*;
-//import org.springframework.format.annotation.DateTimeFormat;
-//import wanderhub.server.domain.member.entity.Member;
-//
-//import java.time.LocalDate;
-//
-//@Builder
-//@Getter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@ToString
-//public class AccompanyDto {
-//    private long memberId;
-//    private String accompanyLocal;
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-//    private LocalDate accompanyDate;
-//    private int maxNum;
-//    private String accompanyTitle;
-//    private String accompanyContent;
-//}
 

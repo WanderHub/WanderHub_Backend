@@ -1,6 +1,7 @@
 package wanderhub.server.domain.accompany.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +9,26 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import wanderhub.server.auth.utils.CustomAuthorityUtils;
+import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.service.AccompanyService;
+import wanderhub.server.domain.member.entity.Member;
+import wanderhub.server.domain.member.entity.MemberStatus;
+import wanderhub.server.domain.member.repository.MemberRepository;
+import wanderhub.server.domain.member.service.MemberService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +47,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AccompanyController.class)
-//@SpringBootTest(classes = AccompanyController.class)
+@MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs //rest docs 자동 설정
 @WithMockUser
@@ -52,26 +62,36 @@ public class AccompanyControllerTest {
     @MockBean
     private AccompanyService accompanyService;
 
-    private static final LocalDateTime time = LocalDateTime.now();
+    @MockBean
+    private MemberService memberService;
+
+    private static final ZonedDateTime time = ZonedDateTime.now();
 
     @Test
     @DisplayName("생성")
     public void create() throws Exception {
-        Accompany accompany1 = Accompany.builder()
-                .id(1L)
-                .memberId(4L)
-                .nickname("hi1")
+//        Member m1 = new Member(1L, "name", "22@gmail.com", "nickname","img","local", null, MemberStatus.ACTIVE);
+        Member m1 = Member.builder()
+                .Id(1L)
+                .name("name")
+                .email("email@gmail.com")
+                .nickName("nickname")
+                .build();
+        memberService.createMember(m1);
+
+        AccompanyDto dto1 = AccompanyDto.builder()
+                .memberId(m1.getId())
                 .accompanyLocal("서울")
                 .accompanyDate(LocalDate.parse("2023-06-05"))
                 .maxNum(2)
                 .accompanyTitle("제목1")
                 .accompanyContent("본문1")
-                .openStatus(true)
                 .build();
+//        accompanyService.createAccompany(AccompanyMapper.INSTANCE.toEntity(dto1)); //왜 이게 없어도 작동이 잘 될까...
 
         this.mockMvc.perform(post("/accompany")
                         .with(csrf())
-                        .content(mapper.writeValueAsString(accompany1))
+                        .content(mapper.writeValueAsString(dto1))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
@@ -79,30 +99,34 @@ public class AccompanyControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestFields(
-                                fieldWithPath("id").description("accompany id (PK)").ignored(),
-                                fieldWithPath("memberId").description("글 생성자 id"),
-                                fieldWithPath("writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("memberId").description("member id"),
+//                                subsectionWithPath("member").description("생성한 멤버"),
                                 fieldWithPath("accompanyLocal").description("동행할 지역"),
                                 fieldWithPath("accompanyDate").description("동행할 날짜"),
                                 fieldWithPath("maxNum").description("동행할 최대 인원"),
                                 fieldWithPath("accompanyTitle").description("동행글 제목"),
-                                fieldWithPath("accompanyContent").description("동행글 본문"),
-                                fieldWithPath("openStatus").description("모집 상태").ignored(),
-                                fieldWithPath("createdAt").description("생성된 날짜").ignored(),
-                                fieldWithPath("modifiedAt").description("수정된 날짜").ignored()
+                                fieldWithPath("accompanyContent").description("동행글 본문")
                         )));
     }
 
     @Test
     @DisplayName("전체 조회")
     public void findAll() throws Exception {
-        Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
-        Accompany accompany2 = new Accompany(2L, 7L, "hi2", "서울", LocalDate.parse("2023-07-05"), 3, "제목2", "내용2", true);
-        List<Accompany> list = new ArrayList<>();
-        list.add(accompany1);
-        list.add(accompany2);
+        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
+        Member m2 = new Member(2L, "name2", "2222@gmail.com", "nickname2","img2","local2", null, MemberStatus.ACTIVE);
+        memberService.createMember(m1);
+        memberService.createMember(m2);
 
-        when(accompanyService.findAll()).thenReturn(list);
+        ZonedDateTime createdAt = time;
+        ZonedDateTime modifiedAt = ZonedDateTime.now();
+        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-01"), 2, "제목1", "본문1", true, createdAt, modifiedAt);
+        AccompanyResponseDto dto2 = new AccompanyResponseDto(2L, m2.getNickName(), "대구", LocalDate.parse("2023-07-02"), 3, "제목2", "본문2", true, createdAt, modifiedAt);
+
+        List<AccompanyResponseDto> list = new ArrayList<>();
+        list.add(dto1);
+        list.add(dto2);
+
+        when(accompanyService.findAll()).thenReturn(AccompanyMapper.INSTANCE.fromResponseDtotoEntityList(list));
 
         this.mockMvc.perform(get("/accompany")
                         .accept(MediaType.APPLICATION_JSON))
@@ -113,8 +137,7 @@ public class AccompanyControllerTest {
                         preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("[].id").description("accompany id (PK)"),
-                                fieldWithPath("[].memberId").description("글 생성자 id"),
-                                fieldWithPath("[].writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("[].nickname").description("글 생성자 닉네임"),
                                 fieldWithPath("[].accompanyLocal").description("동행할 지역"),
                                 fieldWithPath("[].accompanyDate").description("동행할 날짜"),
                                 fieldWithPath("[].maxNum").description("동행할 최대 인원"),
@@ -129,11 +152,14 @@ public class AccompanyControllerTest {
     @Test
     @DisplayName("동행글 식별자로 조회")
     public void findById() throws Exception {
-        Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
+        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
+        memberService.createMember(m1);
 
-        when(accompanyService.findById(anyLong())).thenReturn(Optional.of(accompany1));
+        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "본문1", true, time, time);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/{id}", accompany1.getId()) //pathParameters 쓰려면 RestDocumentationRequestBuilders 사용해야 함
+        when(accompanyService.findById(anyLong())).thenReturn(Optional.of(AccompanyMapper.INSTANCE.fromResponseDtotoEntity(dto1)));
+
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/{id}", dto1.getId()) //pathParameters 쓰려면 RestDocumentationRequestBuilders 사용해야 함
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -145,8 +171,7 @@ public class AccompanyControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("id").description("accompany id (PK)"),
-                                fieldWithPath("memberId").description("글 생성자 id"),
-                                fieldWithPath("writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("nickname").description("글 생성자 닉네임"),
                                 fieldWithPath("accompanyLocal").description("동행할 지역"),
                                 fieldWithPath("accompanyDate").description("동행할 날짜"),
                                 fieldWithPath("maxNum").description("동행할 최대 인원"),
@@ -161,14 +186,20 @@ public class AccompanyControllerTest {
     @Test
     @DisplayName("지역 별 조회")
     public void findByLocal() throws Exception {
-        Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
-        Accompany accompany2 = new Accompany(2L, 7L, "hi2", "서울", LocalDate.parse("2023-07-05"), 3, "제목2", "내용2", true);
-        List<Accompany> list = new ArrayList<>();
-        list.add(accompany1); list.add(accompany2);
+        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
+        Member m2 = new Member(2L, "name2", "2222@gmail.com", "nickname2","img2","local2", null, MemberStatus.ACTIVE);
+        memberService.createMember(m1);
+        memberService.createMember(m2);
 
-        when(accompanyService.findByLocal("서울")).thenReturn(list);
+        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-01"), 2, "제목1", "본문1", true, time, time);
+        AccompanyResponseDto dto2 = new AccompanyResponseDto(2L, m2.getNickName(), "서울", LocalDate.parse("2023-07-02"), 3, "제목2", "본문2", true, time, time);
+        List<AccompanyResponseDto> list = new ArrayList<>();
+        list.add(dto1);
+        list.add(dto2);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocal?accompanyLocal=서울", accompany1.getAccompanyLocal())
+        when(accompanyService.findByLocal("서울")).thenReturn(AccompanyMapper.INSTANCE.fromResponseDtotoEntityList(list));
+
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocal?accompanyLocal=서울", dto1.getAccompanyLocal())
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -180,8 +211,7 @@ public class AccompanyControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("[].id").description("accompany id (PK)"),
-                                fieldWithPath("[].memberId").description("글 생성자 id"),
-                                fieldWithPath("[].writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("[].nickname").description("글 생성자 닉네임"),
                                 fieldWithPath("[].accompanyLocal").description("동행할 지역"),
                                 fieldWithPath("[].accompanyDate").description("동행할 날짜"),
                                 fieldWithPath("[].maxNum").description("동행할 최대 인원"),
@@ -196,14 +226,20 @@ public class AccompanyControllerTest {
     @Test
     @DisplayName("날짜 별 조회")
     public void findByDate() throws Exception {
-        Accompany accompany3 = new Accompany(3L, 9L, "hi9", "제주", LocalDate.parse("2023-07-10"), 2, "제목3", "내용3", true);
-        Accompany accompany4 = new Accompany(4L, 8L, "hi8", "제주", LocalDate.parse("2023-07-10"), 4, "제목4", "내용4", true);
-        List<Accompany> list = new ArrayList<>();
-        list.add(accompany3); list.add(accompany4);
+        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
+        Member m2 = new Member(2L, "name2", "2222@gmail.com", "nickname2","img2","local2", null, MemberStatus.ACTIVE);
+        memberService.createMember(m1);
+        memberService.createMember(m2);
 
-        when(accompanyService.findByDate("2023-07-10")).thenReturn(list);
+        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-02"), 2, "제목1", "본문1", true, time, time);
+        AccompanyResponseDto dto2 = new AccompanyResponseDto(2L, m2.getNickName(), "서울", LocalDate.parse("2023-07-02"), 3, "제목2", "본문2", true, time, time);
+        List<AccompanyResponseDto> list = new ArrayList<>();
+        list.add(dto1);
+        list.add(dto2);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bydate?accompanyDate=2023-07-10", accompany3.getAccompanyDate())
+        when(accompanyService.findByDate("2023-07-02")).thenReturn(AccompanyMapper.INSTANCE.fromResponseDtotoEntityList(list));
+
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bydate?accompanyDate=2023-07-02", dto1.getAccompanyDate())
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -215,8 +251,7 @@ public class AccompanyControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("[].id").description("accompany id (PK)"),
-                                fieldWithPath("[].memberId").description("글 생성자 id"),
-                                fieldWithPath("[].writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("[].nickname").description("글 생성자 닉네임"),
                                 fieldWithPath("[].accompanyLocal").description("동행할 지역"),
                                 fieldWithPath("[].accompanyDate").description("동행할 날짜"),
                                 fieldWithPath("[].maxNum").description("동행할 최대 인원"),
@@ -229,16 +264,22 @@ public class AccompanyControllerTest {
     }
 
     @Test
-    @DisplayName("지역&날짜 별 조회, 쿼리스트링으로")
+    @DisplayName("지역&날짜 별 조회")
     public void findByLocalAndDate() throws Exception {
-        Accompany accompany3 = new Accompany(3L, 9L, "hi9", "제주", LocalDate.parse("2023-07-10"), 2, "제목3", "내용3", true);
-        Accompany accompany4 = new Accompany(4L, 8L, "hi8", "제주", LocalDate.parse("2023-07-10"), 4, "제목4", "내용4", true);
-        List<Accompany> list = new ArrayList<>();
-        list.add(accompany3); list.add(accompany4);
+        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
+        Member m2 = new Member(2L, "name2", "2222@gmail.com", "nickname2","img2","local2", null, MemberStatus.ACTIVE);
+        memberService.createMember(m1);
+        memberService.createMember(m2);
 
-        when(accompanyService.findByLocalAndDate("제주","2023-07-10")).thenReturn(list);
+        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-02"), 2, "제목1", "본문1", true, time, time);
+        AccompanyResponseDto dto2 = new AccompanyResponseDto(2L, m2.getNickName(), "서울", LocalDate.parse("2023-07-02"), 3, "제목2", "본문2", true, time, time);
+        List<AccompanyResponseDto> list = new ArrayList<>();
+        list.add(dto1);
+        list.add(dto2);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocalanddate?accompanyLocal=제주&accompanyDate=2023-07-10")
+        when(accompanyService.findByLocalAndDate("서울","2023-07-02")).thenReturn(AccompanyMapper.INSTANCE.fromResponseDtotoEntityList(list));
+
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocalanddate?accompanyLocal=서울&accompanyDate=2023-07-02")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -251,8 +292,7 @@ public class AccompanyControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("[].id").description("accompany id (PK)"),
-                                fieldWithPath("[].memberId").description("글 생성자 id"),
-                                fieldWithPath("[].writerName").description("글 생성자 닉네임"),
+                                fieldWithPath("[].nickname").description("글 생성자 닉네임"),
                                 fieldWithPath("[].accompanyLocal").description("동행할 지역"),
                                 fieldWithPath("[].accompanyDate").description("동행할 날짜"),
                                 fieldWithPath("[].maxNum").description("동행할 최대 인원"),
@@ -264,12 +304,13 @@ public class AccompanyControllerTest {
                         )));
     }
 
-
     @Test
     @DisplayName("삭제")
     public void deleteAccompany() throws Exception {
-        Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
-        AccompanyResponseDto a1 = AccompanyMapper.INSTANCE.toDto(accompany1);
+        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
+        memberService.createMember(m1);
+
+        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-02"), 2, "제목1", "본문1", true, time, time);
 
         this.mockMvc.perform(RestDocumentationRequestBuilders.delete("/accompany/{id}", 1L)
                         .with(csrf()))
@@ -280,6 +321,5 @@ public class AccompanyControllerTest {
                                 parameterWithName("id").description("동행글 식별자")
                         )));
     }
-
 
 }

@@ -13,7 +13,7 @@ import wanderhub.server.domain.accompany.entity.Accompany.AccompanyBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-15T17:12:18+0900",
+    date = "2023-06-16T22:03:02+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Amazon.com Inc.)"
 )
 @Component
@@ -42,26 +42,6 @@ public class AccompanyMapperImpl implements AccompanyMapper {
     }
 
     @Override
-    public AccompanyDto toRequestDto(Accompany entity) {
-        if ( entity == null ) {
-            return null;
-        }
-
-        AccompanyDtoBuilder accompanyDto = AccompanyDto.builder();
-
-        accompanyDto.id( entity.getId() );
-        accompanyDto.nickname( entity.getNickname() );
-        accompanyDto.accompanyLocal( entity.getAccompanyLocal() );
-        accompanyDto.accompanyDate( entity.getAccompanyDate() );
-        accompanyDto.maxNum( entity.getMaxNum() );
-        accompanyDto.accompanyTitle( entity.getAccompanyTitle() );
-        accompanyDto.accompanyContent( entity.getAccompanyContent() );
-        accompanyDto.openStatus( entity.isOpenStatus() );
-
-        return accompanyDto.build();
-    }
-
-    @Override
     public List<AccompanyResponseDto> toDtoList(List<Accompany> entityList) {
         if ( entityList == null ) {
             return null;
@@ -73,6 +53,23 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public AccompanyDto toRequestDto(Accompany entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        AccompanyDtoBuilder accompanyDto = AccompanyDto.builder();
+
+        accompanyDto.accompanyLocal( entity.getAccompanyLocal() );
+        accompanyDto.accompanyDate( entity.getAccompanyDate() );
+        accompanyDto.maxNum( entity.getMaxNum() );
+        accompanyDto.accompanyTitle( entity.getAccompanyTitle() );
+        accompanyDto.accompanyContent( entity.getAccompanyContent() );
+
+        return accompanyDto.build();
     }
 
     @Override
@@ -97,14 +94,11 @@ public class AccompanyMapperImpl implements AccompanyMapper {
 
         AccompanyBuilder accompany = Accompany.builder();
 
-        accompany.id( dto.getId() );
-        accompany.nickname( dto.getNickname() );
         accompany.accompanyLocal( dto.getAccompanyLocal() );
         accompany.accompanyDate( dto.getAccompanyDate() );
         accompany.maxNum( dto.getMaxNum() );
         accompany.accompanyTitle( dto.getAccompanyTitle() );
         accompany.accompanyContent( dto.getAccompanyContent() );
-        accompany.openStatus( dto.isOpenStatus() );
 
         return accompany.build();
     }
@@ -118,6 +112,40 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         List<Accompany> list = new ArrayList<Accompany>( dtoList.size() );
         for ( AccompanyDto accompanyDto : dtoList ) {
             list.add( toEntity( accompanyDto ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public Accompany fromResponseDtotoEntity(AccompanyResponseDto dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        AccompanyBuilder accompany = Accompany.builder();
+
+        accompany.id( dto.getId() );
+        accompany.nickname( dto.getNickname() );
+        accompany.accompanyLocal( dto.getAccompanyLocal() );
+        accompany.accompanyDate( dto.getAccompanyDate() );
+        accompany.maxNum( dto.getMaxNum() );
+        accompany.accompanyTitle( dto.getAccompanyTitle() );
+        accompany.accompanyContent( dto.getAccompanyContent() );
+        accompany.openStatus( dto.isOpenStatus() );
+
+        return accompany.build();
+    }
+
+    @Override
+    public List<Accompany> fromResponseDtotoEntityList(List<AccompanyResponseDto> dtoList) {
+        if ( dtoList == null ) {
+            return null;
+        }
+
+        List<Accompany> list = new ArrayList<Accompany>( dtoList.size() );
+        for ( AccompanyResponseDto accompanyResponseDto : dtoList ) {
+            list.add( fromResponseDtotoEntity( accompanyResponseDto ) );
         }
 
         return list;
