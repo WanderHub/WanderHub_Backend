@@ -25,11 +25,11 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "https://backwander.kro.kr/oauth2/code/google"
+            redirect-uri: "https://backwander.kro.kr/loginoauth2/code/google"
           kakao:
             clientId: ${K_CLIENT_ID}
             client-secret: ${K_CLIENT_SECRET}
-            redirect-uri: "https://backwander.kro.kr//oauth2/code/kakao"
+            redirect-uri: "https://backwander.kro.kr/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
