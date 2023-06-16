@@ -3,6 +3,7 @@ package wanderhub.server.domain.accompany.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
@@ -13,6 +14,7 @@ import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.entity.MemberStatus;
 import wanderhub.server.domain.member.service.MemberService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,29 +24,19 @@ import java.util.Optional;
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
-    private final MemberService memberService;
+//    private final MemberService memberService;
 
     //생성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody AccompanyDto accompanyDto) {
-//        Member m = new Member(1L, "name", "22@gmail.com", "nickname","img","local", null, MemberStatus.ACTIVE);
-        Member m1 = Member.builder()
-                .Id(1L)
-                .name("name")
-                .email("email@gmail.com")
-                .nickName("nickname")
-                .build();
-        memberService.createMember(m1);
+    public ResponseEntity create(Principal principal, @Validated @RequestBody AccompanyDto accompanyDto) {
+        Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
+        Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName()).get();
+        AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entityResp);
 
-        Accompany entity = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
-        accompanyService.createAccompany(entity);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
-//    private final AccompanyService accompanyService;
-//    private AccompanyMapper accompanyMapper;
-//    private final MemberService memberService;
-//
 //    //생성
 //    @PostMapping
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -62,7 +54,7 @@ public class AccompanyController {
 //    }
 
     //전체 조회 (경로 임시)
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<AccompanyResponseDto>> findAll() {
         List<Accompany> entityList = accompanyService.findAll();
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
