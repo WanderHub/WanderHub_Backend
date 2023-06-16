@@ -44,17 +44,22 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         log.info("useremailuseremailuseremailuseremail =  {}", email);
         log.info("useremailuseremailuseremailuseremail =  {}", email);
 
-        if(!memberService.findByEmail(email).isPresent()) {
-            Member member = new Member(email);
-            memberService.createMember(member);
-        }
-        verifyActive(email);
+        saveMember(email);   // 이메일을 통해 User생성
+        verifyActive(email); // 이메일을 통해서 사용자가 활동중인지 아닌지 검증한다.
         redirect(request, response, email, authorities);    // AccessToken과 Refresh Token을 생성해서 전달하는 Redirect
     }
 
+    private void saveMember(String email) {
+        if(!memberService.findByEmail(email).isPresent()) {    // 존재하지 않으면 생성가능
+            Member member = new Member(email);                  // 멤버가 생성됨.
+            memberService.createMember(member);                 // member를 DB에 저장
+        }
+    }
+
+
     // 있다면, 해당 사용자가 활동중인지 아닌지 검증한다.
     private void verifyActive(String email) {
-        if(!(memberService.findByEmail(email).get().getMemberStatus() == MemberStatus.ACTIVE)) {
+        if(!(memberService.findMember(email).getMemberStatus() == MemberStatus.ACTIVE)) {
             throw new CustomLogicException(ExceptionCode.MEMBER_NOT_ACTIVE);
         }
     }
@@ -105,7 +110,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
 
-        // http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
+//         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
 //        return UriComponentsBuilder
 //                .newInstance()
 //                .scheme("http")
@@ -115,16 +120,19 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .queryParams(queryParams)
 //                .build()
 //                .toUri();
+//    }
+//
+//
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("wanderHub.kro.kr")
-                .path("/oauth")
+                .scheme("https")
+                .host("backwander.kro.kr")
+                .port(443)    // 확인하기.
+                .path("/receive-token")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
 
     }
-
 
 }
