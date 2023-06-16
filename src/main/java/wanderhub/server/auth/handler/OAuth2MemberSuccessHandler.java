@@ -120,12 +120,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .queryParams(queryParams)
 //                .build()
 //                .toUri();
-
+//    }
+//
+//
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("https")
                 .host("backwander.kro.kr")
-//                .port(443)    // 확인하기.
+                .port(443)    // 확인하기.
                 .path("/receive-token")
                 .queryParams(queryParams)
                 .build()
