@@ -10,7 +10,7 @@ public interface MemberMapper {
     default Member patchMemberToMember(MemberDto.Patch patchMember) {
         return Member.builder()
                         .name(patchMember.getName())
-                        .nickName(patchMember.getName())
+                        .nickName(patchMember.getNickName())
                         .imgUrl(patchMember.getImgUrl())
                         .local(patchMember.getLocal())
                         .build();
@@ -22,7 +22,7 @@ public interface MemberMapper {
                 .Id(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
-                .displayName(member.getNickName())
+                .nickName(member.getNickName())
                 .imgUrl(member.getImgUrl())
                 .local(member.getLocal())
                 .memberStatus(member.getMemberStatus())

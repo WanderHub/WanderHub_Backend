@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class MemberDto {
 
+    @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -19,7 +20,7 @@ public class MemberDto {
         @Nullable
         private String name;            // 이름 / null 허용
         @NotBlank
-        private String displayName;     // 닉네임 / null, 공백, 빈문자 X
+        private String nickName;     // 닉네임 / null, 공백, 빈문자 X
         @Nullable
         private String imgUrl;          // 이미지 Url  / null 허용
         @Nullable
@@ -32,7 +33,7 @@ public class MemberDto {
         private Long Id;
         private String name;
         private String email;
-        private String displayName;
+        private String nickName;
         private String imgUrl;
         private String local;
         private MemberStatus memberStatus;

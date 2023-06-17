@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
 @Table(name = "MEMBER")
 public class Member extends Auditable {
 
@@ -38,10 +37,7 @@ public class Member extends Auditable {
     private String local;
 
     @Setter
-    @ElementCollection(fetch = FetchType.EAGER) // N + 1 일부터 마주치기 위해서 EAGER // 권한은 값이 하나 이상일 수 있기에 사용.
-    @CollectionTable(name = "ROLES", joinColumns =
-    @JoinColumn(name = "MEMBER_ID")         // 일대다 관계로 JoinColum해줌.
-    )
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
     @Setter
@@ -49,10 +45,17 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_STATUS", length = 16)
     private MemberStatus memberStatus;
 
-
     public Member(String email) {   // 이메일로 멤버 생성
         this.email = email;
     }
 
+    @Builder
+    public Member(String email, String name, String nickName, String imgUrl, String local) {
+        this.email = email;
+        this.name = name;
+        this.nickName = nickName;
+        this.imgUrl = imgUrl;
+        this.local = local;
+    }
 
 }
