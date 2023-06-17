@@ -98,3 +98,7 @@ bootRun {
 clean {
     delete file('src/main/generated')
 }
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-Xlint:unchecked']
+}

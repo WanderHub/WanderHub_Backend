@@ -14,6 +14,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
     //    select m from member where nickName = :nickName
-    Member findByNickName(String displayName);
+    Member findByNickName(String nickName);
 
 }
