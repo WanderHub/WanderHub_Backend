@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder
+@Table(name = "MEMBER")
 public class Member extends Auditable {
 
     @Id
@@ -38,6 +39,9 @@ public class Member extends Auditable {
 
     @Setter
     @ElementCollection(fetch = FetchType.EAGER) // N + 1 일부터 마주치기 위해서 EAGER // 권한은 값이 하나 이상일 수 있기에 사용.
+    @CollectionTable(name = "ROLES", joinColumns =
+    @JoinColumn(name = "MEMBER_ID")         // 일대다 관계로 JoinColum해줌.
+    )
     private List<String> roles = new ArrayList<>();
 
     @Setter
