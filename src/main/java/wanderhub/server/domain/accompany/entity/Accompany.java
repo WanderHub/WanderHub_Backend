@@ -24,7 +24,7 @@ public class Accompany extends Auditable {
     @Column(name="ACCOMPANY_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

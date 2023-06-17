@@ -49,10 +49,6 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_STATUS", length = 16)
     private MemberStatus memberStatus;
 
-    @OneToMany(mappedBy = "Member")
-    List<Accompany> accompanies = new ArrayList<>();
-
-
     public Member(String email) {   // 이메일로 멤버 생성
         this.email = email;
     }
