@@ -16,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Accompany")
 @Entity
 public class Accompany extends Auditable {
 

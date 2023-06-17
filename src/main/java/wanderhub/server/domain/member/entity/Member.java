@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder
+@Table(name = "Member")
 public class Member extends Auditable {
 
     @Id
