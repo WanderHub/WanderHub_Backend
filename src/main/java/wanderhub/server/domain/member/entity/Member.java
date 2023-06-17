@@ -1,7 +1,6 @@
 package wanderhub.server.domain.member.entity;
 
 import lombok.*;
-import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name = "MEMBER")
 public class Member extends Auditable {
 
     @Id
@@ -37,7 +35,10 @@ public class Member extends Auditable {
     private String local;
 
     @Setter
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER) // N + 1 일부터 마주치기 위해서 EAGER // 권한은 값이 하나 이상일 수 있기에 사용.
+    @CollectionTable(name = "ROLES", joinColumns =
+        @JoinColumn(name = "MEMBER_ID")         // 일대다 관계로 JoinColum해줌.
+    )
     private List<String> roles = new ArrayList<>();
 
     @Setter

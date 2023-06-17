@@ -2,7 +2,6 @@ package wanderhub.server.domain.member.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,6 @@ class MemberServiceImplTest {
     MemberService memberService;
 
     final String EMAIL = "SsangSoo@gmail.com";
-
 
 
     @DisplayName("멤버가 생성된다.")
