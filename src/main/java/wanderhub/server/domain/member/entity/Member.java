@@ -1,7 +1,6 @@
 package wanderhub.server.domain.member.entity;
 
 import lombok.*;
-import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -53,6 +52,5 @@ public class Member extends Auditable {
     public Member(String email) {   // 이메일로 멤버 생성
         this.email = email;
     }
-
 
 }
