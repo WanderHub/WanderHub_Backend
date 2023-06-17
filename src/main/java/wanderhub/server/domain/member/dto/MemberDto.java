@@ -17,13 +17,10 @@ public class MemberDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Patch {
-        @Nullable
         private String name;            // 이름 / null 허용
         @NotBlank
         private String nickName;     // 닉네임 / null, 공백, 빈문자 X
-        @Nullable
         private String imgUrl;          // 이미지 Url  / null 허용
-        @Nullable
         private String local;           // 지역 / null 허용
     }
 
