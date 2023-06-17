@@ -38,10 +38,6 @@ class MemberServiceImplTest {
         // than
         assertEquals(createdMember.getEmail(), testMember.getEmail());
         assertEquals(createdMember.getRoles(), testMember.getRoles());
-        System.out.println("testMember.getCreatedAt() = " + testMember.getCreatedAt());
-        System.out.println("testMember.getModifiedAt() = " + testMember.getModifiedAt());
-        System.out.println("createdMember.getModifiedAt() = " + createdMember.getModifiedAt());
-        System.out.println("createdMember.getModifiedAt() = " + createdMember.getModifiedAt());
     }
 
     @DisplayName("멤버를 찾는다.")
