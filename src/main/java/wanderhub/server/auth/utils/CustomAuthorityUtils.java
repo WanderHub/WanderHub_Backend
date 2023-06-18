@@ -34,8 +34,15 @@ public class CustomAuthorityUtils {
     public List<String> createRoles(String email) {
         log.info("adminArray = {}",admins);
         if (admins.contains(email)) {
+            log.info("ADMIN!!!");
+            log.info("ADMIN!!!");
+            log.info("ADMIN!!!");
             return ADMIN_ROLES_STRING;
         }
+        log.info("USER!!!");
+        log.info("USER!!!");
+        log.info("USER!!!");
+        log.info("USER!!!");
         return USER_ROLES_STRING;
     }
 }

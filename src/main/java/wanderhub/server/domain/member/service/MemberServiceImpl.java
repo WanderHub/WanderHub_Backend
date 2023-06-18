@@ -28,8 +28,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member createMember(Member member) {
+
         member.setMemberStatus(MemberStatus.ACTIVE);                    // 멤버 활동 중 변경
         member.setRoles(authorityUtils.createRoles(member.getEmail())); // 멤버의 이메일로 권한 생성
+        log.info("role = {}", member.getRoles());
         return memberRepository.save(member);   // 멤버를 DB에 저장한다.
     }
 

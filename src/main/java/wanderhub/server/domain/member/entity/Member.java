@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name = "MEMBER")
 public class Member extends Auditable {
 
     @Id
