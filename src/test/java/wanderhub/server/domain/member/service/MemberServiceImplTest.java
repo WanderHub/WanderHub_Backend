@@ -14,7 +14,7 @@ import wanderhub.server.global.exception.CustomLogicException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- @Disabled // 배포시
+@Disabled // 배포시
 @ActiveProfiles("local")
 @SpringBootTest
 @Transactional
