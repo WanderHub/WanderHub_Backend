@@ -14,7 +14,7 @@ spring:
       hibernate:
         format_sql: true
         show-sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전
+#        dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전 # 스프링이 알아서 맞춰준다.
   security:
     oauth2:
       client:
