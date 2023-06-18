@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberServiceImplTest {
 
     @Autowired
-    MemberService memberService;
+    MemberServiceImpl memberService;
 
     final String EMAIL = "SsangSoo@gmail.com";
 
