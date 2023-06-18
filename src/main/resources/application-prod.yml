@@ -10,10 +10,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
+        show-sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전
   security:
     oauth2:
