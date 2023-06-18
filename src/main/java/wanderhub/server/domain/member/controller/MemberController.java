@@ -39,6 +39,6 @@ public class MemberController {
         Member patchMember = mapper.patchMemberToMember(patch);
         // memberService의 updateMember를 통해 사용자의 정보를 수정한다.
         Member updatedMember = memberService.updateMember(srcMember, patchMember);
-        return new ResponseEntity(updatedMember, HttpStatus.OK);
+        return new ResponseEntity<>(updatedMember, HttpStatus.OK);
     }
 }
