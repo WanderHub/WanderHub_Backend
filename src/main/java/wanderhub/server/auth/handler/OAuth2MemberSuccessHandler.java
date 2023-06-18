@@ -36,14 +36,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         var oAuth2User = (OAuth2User) authentication.getPrincipal();                // 인증된 객체로부터 OAuth2User를 얻어온다.
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));     // OAuth2User에서 이메일 주소를 얻어온다.
         List<String> authorities = authorityUtils.createRoles(email);               // 얻어온 이메일로 사용자 권한을 생성한다.
-
         // 이메일로 멤버를 확인한다.
         // 없다면 이메일을 통해서 Member를 생성한다.
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-
         saveMember(email);   // 이메일을 통해 User생성
         verifyActive(email); // 이메일을 통해서 사용자가 활동중인지 아닌지 검증한다.
         redirect(request, response, email, authorities);    // AccessToken과 Refresh Token을 생성해서 전달하는 Redirect
