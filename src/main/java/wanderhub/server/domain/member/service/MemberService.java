@@ -39,7 +39,7 @@ public class MemberService {
     public Member updateMember(Member member,Member updateMember) { // 원래있던 member , 수정할 정보를 가진 updateMember
         verificationActiveMember(member);   // 일단 휴면상태인지 검증
         verificatioinNickName(member, updateMember);    // 닉네임 검증
-        return customBeanUtils.copyNonNullProoerties(updateMember, member); // update의 정보가 member로 저장된다.
+        return customBeanUtils.copyNonNullProoerties(updateMember, member);
     }
 
     // 멤버를 이메일로 찾는다.
@@ -48,7 +48,6 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElseThrow(() -> new CustomLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
-
     // 멤버를 기본키로 찾는다.
         // 없으면 예외를 던진다.
     public Member findMember(Long id) {
@@ -56,6 +55,7 @@ public class MemberService {
     }
 
     // 회원가입시 이메일로 멤버 찾는 용도 사용 // OAuth2MemberSuccessHandler에서
+    // 회원가입시 이메일로 멤버 찾는 용도 사용
     public Optional<Member> findByEmail(String email) {
         // 이메일로 멤버를 찾아온다.
         return memberRepository.findByEmail(email);
@@ -71,7 +71,6 @@ public class MemberService {
         } else {
             verificationNotNewbie(updateMember);    // 기존 멤버에 닉네임 변경시도가 있으면 예외 발생
         }
-
     }
 
     // 뉴비는 닉네임을 변경해야하는데, 변경이 없다면, 변경하라고 예외발생시켜야함.

@@ -6,7 +6,6 @@ import wanderhub.server.domain.member.entity.MemberStatus;
 import javax.persistence.Lob;
 import java.time.LocalDateTime;
 
-
 public class MemberDto {
 
     @Builder

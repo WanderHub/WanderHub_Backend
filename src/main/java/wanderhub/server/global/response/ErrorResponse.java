@@ -36,6 +36,10 @@ public class ErrorResponse {
         return new ErrorResponse(FieldError.of(bindingResult), null);
     }
 
+    public static ErrorResponse of(CustomLogicException e) {
+        return new ErrorResponse(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage(), null, null);
+    }
+
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
@@ -44,9 +48,6 @@ public class ErrorResponse {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage(), null, null);
     }
 
-    public static ErrorResponse of(CustomLogicException e) {
-        return new ErrorResponse(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage(), null, null);
-    }
 
     public static ErrorResponse of(HttpStatus httpStatus) {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase(), null, null);

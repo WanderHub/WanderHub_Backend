@@ -1,6 +1,6 @@
 package wanderhub.server.domain.member.controller;
 
-import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +48,9 @@ public class MemberController {
     @PatchMapping("/quit")
     public ResponseEntity quitMember(Principal principal) {
         memberService.quitMember(principal.getName());
-        return new ResponseEntity(new MessageResponseDto("회원이 휴면계정으로 변경되었습니다."),HttpStatus.NO_CONTENT);
+        return new ResponseEntity(new MessageResponseDto("회원이 휴면계정으로 변경되었습니다."), HttpStatus.NO_CONTENT);
     }
 
-
     // logOut
-
-
-
-
 
 }

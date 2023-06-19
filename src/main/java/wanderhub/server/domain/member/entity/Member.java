@@ -22,13 +22,12 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_ID", updatable = false)
     private Long Id;
 
-    @Column(name = "EMAIL", length = 50, nullable = false, updatable = false)
-    private String email;
-
     @Setter
     @Column(name = "NAME", length = 50)
     private String name;
 
+    @Column(name = "EMAIL", length = 50, nullable = false, updatable = false)
+    private String email;
 
     @Setter
     @Column(name = "NICKNAME", length = 50, unique = true)
@@ -68,4 +67,5 @@ public class Member extends Auditable {
         this.imgUrl = imgUrl;
         this.local = local;
     }
+
 }
