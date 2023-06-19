@@ -2,6 +2,7 @@ package wanderhub.server.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,8 @@ import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.mapper.MemberMapper;
 import wanderhub.server.domain.member.service.MemberService;
 import wanderhub.server.global.response.SingleResponse;
+
+import java.security.Principal;
 
 import java.security.Principal;
 
@@ -36,5 +39,4 @@ public class MemberController {
         return ResponseEntity.ok(new SingleResponse<>(mapper.memberToMemberResponse(updatedMember)));
 
     }
-
 }

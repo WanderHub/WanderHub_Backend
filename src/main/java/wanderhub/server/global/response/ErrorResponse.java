@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
+import wanderhub.server.global.exception.CustomLogicException;
 import wanderhub.server.global.exception.ExceptionCode;
 
 import javax.validation.ConstraintViolation;
@@ -33,6 +34,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(BindingResult bindingResult) {
         return new ErrorResponse(FieldError.of(bindingResult), null);
+    }
+
+    public static ErrorResponse of(CustomLogicException e) {
+        return new ErrorResponse(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage(), null, null);
     }
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {

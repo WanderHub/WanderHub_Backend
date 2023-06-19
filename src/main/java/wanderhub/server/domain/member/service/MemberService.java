@@ -47,7 +47,6 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElseThrow(() -> new CustomLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
-
     // 멤버를 기본키로 찾는다.
         // 없으면 예외를 던진다.
     public Member findMember(Long id) {
@@ -70,7 +69,6 @@ public class MemberService {
         } else {
             verificationNotNewbie(updateMember);    // 기존 멤버에 닉네임 변경시도가 있으면 예외 발생
         }
-
     }
 
     // 뉴비는 닉네임을 변경해야하는데, 변경이 없다면, 변경하라고 예외발생시켜야함.

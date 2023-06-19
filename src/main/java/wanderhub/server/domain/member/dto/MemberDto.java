@@ -6,7 +6,6 @@ import wanderhub.server.domain.member.entity.MemberStatus;
 import javax.persistence.Lob;
 import java.time.LocalDateTime;
 
-
 public class MemberDto {
 
     @Builder
@@ -20,10 +19,10 @@ public class MemberDto {
         private String local;           // 지역 / null 허용
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Builder
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Response {
         private Long Id;
         private String name;

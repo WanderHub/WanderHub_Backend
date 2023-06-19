@@ -1,13 +1,13 @@
 package wanderhub.server.auth.config;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -23,13 +23,11 @@ import wanderhub.server.domain.member.service.MemberService;
 
 import java.util.Arrays;
 
-
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration  // 구성정보 클래스
 @EnableWebSecurity(debug = true)  // Spring Security 활성화
 @RequiredArgsConstructor
-@Slf4j
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
