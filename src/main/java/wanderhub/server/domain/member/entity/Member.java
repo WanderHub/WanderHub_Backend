@@ -2,6 +2,9 @@ package wanderhub.server.domain.member.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -49,16 +52,16 @@ public class Member extends Auditable {
 
     @Setter
     @ColumnDefault("false")
-    @Column(name = "JOIN_ON")
-    private Boolean joinOn;
+    @Column(name = "NEWBIE")
+    private Boolean newbie;
 
-    public Member(String email) {   // 이메일로 멤버 생성
+    public Member(String email, Boolean newbie) {   // 이메일로 멤버 생성
         this.email = email;
+        this.newbie = newbie;
     }
 
     @Builder
-    public Member(String email, String name, String nickName, String imgUrl, String local) {
-        this.email = email;
+    public Member(String name, String nickName, String imgUrl, String local) {
         this.name = name;
         this.nickName = nickName;
         this.imgUrl = imgUrl;

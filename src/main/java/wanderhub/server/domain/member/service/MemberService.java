@@ -37,26 +37,7 @@ public class MemberService {
 
     // 멤버 수정 메서드
     public Member updateMember(Member member,Member updateMember) { // 원래있던 member , 수정할 정보를 가진 updateMember
-        log.info("member = {}", member.getId());
-        log.info("member = {}", member.getNickName());
-        log.info("member = {}", member.getName());
-        log.info("member = {}", member.getRoles());
-        log.info("updateMember = {}",updateMember.getNickName());
-        log.info("updateMember = {}",updateMember.getName());
-        log.info("updateMember = {}",updateMember.getLocal());
         verificatioinNickName(member, updateMember);    // 닉네임 검증
-        log.info("닉네임 검증!!!!!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-        log.info("닉네임 검증!!!!!!!!!!!!완료!!!!!!!!");
-           // updateMember정보를 원래 member로
         return customBeanUtils.copyNonNullProoerties(updateMember, member);
     }
 
@@ -66,13 +47,11 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElseThrow(() -> new CustomLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
-
     // 멤버를 기본키로 찾는다.
         // 없으면 예외를 던진다.
     public Member findMember(Long id) {
         return memberRepository.findById(id).orElseThrow(() -> new CustomLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
-
 
     // 회원가입시 이메일로 멤버 찾는 용도 사용
     public Optional<Member> findByEmail(String email) {
@@ -82,23 +61,36 @@ public class MemberService {
 
     // 닉네임 검증 메서드
     public void verificatioinNickName(Member srcMember, Member updateMember) {
-        // 기존 멤버 닉네임은 없고, update멤버에 닉네임이 있으면 닉네임 변경이므로, joinon(가입상태)를 true로 바꾼다.
-        if(srcMember.getNickName()==null && updateMember.getNickName()!=null) {
-            srcMember.setJoinOn(true);
-            log.info("닉변 가능!!");
-            log.info("닉변 가능!!");
-            log.info("닉변 가능!!");
-            log.info("닉변 가능!!");
-            log.info("닉변 가능!!");
-            log.info("닉변 가능!!");
+        if(srcMember.getNewbie()) { // 뉴비라면,
+            verificationNewbie(updateMember);   // 뉴비검증 닉네임 정보 없으면 예외
+            // 뉴비검증 통과시 닉네임 변경될 것이기때문에,
+            // 신규회원여부를 false로 변경하여 기존 멤버라고 한다.
+            srcMember.setNewbie(false);
+        } else {
+            verificationNotNewbie(updateMember);    // 기존 멤버에 닉네임 변경시도가 있으면 예외 발생
         }
-        // 기존멤버 닉네임이 없고, updateMember에도 닉네임정보가 없다면, 닉네임 변경을 해달라는 예외를 던진다.
-        if(srcMember.getNickName()==null && updateMember.getNickName()==null) {
+    }
+
+    // 뉴비는 닉네임을 변경해야하는데, 변경이 없다면, 변경하라고 예외발생시켜야함.
+    public void verificationNewbie(Member updateMember) {
+        // 뉴비인데, updateMember에도 닉네임정보가 없다면, 닉네임 변경을 해달라는 예외를 던진다.
+        if(updateMember.getNickName()==null) {
             throw new CustomLogicException(ExceptionCode.NICKNAME_REQUIRED);
         }
-        // member의 joinOn이 true이고, update멤버에 nickname 정보가 있다면, 닉네임은 변경하지 못 한다는 예외를 발생시킨다.
-        if(srcMember.getJoinOn()==true && updateMember.getJoinOn()!=null) {
+    }
+
+    // 기존 회원은 닉네임을 변경하려고할 때 예외를 발생시킨다.
+    public void verificationNotNewbie(Member updateMember) {
+        if(updateMember.getNickName()!=null) { // 기존멤버가 닉네임을 변경하려고하면, 예외 발생
             throw new CustomLogicException(ExceptionCode.NICKNAME_NOT_UPDATE);
+        }
+    }
+
+    // 닉네임없는 회원이 서비스를 시작하려할 때, 검증 메서드
+    public void verificationMember(String email) {
+        Member member = findMember(email);
+        if(member.getNewbie() && member.getNickName()==null) {
+            throw new CustomLogicException(ExceptionCode.NICKNAME_REQUIRED);
         }
     }
 
@@ -106,4 +98,5 @@ public class MemberService {
         member.setMemberStatus(MemberStatus.HUMAN);
         return member.getMemberStatus()==MemberStatus.HUMAN;
     }
+
 }

@@ -1,10 +1,7 @@
 package wanderhub.server.domain.accompany.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 
 @Builder
 @Getter
@@ -25,4 +22,3 @@ public class AccompanyDto {
     private String placeTitle;
 
 }
-

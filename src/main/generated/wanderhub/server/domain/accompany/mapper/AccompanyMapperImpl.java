@@ -12,7 +12,7 @@ import wanderhub.server.domain.accompany.entity.Accompany;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-19T18:06:40+0900",
+    date = "2023-06-20T00:23:26+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.18 (Amazon.com Inc.)"
 )
 @Component
@@ -34,6 +34,10 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompanyResponseDto.accompanyTitle( entity.getAccompanyTitle() );
         accompanyResponseDto.accompanyContent( entity.getAccompanyContent() );
         accompanyResponseDto.openStatus( entity.isOpenStatus() );
+        accompanyResponseDto.coordX( entity.getCoordX() );
+        accompanyResponseDto.coordY( entity.getCoordY() );
+        accompanyResponseDto.placeTitle( entity.getPlaceTitle() );
+        accompanyResponseDto.registeredMembers( entity.getRegisteredMembers() );
         accompanyResponseDto.createdAt( entity.getCreatedAt() );
         accompanyResponseDto.modifiedAt( entity.getModifiedAt() );
 
@@ -69,6 +73,9 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompanyDto.maxNum( entity.getMaxNum() );
         accompanyDto.accompanyTitle( entity.getAccompanyTitle() );
         accompanyDto.accompanyContent( entity.getAccompanyContent() );
+        accompanyDto.coordX( entity.getCoordX() );
+        accompanyDto.coordY( entity.getCoordY() );
+        accompanyDto.placeTitle( entity.getPlaceTitle() );
 
         return accompanyDto.build();
     }
@@ -102,6 +109,9 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompany.maxNum( dto.getMaxNum() );
         accompany.accompanyTitle( dto.getAccompanyTitle() );
         accompany.accompanyContent( dto.getAccompanyContent() );
+        accompany.coordX( dto.getCoordX() );
+        accompany.coordY( dto.getCoordY() );
+        accompany.placeTitle( dto.getPlaceTitle() );
 
         return accompany.build();
     }
@@ -136,6 +146,10 @@ public class AccompanyMapperImpl implements AccompanyMapper {
         accompany.accompanyTitle( dto.getAccompanyTitle() );
         accompany.accompanyContent( dto.getAccompanyContent() );
         accompany.openStatus( dto.isOpenStatus() );
+        accompany.coordX( dto.getCoordX() );
+        accompany.coordY( dto.getCoordY() );
+        accompany.placeTitle( dto.getPlaceTitle() );
+        accompany.registeredMembers( dto.getRegisteredMembers() );
 
         return accompany.build();
     }

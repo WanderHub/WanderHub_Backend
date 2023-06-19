@@ -52,7 +52,6 @@ logging:
 admin:
   email: ${ADMIN_EMAILS}
 
-
 jwt:
   key:
     secret: ${JWT_SECRET_KEY}

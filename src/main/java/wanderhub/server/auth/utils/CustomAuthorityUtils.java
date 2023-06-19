@@ -1,6 +1,5 @@
 package wanderhub.server.auth.utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -11,13 +10,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Component
 public class CustomAuthorityUtils {
     @Value("${admin.email}")
     private Set<String> admins; // admin 이메일 리스트
-
-
     private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
     private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN", "USER");
@@ -32,7 +28,6 @@ public class CustomAuthorityUtils {
     }
 
     public List<String> createRoles(String email) {
-        log.info("adminArray = {}",admins);
         if (admins.contains(email)) {
             return ADMIN_ROLES_STRING;
         }

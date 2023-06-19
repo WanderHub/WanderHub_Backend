@@ -12,11 +12,13 @@ import wanderhub.server.domain.member.dto.MemberDto;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.mapper.MemberMapper;
 import wanderhub.server.domain.member.service.MemberService;
+import wanderhub.server.global.response.SingleResponse;
+
+import java.security.Principal;
 
 import java.security.Principal;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/members")
 @Slf4j
 public class MemberController {
@@ -24,19 +26,17 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
+    public MemberController(MemberService memberService, MemberMapper mapper) {
+        this.memberService = memberService;
+        this.mapper = mapper;
+    }
 
     @PatchMapping
     public ResponseEntity update(Principal principal, @RequestBody MemberDto.Patch patch) {
         Member findMember = memberService.findMember(principal.getName());   // 이메일 정보로 사용자를 찾아온다.
-        log.info("srcMember = {} ", findMember.getEmail());
-        log.info("srcMember = {} ", findMember.getMemberStatus());
-        log.info("srcMember = {} ", findMember.getRoles());
-        log.info("patch = {} ", patch.getNickName());
-        log.info("patch = {} ", patch.getLocal());
-        log.info("patch = {} ", patch.getName());
-        log.info("patch = {} ", patch.getImgUrl());
         // memberService의 updateMember를 통해 사용자의 정보를 수정한다.   // PatchDto를 mapper를 통해서 엔티티로 매핑한다.
-        Member updatedMember = memberService.updateMember(findMember, mapper.patchMemberToMember(patch));
-        return new ResponseEntity<>(mapper.memberToMemberResponse(updatedMember), HttpStatus.OK);
+        Member updatedMember = memberService.updateMember(findMember, mapper.memberDtoPatchToMember(patch));
+        return ResponseEntity.ok(new SingleResponse<>(mapper.memberToMemberResponse(updatedMember)));
+
     }
 }

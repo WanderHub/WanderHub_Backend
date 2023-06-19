@@ -1,16 +1,11 @@
 package wanderhub.server.domain.member.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import org.springframework.lang.Nullable;
+import lombok.*;
 import wanderhub.server.domain.member.entity.MemberStatus;
 
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Lob;
+import java.time.LocalDateTime;
 
-@NoArgsConstructor
 public class MemberDto {
 
     @Builder
@@ -24,16 +19,21 @@ public class MemberDto {
         private String local;           // 지역 / null 허용
     }
 
-    @AllArgsConstructor
     @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Response {
         private Long Id;
         private String name;
         private String email;
         private String nickName;
+        @Lob
         private String imgUrl;
         private String local;
         private MemberStatus memberStatus;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 
 }
