@@ -48,6 +48,7 @@ public class ErrorResponse {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage(), null, null);
     }
 
+
     public static ErrorResponse of(HttpStatus httpStatus) {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase(), null, null);
     }

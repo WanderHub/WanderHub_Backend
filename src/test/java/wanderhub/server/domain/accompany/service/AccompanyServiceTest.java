@@ -24,6 +24,7 @@ public class AccompanyServiceTest {
 //    void createAccompany() {
 //        AccompanyService accompanyService = new AccompanyServiceImpl(accompanyRepository);
 //
+//        Accompany accompany = new Accompany(null, null, "hi2", "대전", LocalDate.parse("2023-06-05"), 4, "제목2", "내용2", true);
 //        Accompany accompany = new Accompany(null, 4L, "hi2", "대전", LocalDate.parse("2023-06-05"), 4, "제목2", "내용2", true);
 //        when(accompanyRepository.save(any(Accompany.class))).thenReturn(accompany);
 //        accompanyService.createAccompany(accompany);
@@ -33,5 +34,6 @@ public class AccompanyServiceTest {
 //
 //        assertThat(res.get().getNickname()).isEqualTo("hi2");
 //    }
-
+//
+//}
 }

@@ -145,6 +145,17 @@ public class AccompanyControllerTest {
 //        AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-01"), 2, "제목1", "본문1", true, createdAt, modifiedAt);
 //        AccompanyResponseDto dto2 = new AccompanyResponseDto(2L, m2.getNickName(), "대구", LocalDate.parse("2023-07-02"), 3, "제목2", "본문2", true, createdAt, modifiedAt);
 //
+//        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/accompany/bylocalanddate2?accompanyLocal=제주&accompanyDate=2023-07-10")
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andDo(document("accompany-findByLocalAndDate2",
+//                        preprocessRequest(prettyPrint()),
+//                        preprocessResponse(prettyPrint()),
+//                        requestParameters(
+//                                parameterWithName("accompanyLocal").description("동행 지역"),
+//                                parameterWithName("accompanyDate").description("동행 날짜")
+//                        ),
 //        List<AccompanyResponseDto> list = new ArrayList<>();
 //        list.add(dto1);
 //        list.add(dto2);
@@ -330,6 +341,8 @@ public class AccompanyControllerTest {
 //    @Test
 //    @DisplayName("삭제")
 //    public void deleteAccompany() throws Exception {
+//        Accompany accompany1 = new Accompany(1L, 4L, "hi1", "서울", LocalDate.parse("2023-06-11"), 5, "제목1", "내용1", true);
+//        AccompanyResponseDto a1 = AccompanyMapper.INSTANCE.toDto(accompany1);
 //        Member m1 = new Member(1L, "name1", "1111@gmail.com", "nickname1","img1","local1", null, MemberStatus.ACTIVE);
 //        memberService.createMember(m1);
 //
@@ -339,11 +352,12 @@ public class AccompanyControllerTest {
 //                        .with(csrf()))
 //                .andExpect(status().isNoContent())
 //                .andDo(print())
-//                .andDo(document("accompany/delete",
+//                .andDo(document("accompany-delete",
 //                        pathParameters(
 //                                parameterWithName("id").description("동행글 식별자")
 //                        )));
 //    }
-
+//
+//
+//}
 }
-

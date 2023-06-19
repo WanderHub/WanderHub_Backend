@@ -30,4 +30,3 @@ public interface AccompanyMapper {
     List<Accompany> fromResponseDtotoEntityList(List<AccompanyResponseDto> dtoList); //controller test 때문에 생성
 
 }
-
