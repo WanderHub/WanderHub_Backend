@@ -65,7 +65,7 @@ public class AccompanyControllerTest {
     @MockBean
     private MemberService memberService;
 
-    private static final ZonedDateTime time = ZonedDateTime.now();
+    private static final LocalDateTime time = LocalDateTime.now();
 
     @Test
     @DisplayName("생성")
@@ -88,6 +88,8 @@ public class AccompanyControllerTest {
                 .accompanyContent("본문1")
                 .build();
 //        accompanyService.createAccompany(AccompanyMapper.INSTANCE.toEntity(dto1)); //왜 이게 없어도 작동이 잘 될까...
+
+//        when(accompanyService.createAccompany()).thenReturn(Optional.of(AccompanyMapper.INSTANCE.fromResponseDtotoEntity(dto1)));
 
         this.mockMvc.perform(post("/accompany")
                         .with(csrf())
@@ -117,8 +119,8 @@ public class AccompanyControllerTest {
         memberService.createMember(m1);
         memberService.createMember(m2);
 
-        ZonedDateTime createdAt = time;
-        ZonedDateTime modifiedAt = ZonedDateTime.now();
+        LocalDateTime createdAt = time;
+        LocalDateTime modifiedAt = LocalDateTime.now();
         AccompanyResponseDto dto1 = new AccompanyResponseDto(1L, m1.getNickName(), "서울", LocalDate.parse("2023-07-01"), 2, "제목1", "본문1", true, createdAt, modifiedAt);
         AccompanyResponseDto dto2 = new AccompanyResponseDto(2L, m2.getNickName(), "대구", LocalDate.parse("2023-07-02"), 3, "제목2", "본문2", true, createdAt, modifiedAt);
 

@@ -1,6 +1,7 @@
 package wanderhub.server.domain.accompany.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/accompany")
 @RequiredArgsConstructor
+@Slf4j
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
@@ -32,6 +34,12 @@ public class AccompanyController {
     public ResponseEntity create(Principal principal, @Validated @RequestBody AccompanyDto accompanyDto) {
         Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
         Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName()).get();
+        log.info("log = {}", entityResp.getClass());
+        log.info("log = {}", entityResp.getClass());
+        log.info("log = {}", entityResp.getClass());
+        log.info("log = {}", entityResp.getClass());
+        log.info("log = {}", entityResp.getClass());
+        log.info("log = {}", entityResp.getClass());
         AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entityResp);
 
         return new ResponseEntity<>(dto, HttpStatus.CREATED);

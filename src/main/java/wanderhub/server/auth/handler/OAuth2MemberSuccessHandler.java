@@ -110,29 +110,28 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
 
-//         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
-//        return UriComponentsBuilder
-//                .newInstance()
-//                .scheme("http")
-//                .host("localhost")
-//                .port(8080)
-//                .path("/receive-token")
-//                .queryParams(queryParams)
-//                .build()
-//                .toUri();
-//    }
-//
-//
+         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("https")
-                .host("backwander.kro.kr")
-                .port(443)    // 확인하기.
+                .scheme("http")
+                .host("localhost")
+                .port(8080)
                 .path("/receive-token")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
-
     }
+
+//        return UriComponentsBuilder
+//                .newInstance()
+//                .scheme("https")
+//                .host("backwander.kro.kr")
+//                .port(443)    // 확인하기.
+//                .path("/receive-token")
+//                .queryParams(queryParams)
+//                .build()
+//                .toUri();
+//
+//    }
 
 }

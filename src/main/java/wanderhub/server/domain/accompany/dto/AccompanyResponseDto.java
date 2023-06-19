@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -23,7 +23,7 @@ public class AccompanyResponseDto {
     private String accompanyContent;
     private boolean openStatus;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    private ZonedDateTime modifiedAt;
+    private LocalDateTime modifiedAt;
 }
