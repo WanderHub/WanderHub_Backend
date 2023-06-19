@@ -1,6 +1,7 @@
 package wanderhub.server.domain.member.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -18,19 +19,22 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_ID", updatable = false)
     private Long Id;
 
+    @Setter
     @Column(name = "NAME", length = 50)
     private String name;
 
     @Column(name = "EMAIL", length = 50, nullable = false, updatable = false)
     private String email;
 
-    @Column(name = "NICKNAME", length = 50, updatable = false, unique = true)
+    @Setter
+    @Column(name = "NICKNAME", length = 50, unique = true)
     private String nickName;
 
     @Lob
     @Column(name = "IMG_URL")
     private String imgUrl;
 
+    @Setter
     @Column(name = "LOCAL", length = 16)
     private String local;
 
@@ -42,6 +46,11 @@ public class Member extends Auditable {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_STATUS", length = 16)
     private MemberStatus memberStatus;
+
+    @Setter
+    @ColumnDefault("false")
+    @Column(name = "JOIN_ON")
+    private Boolean joinOn;
 
     public Member(String email) {   // 이메일로 멤버 생성
         this.email = email;

@@ -17,7 +17,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/members")
 @Slf4j
 public class MemberController {
 
@@ -27,18 +27,16 @@ public class MemberController {
 
     @PatchMapping
     public ResponseEntity update(Principal principal, @RequestBody MemberDto.Patch patch) {
-        log.info("principal = {}, {} ", principal, principal.getName());
-        log.info("principal = {}, {} ", principal, principal.getName());
-        log.info("principal = {}, {} ", principal, principal.getName());
-        log.info("principal = {}, {} ", principal, principal.getName());
-        log.info("principal = {}, {} ", principal, principal.getName());
-        log.info("principal = {}, {} ", principal, principal.getName());
-        // 이메일 정보로 멤버를 찾아온다.
-        Member srcMember = memberService.findMember(principal.getName());   // 이메일 정보로 사용자를 찾아온다.
-        // PatchDto를 mapper를 통해서 엔티티로 매핑한다.
-        Member patchMember = mapper.patchMemberToMember(patch);
-        // memberService의 updateMember를 통해 사용자의 정보를 수정한다.
-        Member updatedMember = memberService.updateMember(srcMember, patchMember);
-        return new ResponseEntity<>(updatedMember, HttpStatus.OK);
+        Member findMember = memberService.findMember(principal.getName());   // 이메일 정보로 사용자를 찾아온다.
+        log.info("srcMember = {} ", findMember.getEmail());
+        log.info("srcMember = {} ", findMember.getMemberStatus());
+        log.info("srcMember = {} ", findMember.getRoles());
+        log.info("patch = {} ", patch.getNickName());
+        log.info("patch = {} ", patch.getLocal());
+        log.info("patch = {} ", patch.getName());
+        log.info("patch = {} ", patch.getImgUrl());
+        // memberService의 updateMember를 통해 사용자의 정보를 수정한다.   // PatchDto를 mapper를 통해서 엔티티로 매핑한다.
+        Member updatedMember = memberService.updateMember(findMember, mapper.patchMemberToMember(patch));
+        return new ResponseEntity<>(mapper.memberToMemberResponse(updatedMember), HttpStatus.OK);
     }
 }

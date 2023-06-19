@@ -1,7 +1,6 @@
 package wanderhub.server.domain.member.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("local")
 @SpringBootTest
 @Transactional
-class MemberServiceImplTest {
+class MemberServiceTest {
 
     @Autowired
-    MemberServiceImpl memberService;
+    MemberService memberService;
 
     final String EMAIL = "SsangSoo@gmail.com";
 
