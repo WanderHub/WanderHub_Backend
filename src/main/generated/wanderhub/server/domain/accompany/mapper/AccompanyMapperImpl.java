@@ -1,20 +1,19 @@
 package wanderhub.server.domain.accompany.mapper;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
-import wanderhub.server.domain.accompany.dto.AccompanyDto.AccompanyDtoBuilder;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto.AccompanyResponseDtoBuilder;
 import wanderhub.server.domain.accompany.entity.Accompany;
-import wanderhub.server.domain.accompany.entity.Accompany.AccompanyBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-18T12:16:07+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Amazon.com Inc.)"
+    date = "2023-06-19T18:06:40+0900",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.18 (Amazon.com Inc.)"
 )
 @Component
 public class AccompanyMapperImpl implements AccompanyMapper {
@@ -25,7 +24,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
             return null;
         }
 
-        AccompanyResponseDtoBuilder accompanyResponseDto = AccompanyResponseDto.builder();
+        AccompanyResponseDto.AccompanyResponseDtoBuilder accompanyResponseDto = AccompanyResponseDto.builder();
 
         accompanyResponseDto.id( entity.getId() );
         accompanyResponseDto.nickname( entity.getNickname() );
@@ -61,10 +60,12 @@ public class AccompanyMapperImpl implements AccompanyMapper {
             return null;
         }
 
-        AccompanyDtoBuilder accompanyDto = AccompanyDto.builder();
+        AccompanyDto.AccompanyDtoBuilder accompanyDto = AccompanyDto.builder();
 
         accompanyDto.accompanyLocal( entity.getAccompanyLocal() );
-        accompanyDto.accompanyDate( entity.getAccompanyDate() );
+        if ( entity.getAccompanyDate() != null ) {
+            accompanyDto.accompanyDate( DateTimeFormatter.ISO_LOCAL_DATE.format( entity.getAccompanyDate() ) );
+        }
         accompanyDto.maxNum( entity.getMaxNum() );
         accompanyDto.accompanyTitle( entity.getAccompanyTitle() );
         accompanyDto.accompanyContent( entity.getAccompanyContent() );
@@ -92,10 +93,12 @@ public class AccompanyMapperImpl implements AccompanyMapper {
             return null;
         }
 
-        AccompanyBuilder accompany = Accompany.builder();
+        Accompany.AccompanyBuilder accompany = Accompany.builder();
 
         accompany.accompanyLocal( dto.getAccompanyLocal() );
-        accompany.accompanyDate( dto.getAccompanyDate() );
+        if ( dto.getAccompanyDate() != null ) {
+            accompany.accompanyDate( LocalDate.parse( dto.getAccompanyDate() ) );
+        }
         accompany.maxNum( dto.getMaxNum() );
         accompany.accompanyTitle( dto.getAccompanyTitle() );
         accompany.accompanyContent( dto.getAccompanyContent() );
@@ -123,7 +126,7 @@ public class AccompanyMapperImpl implements AccompanyMapper {
             return null;
         }
 
-        AccompanyBuilder accompany = Accompany.builder();
+        Accompany.AccompanyBuilder accompany = Accompany.builder();
 
         accompany.id( dto.getId() );
         accompany.nickname( dto.getNickname() );

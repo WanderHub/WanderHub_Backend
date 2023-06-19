@@ -22,10 +22,10 @@ public class AccompanyServiceImpl implements AccompanyService {
     private final MemberService memberService;
 
     @Override
-    public Optional<Accompany> createAccompany(Accompany accompany, String userEmail) {
+    public Accompany createAccompany(Accompany accompany, String userEmail) {
         accompany.setNickname(memberService.findByEmail(userEmail).get().getNickName());
         accompany.setOpenStatus(true);
-        return Optional.of(accompanyRepository.save(accompany));
+        return accompanyRepository.save(accompany);
     }
 
     @Override

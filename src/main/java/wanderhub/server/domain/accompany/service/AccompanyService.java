@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AccompanyService {
 
-    Optional<Accompany> createAccompany(Accompany accompany, String userEmail);
+    Accompany createAccompany(Accompany accompany, String userEmail);
     List<Accompany> findAll();
     Optional<Accompany> findById(Long id);
     List<Accompany> findByLocal(String accompanyLocal);

@@ -12,15 +12,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 public class AccompanyDto {
-//    private Long id;
-    private Long memberId;
-//    private String nickname;
     private String accompanyLocal;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate accompanyDate;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    private LocalDate accompanyDate;
+    private String accompanyDate;
     private int maxNum;
     private String accompanyTitle;
     private String accompanyContent;
+    private double coordX;
+    private double coordY;
+    private String placeTitle;
+
 }
 

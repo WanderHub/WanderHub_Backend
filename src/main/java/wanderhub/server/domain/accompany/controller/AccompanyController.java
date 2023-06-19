@@ -1,11 +1,13 @@
 package wanderhub.server.domain.accompany.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
@@ -16,6 +18,7 @@ import wanderhub.server.domain.member.entity.MemberStatus;
 import wanderhub.server.domain.member.service.MemberService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,40 +29,24 @@ import java.util.Optional;
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
-//    private final MemberService memberService;
+    private final MemberService memberService; //나중에 지울 부분
 
     //생성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity create(Principal principal, @Validated @RequestBody AccompanyDto accompanyDto) {
+        Member member = memberService.findMember(principal.getName()); //나중에 지울 부분, 테스트코드할 때 지워야 함
+        member.setNickName("nicknameeeeee"); //나중에 지울 부분, 테스트코드할 때 지워야 함
+
         Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
-        Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName()).get();
-        log.info("log = {}", entityResp.getClass());
-        log.info("log = {}", entityResp.getClass());
-        log.info("log = {}", entityResp.getClass());
-        log.info("log = {}", entityResp.getClass());
-        log.info("log = {}", entityResp.getClass());
-        log.info("log = {}", entityResp.getClass());
+
+        entityReq.setAccompanyDate(LocalDate.parse(accompanyDto.getAccompanyDate()));
+
+        Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName());
         AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entityResp);
 
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
-
-//    //생성
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public ResponseEntity create(Principal principal, @RequestBody AccompanyDto accompanyDto) {
-//        String nickName = memberService.findMember(accompanyDto.getMemberId()).getNickName();
-//
-//        Accompany entity = accompanyMapper.INSTANCE.toEntity(accompanyDto);
-//        entity.setNickname(nickName);
-//        log.info("entity = {}" , entity);
-//        Accompany accompany = accompanyService.createAccompany(entity);
-//        log.info("accompany = {}", accompany);
-//        AccompanyResponseDto accompanyResponseDto = accompanyMapper.INSTANCE.toDto(accompany);
-//
-//        return new ResponseEntity(accompanyResponseDto, HttpStatus.CREATED);
-//    }
 
     //전체 조회 (경로 임시)
     @GetMapping
