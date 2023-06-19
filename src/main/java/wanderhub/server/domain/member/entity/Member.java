@@ -19,12 +19,13 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_ID", updatable = false)
     private Long Id;
 
+    @Column(name = "EMAIL", length = 50, nullable = false, updatable = false)
+    private String email;
+
     @Setter
     @Column(name = "NAME", length = 50)
     private String name;
 
-    @Column(name = "EMAIL", length = 50, nullable = false, updatable = false)
-    private String email;
 
     @Setter
     @Column(name = "NICKNAME", length = 50, unique = true)
@@ -49,16 +50,16 @@ public class Member extends Auditable {
 
     @Setter
     @ColumnDefault("false")
-    @Column(name = "JOIN_ON")
-    private Boolean joinOn;
+    @Column(name = "NEWBIE")
+    private Boolean newbie;
 
-    public Member(String email) {   // 이메일로 멤버 생성
+    public Member(String email, Boolean newbie) {   // 이메일로 멤버 생성
         this.email = email;
+        this.newbie = newbie;
     }
 
     @Builder
-    public Member(String email, String name, String nickName, String imgUrl, String local) {
-        this.email = email;
+    public Member(String name, String nickName, String imgUrl, String local) {
         this.name = name;
         this.nickName = nickName;
         this.imgUrl = imgUrl;

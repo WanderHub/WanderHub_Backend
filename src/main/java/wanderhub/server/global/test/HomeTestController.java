@@ -26,8 +26,8 @@ public class HomeTestController {
     }
 
     @GetMapping("/receive-token")
-    public ResponseEntity tokenTest(@RequestParam("access_token")String accessToken, @RequestParam("refresh_token")String refreshToken) {
-        String tokens =  String.format("accessToken = %s     %n%n%n%n%n                  refreshToken = %s",accessToken,refreshToken) ;
+    public ResponseEntity tokenTest(@RequestParam("access_token")String accessToken, @RequestParam("refresh_token")String refreshToken , @RequestParam("newbie")String newbie) {
+        String tokens =  String.format("accessToken = %s     %n%n%n%n%n                  refreshToken = %s   %n%n%n%n%n     newbie = %s",accessToken, refreshToken, newbie) ;
         return new ResponseEntity<>(tokens, HttpStatus.CREATED);
     }
 
