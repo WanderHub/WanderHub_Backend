@@ -16,14 +16,15 @@ public class MemberDto {
     public static class Patch {
         private String name;            // 이름 / null 허용
         private String nickName;     // 닉네임 / null, 공백, 빈문자 X
+        @Lob
         private String imgUrl;          // 이미지 Url  / null 허용
         private String local;           // 지역 / null 허용
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Builder
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Response {
         private Long Id;
         private String name;
