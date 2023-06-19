@@ -7,9 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
 import org.springframework.web.filter.OncePerRequestFilter;
-import wanderhub.server.auth.jwt.JwtTokenizer;
 import wanderhub.server.auth.utils.CustomAuthorityUtils;
 
 import javax.servlet.FilterChain;
@@ -60,7 +58,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
 
 
     private Map<String, Object> verifyJws(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer ,", "");     //  request의 header에서 JWT를 얻음. // jws는 서명된 JWT를 의미함.
+////////////////////////////////////////////////////////////////// "Bearer ," << 콤마이거 개 도그 베이비 shake it "///////////////
+//        String jws = request.getHeader("Authorization").replace("Bearer ,", "");     //  request의 header에서 JWT를 얻음. // jws는 서명된 JWT를 의미함.
+        String jws = request.getHeader("Authorization").replace("Bearer ", "");     //  request의 header에서 JWT를 얻음. // jws는 서명된 JWT를 의미함.
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());  // 서명을 검증하기위한 SecretKey를 얻는다.
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody(); // Claims를 파싱한다.
 
@@ -68,6 +68,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
     }
 
     // Authentication 객체를 SecurityContext에 저장하기 위한 메서드
+    @SuppressWarnings("unchecked")
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("username");  // JWT에서 파싱한 Claims에서 'username'을 얻는다.
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List) claims.get("roles"));  // JWT의 Claims에서 얻은 권한 정보를 기반으로 권한리스트를 얻는다.

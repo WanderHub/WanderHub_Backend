@@ -3,6 +3,7 @@ package wanderhub.server.global.response;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+
 import wanderhub.server.global.exception.ExceptionCode;
 
 import javax.validation.ConstraintViolation;
@@ -17,13 +18,15 @@ public class ErrorResponse {
     private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
 
-    private ErrorResponse(int status, String message) {
-        this.status = status;
-        this.message = message;
-    }
-
     private ErrorResponse(final List<FieldError> fieldErrors,
                           final List<ConstraintViolationError> violationErrors) {
+        this.fieldErrors = fieldErrors;
+        this.violationErrors = violationErrors;
+    }
+
+    public ErrorResponse(int status, String message, List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
+        this.status = status;
+        this.message = message;
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
     }
@@ -37,15 +40,15 @@ public class ErrorResponse {
     }
 
     public static ErrorResponse of(ExceptionCode exceptionCode) {
-        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage(), null, null);
     }
 
     public static ErrorResponse of(HttpStatus httpStatus) {
-        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
+        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase(), null, null);
     }
 
     public static ErrorResponse of(HttpStatus httpStatus, String message) {
-        return new ErrorResponse(httpStatus.value(), message);
+        return new ErrorResponse(httpStatus.value(), message, null, null);
     }
 
     @Getter

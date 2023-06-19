@@ -58,7 +58,6 @@ public class OAuth2Attribute {
     }
 
 
-
     // OAuth2User 객체에 넣어주기 위해서 내부 속성을 Map으로 변환해서 값들을 반환해준다.
     public Map<String, Object> convertToMap() {
         Map<String, Object> map = new HashMap<>();
