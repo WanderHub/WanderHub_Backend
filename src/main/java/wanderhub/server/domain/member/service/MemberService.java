@@ -96,9 +96,9 @@ public class MemberService {
         }
     }
 
-
     public boolean writeMemberStatus(Member member) {
         member.setMemberStatus(MemberStatus.HUMAN);
         return member.getMemberStatus()==MemberStatus.HUMAN;
     }
+
 }

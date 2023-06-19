@@ -2,6 +2,9 @@ package wanderhub.server.domain.member.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -65,5 +68,4 @@ public class Member extends Auditable {
         this.imgUrl = imgUrl;
         this.local = local;
     }
-
 }

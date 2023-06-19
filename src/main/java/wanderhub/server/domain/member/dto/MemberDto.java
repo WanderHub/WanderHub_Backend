@@ -1,11 +1,9 @@
 package wanderhub.server.domain.member.dto;
 
 import lombok.*;
-import org.springframework.lang.Nullable;
 import wanderhub.server.domain.member.entity.MemberStatus;
 
 import javax.persistence.Lob;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 
@@ -38,6 +36,5 @@ public class MemberDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
-
 
 }

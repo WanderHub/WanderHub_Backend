@@ -52,7 +52,7 @@ logging:
           jpa: DEBUG
 
 admin:
-  email: ${ADMIN_EMAILS}
+  email: ${ADMIN_EMAIL}
 
 
 jwt:

@@ -18,6 +18,7 @@ public class HomeTestController {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String rediUri;
 
+
     @GetMapping
     public String testHome(Model m) {
         m.addAttribute("client_id", kid);
@@ -26,9 +27,11 @@ public class HomeTestController {
     }
 
     @GetMapping("/receive-token")
+
     public ResponseEntity tokenTest(@RequestParam("access_token")String accessToken, @RequestParam("refresh_token")String refreshToken , @RequestParam("newbie")String newbie) {
         String tokens =  String.format("accessToken = %s     %n%n%n%n%n                  refreshToken = %s   %n%n%n%n%n     newbie = %s",accessToken, refreshToken, newbie) ;
         return new ResponseEntity<>(tokens, HttpStatus.CREATED);
+
     }
 
 }
