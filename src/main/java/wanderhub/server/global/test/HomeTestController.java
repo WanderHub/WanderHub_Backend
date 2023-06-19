@@ -26,6 +26,11 @@ public class HomeTestController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String errorRedirect() {
+        return "redirect:http://localhost:8080";
+    }
+
     @GetMapping("/receive-token")
 
     public ResponseEntity tokenTest(@RequestParam("access_token")String accessToken, @RequestParam("refresh_token")String refreshToken , @RequestParam("newbie")String newbie) {

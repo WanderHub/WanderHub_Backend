@@ -90,12 +90,13 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return accessToken;
     }
 
+    // RefreshToken 생성
     private String delegateRefreshToken(String username) {
         String subject = username;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+
 
         return refreshToken;
     }
@@ -111,16 +112,16 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
 
 //         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
-//        return UriComponentsBuilder
-//                .newInstance()
-//                .scheme("http")
-//                .host("localhost")
-//                .port(8080)
-//                .path("/receive-token")
-//                .queryParams(queryParams)
-//                .build()
-//                .toUri();
-//    }
+        return UriComponentsBuilder
+                .newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8080)
+                .path("/receive-token")
+                .queryParams(queryParams)
+                .build()
+                .toUri();
+    }
 
 
 //        return UriComponentsBuilder
@@ -135,16 +136,15 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //    }
 
 
-        return UriComponentsBuilder
-                .newInstance()
-                .scheme("https")
-                .host("wanderHub.kro.kr")
-                .port(443)
-                .path("/receive-token")
-                .queryParams(queryParams)
-                .build()
-                .toUri();
-
-    }
+//        return UriComponentsBuilder
+//                .newInstance()
+//                .scheme("https")
+//                .host("wanderHub.kro.kr")
+//                .port(443)
+//                .path("/receive-token")
+//                .queryParams(queryParams)
+//                .build()
+//                .toUri();
+//    }
 
 }

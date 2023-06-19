@@ -37,8 +37,9 @@ public class MemberService {
 
     // 멤버 수정 메서드
     public Member updateMember(Member member,Member updateMember) { // 원래있던 member , 수정할 정보를 가진 updateMember
+        verificationActiveMember(member);   // 일단 휴면상태인지 검증
         verificatioinNickName(member, updateMember);    // 닉네임 검증
-        return customBeanUtils.copyNonNullProoerties(updateMember, member);
+        return customBeanUtils.copyNonNullProoerties(updateMember, member); // update의 정보가 member로 저장된다.
     }
 
     // 멤버를 이메일로 찾는다.
@@ -54,7 +55,7 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(() -> new CustomLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
-    // 회원가입시 이메일로 멤버 찾는 용도 사용
+    // 회원가입시 이메일로 멤버 찾는 용도 사용 // OAuth2MemberSuccessHandler에서
     public Optional<Member> findByEmail(String email) {
         // 이메일로 멤버를 찾아온다.
         return memberRepository.findByEmail(email);
@@ -88,17 +89,35 @@ public class MemberService {
         }
     }
 
-    // 닉네임없는 회원이 서비스를 시작하려할 때, 검증 메서드
-    public void verificationMember(String email) {
-        Member member = findMember(email);
-        if(member.getNewbie() && member.getNickName()==null) {
+    // 닉네임없거나 휴면상태인 회원이 서비스를 시작하려할 때, 검증 메서드
+    public void verificationMember(Member member) {
+        if(member.getNewbie() && member.getNickName()==null) {          // 닉네임이 없는 사람인지 검증
             throw new CustomLogicException(ExceptionCode.NICKNAME_REQUIRED);
         }
+        verificationActiveMember(member);   // 휴면상태 검증
     }
 
-    public boolean writeMemberStatus(Member member) {
+    public void verificationMemberByEmail(String email) {
+        verificationMember(findMember(email));  // 이메일로 검증하게하기 // select한번 '덜' 날리기 위해..
+    }
+
+    public void verificationActiveMember(Member member) {
+        if(member.getMemberStatus()==MemberStatus.HUMAN) {              // 휴면상태인지 확인
+            throw new CustomLogicException(ExceptionCode.MEMBER_ALREADY_HUMAN);
+        }
+    }
+    
+    // 회원탈퇴 => 휴면상태
+    public void quitMember(String email) {
+        verificationMemberByEmail(email);
+        Member member = findMember(email);
         member.setMemberStatus(MemberStatus.HUMAN);
-        return member.getMemberStatus()==MemberStatus.HUMAN;
+    }
+
+    // 멤버조회
+    public Member getMember(String email) {
+        verificationMemberByEmail(email);
+        return findMember(email);// 멤버있는지 확인
     }
 
 }
