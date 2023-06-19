@@ -36,26 +36,19 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         var oAuth2User = (OAuth2User) authentication.getPrincipal();                // 인증된 객체로부터 OAuth2User를 얻어온다.
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));     // OAuth2User에서 이메일 주소를 얻어온다.
         List<String> authorities = authorityUtils.createRoles(email);               // 얻어온 이메일로 사용자 권한을 생성한다.
-
         // 이메일로 멤버를 확인한다.
-        // 없다면 이메일을 통해서 Member를 생성한다.
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-
-        saveMember(email);   // 이메일을 통해 User생성
+            // 있으면 생성과정을 skip한다.
+        if(!memberService.findByEmail(email).isPresent()) { // 없다면 이메일을 통해서 Member를 생성한다.
+            saveMember(email);   // 이메일을 통해 User생성
+        }
         verifyActive(email); // 이메일을 통해서 사용자가 활동중인지 아닌지 검증한다.
         redirect(request, response, email, authorities);    // AccessToken과 Refresh Token을 생성해서 전달하는 Redirect
     }
 
     private void saveMember(String email) {
-        if(!memberService.findByEmail(email).isPresent()) {    // 존재하지 않으면 생성가능
             Member member = new Member(email);                  // 멤버가 생성됨.
             memberService.createMember(member);                 // member를 DB에 저장
-        }
     }
-
 
     // 있다면, 해당 사용자가 활동중인지 아닌지 검증한다.
     private void verifyActive(String email) {
@@ -110,7 +103,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
 
-         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
+
+
+//         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
@@ -131,7 +126,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .queryParams(queryParams)
 //                .build()
 //                .toUri();
-//
 //    }
 
 }

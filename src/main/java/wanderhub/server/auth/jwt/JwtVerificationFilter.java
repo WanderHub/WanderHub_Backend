@@ -7,9 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
 import org.springframework.web.filter.OncePerRequestFilter;
-import wanderhub.server.auth.jwt.JwtTokenizer;
 import wanderhub.server.auth.utils.CustomAuthorityUtils;
 
 import javax.servlet.FilterChain;
@@ -70,6 +68,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
     }
 
     // Authentication 객체를 SecurityContext에 저장하기 위한 메서드
+    @SuppressWarnings("unchecked")
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("username");  // JWT에서 파싱한 Claims에서 'username'을 얻는다.
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List) claims.get("roles"));  // JWT의 Claims에서 얻은 권한 정보를 기반으로 권한리스트를 얻는다.

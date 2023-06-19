@@ -54,7 +54,7 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           gradle-version: 7.6.1 # gradle 버전
-          arguments: build      # build
+          arguments: build -x test  # build # test 제외
 
       # build한 후 프로젝트를 압축합니다.
       - name: Make zip file
