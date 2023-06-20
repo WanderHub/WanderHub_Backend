@@ -41,10 +41,8 @@ public class AccompanyController {
         entityReq.setAccompanyDate(LocalDate.parse(accompanyDto.getAccompanyDate())); //accompanyDate 형변환 (String->LocalDate)
         Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName()); //생성
         AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entityResp); //entity -> responseDto
-
         //AccompanyMember에 인원수 1명(만든 사람) 추가
         accompanyMemberService.createAccompanyMember(entityResp.getId(), memberService.findByEmail(principal.getName()).get().getId());
-
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 

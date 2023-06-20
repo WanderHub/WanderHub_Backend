@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import wanderhub.server.auth.utils.CustomAuthorityUtils;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +67,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
     }
 
     // Authentication 객체를 SecurityContext에 저장하기 위한 메서드
+    // 이 메서드가 있기 때문에, 컨트롤러의 매개변수로 Principal을 받을 수 있나..?
     @SuppressWarnings("unchecked")
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("username");  // JWT에서 파싱한 Claims에서 'username'을 얻는다.
@@ -75,6 +75,4 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);   //
         SecurityContextHolder.getContext().setAuthentication(authentication);   // SecurityContext에 Authentication 객체 저장
     }
-
-
 }

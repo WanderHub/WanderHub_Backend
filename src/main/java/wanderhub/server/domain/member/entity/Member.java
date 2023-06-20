@@ -31,7 +31,7 @@ public class Member extends Auditable {
     private String email;
 
     @Setter
-    @Column(name = "NICKNAME", length = 50, unique = true)
+    @Column(name = "NICKNAME", length = 50)
     private String nickName;
 
     @Lob
@@ -68,7 +68,6 @@ public class Member extends Auditable {
         this.imgUrl = imgUrl;
         this.local = local;
     }
-
 
     //table join (Member 일대다 AccompaniedMember)
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

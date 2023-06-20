@@ -47,7 +47,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         }
         verifyActive(email); // 이메일을 통해서 사용자가 활동중인지 아닌지 검증한다.
         redirect(request, response, email, authorities, newbie);    // AccessToken과 Refresh Token을 생성해서 전달하는 Redirect
-
     }
 
     private void saveMember(String email) {
@@ -56,15 +55,12 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     }
 
-
-
     // 있다면, 해당 사용자가 활동중인지 아닌지 검증한다.
     private void verifyActive(String email) {
-        if(!(memberService.findMember(email).getMemberStatus() == MemberStatus.ACTIVE)) {
+        if(!(memberService.findByEmail(email).get().getMemberStatus() == MemberStatus.ACTIVE)) {
             throw new CustomLogicException(ExceptionCode.MEMBER_NOT_ACTIVE);
         }
     }
-
 
     // 토큰 정보를 얻어 프론트엔드로 리다이렉트 해주는 메서드
 
@@ -100,8 +96,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
-
         return refreshToken;
     }
 
@@ -117,16 +111,18 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
 
 //         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
-        return UriComponentsBuilder
-                .newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(8080)
-                .path("/receive-token")
-                .queryParams(queryParams)
-                .build()
-                .toUri();
-    }
+//         return UriComponentsBuilder
+//                 .newInstance()
+//                 .scheme("http")
+//                 .host("localhost")
+//                 .port(8080)
+//                 .path("/receive-token")
+//                 .queryParams(queryParams)
+//                 .build()
+//                 .toUri();
+//     }
+
+        // http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
 
 //        return UriComponentsBuilder
 //                .newInstance()
@@ -139,17 +135,16 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .toUri();
 //    }
 
+        return UriComponentsBuilder
+                .newInstance()
+                .scheme("https")
+                .host("backwander.kro.kr")
+                .port(443)
+                .path("/receive-token")
+                .queryParams(queryParams)
+                .build()
+                .toUri();
 
-//        return UriComponentsBuilder
-//                .newInstance()
-//                .scheme("https")
-//                .host("wanderHub.kro.kr")
-//                .port(443)
-//                .path("/receive-token")
-//                .queryParams(queryParams)
-//                .build()
-//                .toUri();
-//
-//    }
+    }
 
 }

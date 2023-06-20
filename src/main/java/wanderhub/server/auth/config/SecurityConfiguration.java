@@ -1,6 +1,7 @@
 package wanderhub.server.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,6 +29,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration  // 구성정보 클래스
 @EnableWebSecurity(debug = true)  // Spring Security 활성화
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -58,7 +60,7 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login()  // OAuth2 로그인 인증 활성화
                 .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService)
-                )
+                )   // 소셜 로그인 성공한 이후에 이뤄질 Handler
                 .userInfoEndpoint()
                 .userService(customOAuth2MemberService);
 
@@ -84,5 +86,6 @@ public class SecurityConfiguration {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
             builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
+
     }
 }

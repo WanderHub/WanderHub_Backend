@@ -18,8 +18,10 @@ public class HomeTestController {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String rediUri;
 
-    @GetMapping
+    @GetMapping("/")
     public String testHome(Model m) {
+        log.info("kid = {}", kid);
+        log.info("rediUri = {}", rediUri);
         m.addAttribute("client_id", kid);
         m.addAttribute("redirect_uri", rediUri);
         return "index";
