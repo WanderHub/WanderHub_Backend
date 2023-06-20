@@ -61,6 +61,20 @@ public class MemberService {
         return memberRepository.findByEmail(email);
     }
 
+    
+    // 회원탈퇴 => 휴면상태
+    public void quitMember(String email) {
+        verificationMemberByEmail(email);
+        Member member = findMember(email);
+        member.setMemberStatus(MemberStatus.HUMAN);
+    }
+
+    // 멤버조회
+    public Member getMember(String email) {
+        verificationMemberByEmail(email);
+        return findMember(email);// 멤버있는지 확인
+    }
+
     // 닉네임 검증 메서드
     public void verificatioinNickName(Member srcMember, Member updateMember) {
         if(srcMember.getNewbie()) { // 뉴비라면,
@@ -76,8 +90,13 @@ public class MemberService {
     // 뉴비는 닉네임을 변경해야하는데, 변경이 없다면, 변경하라고 예외발생시켜야함.
     public void verificationNewbie(Member updateMember) {
         // 뉴비인데, updateMember에도 닉네임정보가 없다면, 닉네임 변경을 해달라는 예외를 던진다.
-        if(updateMember.getNickName()==null) {
+        if (updateMember.getNickName() == null) {
             throw new CustomLogicException(ExceptionCode.NICKNAME_REQUIRED);
+        } else {        // 닉네임이 있는데, 중복이 발생하면 이미 있다고 예외발생시켜야함.
+            Optional<Member> byNickName = memberRepository.findByNickName(updateMember.getNickName());  // 닉네임으로 회원 조회
+            if(byNickName.isPresent()) {
+                throw new CustomLogicException(ExceptionCode.NICKNAME_DUPLICATED);  // 값이 있으면 이미 닉네임은 사용되는 사람이므로 예외발생시켜야함.
+            }
         }
     }
 
@@ -105,18 +124,7 @@ public class MemberService {
             throw new CustomLogicException(ExceptionCode.MEMBER_ALREADY_HUMAN);
         }
     }
-    
-    // 회원탈퇴 => 휴면상태
-    public void quitMember(String email) {
-        verificationMemberByEmail(email);
-        Member member = findMember(email);
-        member.setMemberStatus(MemberStatus.HUMAN);
-    }
 
-    // 멤버조회
-    public Member getMember(String email) {
-        verificationMemberByEmail(email);
-        return findMember(email);// 멤버있는지 확인
-    }
+
 
 }

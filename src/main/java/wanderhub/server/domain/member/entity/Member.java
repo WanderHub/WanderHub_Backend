@@ -30,7 +30,7 @@ public class Member extends Auditable {
     private String email;
 
     @Setter
-    @Column(name = "NICKNAME", length = 50, unique = true)
+    @Column(name = "NICKNAME", length = 50)
     private String nickName;
 
     @Lob
