@@ -36,20 +36,23 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         var oAuth2User = (OAuth2User) authentication.getPrincipal();                // 인증된 객체로부터 OAuth2User를 얻어온다.
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));     // OAuth2User에서 이메일 주소를 얻어온다.
         List<String> authorities = authorityUtils.createRoles(email);               // 얻어온 이메일로 사용자 권한을 생성한다.
-
-        // 이메일로 멤버를 확인한다.
-        // 없다면 이메일을 통해서 Member를 생성한다.
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-        log.info("useremailuseremailuseremailuseremail =  {}", email);
-
-        if(!memberService.findByEmail(email).isPresent()) {
-            Member member = new Member(email);
-            memberService.createMember(member);
+        // 이메일로 멤버가 있는지 확인한다.
+        Optional<Member> member = memberService.findByEmail(email); // 이메일을 통해서 사용자를 찾아온다.
+        boolean newbie;
+        if(!member.isPresent()) {   // 없다면 이메일을 통해서 Member를 생성한다.
+            saveMember(email);      // 이메일을 통해 User생성
+            newbie = true;          // 새로가입하는 사람
+        } else {                    // 멤버가 있다면, 회원가입 필요없다.
+            newbie = false;         // 새로가입하는 사람 아님.
         }
-        verifyActive(email);
-        redirect(request, response, email, authorities);    // AccessToken과 Refresh Token을 생성해서 전달하는 Redirect
+        verifyActive(email); // 이메일을 통해서 사용자가 활동중인지 아닌지 검증한다.
+        redirect(request, response, email, authorities, newbie);    // AccessToken과 Refresh Token을 생성해서 전달하는 Redirect
+    }
+
+    private void saveMember(String email) {
+            Member member = new Member(email, true);                  // 멤버가 생성됨.
+            memberService.createMember(member);                 // member를 DB에 저장
+
     }
 
     // 있다면, 해당 사용자가 활동중인지 아닌지 검증한다.
@@ -59,15 +62,15 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         }
     }
 
-
     // 토큰 정보를 얻어 프론트엔드로 리다이렉트 해주는 메서드
-    private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
+
+    private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities, boolean newbie) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);    // accessToken을 생성
         String refreshToken = delegateRefreshToken(username);               // refreshToken을 생성
 
         // 프론트엔드 애플리케이션 쪽의 URL을 생성한다.
             // creatURI의 UriComponentsBuilder를 이용해서 AccessToken과 RefreshToken을 포함한 URL을 생성함.
-        String uri = createURI(accessToken, refreshToken).toString();
+        String uri = createURI(accessToken, refreshToken, newbie).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);         // SimpleUrlAuthenticationSuccessHandler에서 제공하는 메서드
 
     }
@@ -87,23 +90,26 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return accessToken;
     }
 
+    // RefreshToken 생성
     private String delegateRefreshToken(String username) {
         String subject = username;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
         return refreshToken;
     }
 
 
-    private URI createURI(String accessToken, String refreshToken) {
+    private URI createURI(String accessToken, String refreshToken, boolean newbie) {
         // MultiValueMap는 Map을 확장하여 키와 여러개의 값 연결 가능.
         // LinkedMultiValueMap은 MultiValueMap 인터페이스의 구현체 중 하나.
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
+        queryParams.add("newbie", String.valueOf(newbie));
+
+
+
 
         // http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
 //        return UriComponentsBuilder
@@ -115,16 +121,29 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .queryParams(queryParams)
 //                .build()
 //                .toUri();
+//    }
+
+//        return UriComponentsBuilder
+//                .newInstance()
+//                .scheme("http")
+//                .host("localhost")
+//                .port(3000)    // 확인하기.
+//                .path("/ouath/redirect")
+//                .queryParams(queryParams)
+//                .build()
+//                .toUri();
+//    }
+
+
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("wanderHub.kro.kr")
-                .path("/oauth")
+                .scheme("https")
+                .host("backwander.kro.kr")
+                .port(443)
+                .path("/receive-token")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
 
     }
-
-
 }

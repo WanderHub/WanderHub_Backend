@@ -2,13 +2,14 @@ package wanderhub.server.domain.accompany.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Builder
 @Getter
@@ -16,7 +17,6 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="accompany")
 public class Accompany extends Auditable {
 
     @Id
@@ -24,15 +24,18 @@ public class Accompany extends Auditable {
     @Column(name="ACCOMPANY_ID")
     private Long id;
 
-    @Column(name="MEMBER_ID", nullable=false)
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
-    @Column(name="WRITER_NAME", nullable=false)
-    private String writerName;
+    @Setter
+    @Column(name="NICKNAME", nullable=false)
+    private String nickname;
 
     @Column(name="LOCAL", nullable=false)
     private String accompanyLocal;
 
+    @Setter
     @Column(name="ACCOMPANY_DATE")
     private LocalDate accompanyDate;
 
@@ -45,8 +48,20 @@ public class Accompany extends Auditable {
     @Column(name="CONTENT", nullable=false)
     private String accompanyContent;
 
-    @Column(name="STATUS", columnDefinition = "boolean default true")
     @Setter
+    @Column(name="STATUS", columnDefinition = "boolean default true")
     private boolean openStatus;
+
+    @Column(name = "COORD_X")
+    private double coordX;
+
+    @Column(name = "COORD_Y")
+    private double coordY;
+
+    @Column(name = "PLACE_TITLE")
+    private String placeTitle;
+
+    @Formula("(select count(1) from accompany_member am where am.accompany_id = id)")
+    private int registeredMembers;
 
 }

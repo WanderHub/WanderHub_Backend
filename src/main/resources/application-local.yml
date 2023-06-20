@@ -52,7 +52,7 @@ logging:
           jpa: DEBUG
 
 admin:
-  email: ${ADMIN_EMAILS}
+  email: ${ADMIN_EMAIL}
 
 
 jwt:
@@ -60,3 +60,5 @@ jwt:
     secret: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 1440
+
+type: local

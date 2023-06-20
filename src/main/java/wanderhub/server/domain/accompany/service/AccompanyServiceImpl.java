@@ -3,12 +3,12 @@ package wanderhub.server.domain.accompany.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wanderhub.server.domain.accompany.dto.AccompanyDto;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
-import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.repository.AccompanyRepository;
+import wanderhub.server.domain.member.entity.Member;
+import wanderhub.server.domain.member.service.MemberService;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +19,13 @@ import java.util.Optional;
 public class AccompanyServiceImpl implements AccompanyService {
 
     private final AccompanyRepository accompanyRepository;
+    private final MemberService memberService;
 
     @Override
-    public void createAccompany(Accompany accompany) {
+    public Accompany createAccompany(Accompany accompany, String userEmail) {
+        accompany.setNickname(memberService.findByEmail(userEmail).get().getNickName());
         accompany.setOpenStatus(true);
-        accompanyRepository.save(accompany);
+        return accompanyRepository.save(accompany);
     }
 
     @Override
@@ -58,10 +60,4 @@ public class AccompanyServiceImpl implements AccompanyService {
 
         accompanyRepository.delete(entity);
     }
-
-
-
-
-
-
 }

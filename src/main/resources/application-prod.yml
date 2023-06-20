@@ -3,18 +3,18 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${DATA_BASE_NAME}?useSSL=false
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${DATA_BASE_NAME}?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Seoul
     username: ${MYSQL_USER_NAME}
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전
+        show-sql: true
+#        dialect: org.hibernate.dialect.MySQL8Dialect  # MySQL8 버전 # 스프링이 알아서 맞춰준다.
   security:
     oauth2:
       client:
@@ -51,7 +51,6 @@ logging:
 
 admin:
   email: ${ADMIN_EMAILS}
-
 
 jwt:
   key:

@@ -2,15 +2,13 @@ package wanderhub.server.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -24,14 +22,12 @@ import wanderhub.server.auth.oauth.CustomOAuth2MemberService;
 import wanderhub.server.auth.utils.CustomAuthorityUtils;
 import wanderhub.server.domain.member.service.MemberService;
 
-import javax.annotation.PostConstruct;
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration  // 구성정보 클래스
-@EnableWebSecurity  // Spring Security 활성화
+@EnableWebSecurity(debug = true)  // Spring Security 활성화
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfiguration {
@@ -64,7 +60,7 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login()  // OAuth2 로그인 인증 활성화
                 .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService)
-                )
+                )   // 소셜 로그인 성공한 이후에 이뤄질 Handler
                 .userInfoEndpoint()
                 .userService(customOAuth2MemberService);
 
@@ -84,39 +80,12 @@ public class SecurityConfiguration {
         return source;
     }
 
-
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
 
-        @Value("${spring.security.oauth2.client.registration.google.clientId}")
-        private Optional<String> clientId;
-
-        @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-        private Optional<String> clientSecret;
-
-
-        @Value("${spring.security.oauth2.client.registration.kakao.clientId}")
-        private Optional<String> kclientId;
-
-        @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
-        private Optional<String> kclientSecret;
-
-        @PostConstruct
-        private ClientRegistration clientRegistration() {
-            log.info("clientId = {}", clientId.isPresent());
-            log.info("clientSecret = {}", clientSecret.isPresent());
-            log.info("kclientId = {}", kclientId.isPresent());
-            log.info("kclientSecret = {}", kclientSecret.isPresent());
-
-            return CommonOAuth2Provider
-                    .GOOGLE
-                    .getBuilder("google")
-                    .clientId(clientId.get())
-                    .clientSecret(clientSecret.get())
-                    .build();
-        }
     }
 }
