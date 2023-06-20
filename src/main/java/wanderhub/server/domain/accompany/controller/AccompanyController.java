@@ -102,6 +102,7 @@ public class AccompanyController {
 
     //남이 생성한 동행에 참여하기 기능
     @PostMapping("/{id}/join")
+    @ResponseStatus(HttpStatus.CREATED)
     public void joinAccompany(Principal principal, @PathVariable Long id) {
 
         String userEmail = principal.getName();
@@ -112,6 +113,7 @@ public class AccompanyController {
 
     //남이 생성한 동행에서 나오기 기능
     @DeleteMapping("/{id}/quit")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void quitAccompany(Principal principal, @PathVariable Long id) {
 
         String userEmail = principal.getName();
