@@ -72,6 +72,7 @@ public class BoardService {
     public void verificationWriter(Board board, Member member) {
         if (!board.getNickName().equals(member.getNickName())) {            // 찾은 게시판의 작성자와 게시판을 수정을 시도하려는 사용자의 닉네임이 다를 때
             throw new CustomLogicException(ExceptionCode.BOARD_WRITER_DIFFERENT);   // 멤버가 다르다는 예외 발생
+
         }
     }
 

@@ -16,8 +16,10 @@ import wanderhub.server.domain.accompany.service.AccompanyService;
 import wanderhub.server.domain.accompany_member.service.AccompanyMemberService;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
-
 import javax.sound.midi.MetaMessage;
+import wanderhub.server.domain.member.entity.Member;
+import wanderhub.server.domain.member.service.MemberService;
+
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -30,8 +32,8 @@ import java.util.Optional;
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
-    private final MemberService memberService;
     private final AccompanyMemberService accompanyMemberService;
+    private final MemberService memberService; //나중에 지울 부분
 
     //생성
     @PostMapping
@@ -119,6 +121,5 @@ public class AccompanyController {
 
         accompanyMemberService.deleteAccompanyMember(id, member.getId());
     }
-
 
 }
