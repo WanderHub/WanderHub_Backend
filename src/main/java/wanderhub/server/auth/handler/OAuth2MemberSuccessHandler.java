@@ -143,7 +143,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("https")
-                .host("wanderHub.kro.kr")
+                .host("backwander.kro.kr")
                 .port(443)
                 .path("/receive-token")
                 .queryParams(queryParams)

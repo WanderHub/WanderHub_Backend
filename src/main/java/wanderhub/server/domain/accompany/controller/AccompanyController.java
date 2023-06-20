@@ -33,9 +33,6 @@ public class AccompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity create(Principal principal, @Validated @RequestBody AccompanyDto accompanyDto) {
-        Member member = memberService.findMember(principal.getName()); //나중에 지울 부분, 테스트코드할 때 지워야 함
-        member.setNickName("nicknameeeeee"); //나중에 지울 부분, 테스트코드할 때 지워야 함
-
         Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
 
         entityReq.setAccompanyDate(LocalDate.parse(accompanyDto.getAccompanyDate()));
