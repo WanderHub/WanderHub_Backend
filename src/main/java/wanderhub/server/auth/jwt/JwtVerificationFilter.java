@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import wanderhub.server.auth.utils.CustomAuthorityUtils;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +75,4 @@ public class JwtVerificationFilter extends OncePerRequestFilter { // request당 
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);   //
         SecurityContextHolder.getContext().setAuthentication(authentication);   // SecurityContext에 Authentication 객체 저장
     }
-
-
 }

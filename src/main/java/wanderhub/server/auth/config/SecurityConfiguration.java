@@ -1,6 +1,7 @@
 package wanderhub.server.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,6 +29,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration  // 구성정보 클래스
 @EnableWebSecurity(debug = true)  // Spring Security 활성화
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -74,7 +76,6 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(Arrays.asList("*"));                              // 스크립트기반의 HTTP 통신 허용 // 운영서버에맞게 커스터마이징
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));  // 지정한 HTTP Method에 대한 통신 허용
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // CorsConfigurationSource를 구현한 클래스
-
         source.registerCorsConfiguration("/**", configuration);                    // 모든 URL에 configuration에서 설정한 정책 적용
         return source;
     }
@@ -85,5 +86,6 @@ public class SecurityConfiguration {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
             builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
+
     }
 }

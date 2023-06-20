@@ -1,6 +1,5 @@
 package wanderhub.server.domain.member.controller;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +51,4 @@ public class MemberController {
     }
 
     // logOut
-
 }

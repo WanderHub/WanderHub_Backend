@@ -67,5 +67,4 @@ public class Member extends Auditable {
         this.imgUrl = imgUrl;
         this.local = local;
     }
-
 }
