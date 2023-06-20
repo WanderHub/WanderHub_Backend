@@ -110,18 +110,19 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
 
 
+//         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
+//         return UriComponentsBuilder
+//                 .newInstance()
+//                 .scheme("http")
+//                 .host("localhost")
+//                 .port(8080)
+//                 .path("/receive-token")
+//                 .queryParams(queryParams)
+//                 .build()
+//                 .toUri();
+//     }
 
         // http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
-//        return UriComponentsBuilder
-//                .newInstance()
-//                .scheme("http")
-//                .host("localhost")
-//                .port(8080)
-//                .path("/receive-token")
-//                .queryParams(queryParams)
-//                .build()
-//                .toUri();
-//    }
 
 //        return UriComponentsBuilder
 //                .newInstance()
@@ -134,7 +135,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .toUri();
 //    }
 
-
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("https")
@@ -146,4 +146,5 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .toUri();
 
     }
+
 }
