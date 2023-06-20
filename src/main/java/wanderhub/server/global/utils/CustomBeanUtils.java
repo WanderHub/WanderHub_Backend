@@ -1,7 +1,5 @@
 package wanderhub.server.global.utils;
 
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Component;

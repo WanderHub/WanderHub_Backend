@@ -20,6 +20,8 @@ public class HomeTestController {
 
     @GetMapping("/")
     public String testHome(Model m) {
+        log.info("kid = {}", kid);
+        log.info("rediUri = {}", rediUri);
         m.addAttribute("client_id", kid);
         m.addAttribute("redirect_uri", rediUri);
         return "index";

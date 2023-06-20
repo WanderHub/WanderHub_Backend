@@ -44,7 +44,6 @@ public class OAuth2Attribute {
     }
 
     // 카카오 로그인 OAuth2 유저 사용자
-    @SuppressWarnings("unchecked")
     private static OAuth2Attribute ofKakao(String attributeKey,
                                            Map<String, Object> attributes) {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
@@ -57,7 +56,6 @@ public class OAuth2Attribute {
                 .attributeKey(attributeKey)                     // attributeKey를 속성에 추가.
                 .build();
     }
-
 
     // OAuth2User 객체에 넣어주기 위해서 내부 속성을 Map으로 변환해서 값들을 반환해준다.
     public Map<String, Object> convertToMap() {

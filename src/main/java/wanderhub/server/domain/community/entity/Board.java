@@ -33,7 +33,7 @@ public class Board extends Auditable {
     private String content;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "LOCAL")
+    @Column(name = "LOCAL",length = 16)
     @Setter
     private BoardLocal local;
 

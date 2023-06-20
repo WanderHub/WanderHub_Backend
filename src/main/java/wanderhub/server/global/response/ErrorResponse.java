@@ -3,10 +3,8 @@ package wanderhub.server.global.response;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-
 import wanderhub.server.global.exception.CustomLogicException;
 import wanderhub.server.global.exception.ExceptionCode;
-
 import javax.validation.ConstraintViolation;
 import java.util.List;
 import java.util.Set;
@@ -28,9 +26,8 @@ public class ErrorResponse {
     public ErrorResponse(int status, String message, List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
         this.status = status;
         this.message = message;
-        this.fieldErrors = fieldErrors;
-        this.violationErrors = violationErrors;
     }
+
 
     public static ErrorResponse of(BindingResult bindingResult) {
         return new ErrorResponse(FieldError.of(bindingResult), null);
@@ -56,6 +53,7 @@ public class ErrorResponse {
     public static ErrorResponse of(HttpStatus httpStatus, String message) {
         return new ErrorResponse(httpStatus.value(), message, null, null);
     }
+
 
     @Getter
     public static class FieldError {
