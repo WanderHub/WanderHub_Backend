@@ -23,6 +23,7 @@ public class AccompanyServiceImpl implements AccompanyService {
 
     @Override
     public Accompany createAccompany(Accompany accompany, String userEmail) {
+        accompany.setMember(memberService.findByEmail(userEmail).get()); //tmp
         accompany.setNickname(memberService.findByEmail(userEmail).get().getNickName());
         accompany.setOpenStatus(true);
         return accompanyRepository.save(accompany);

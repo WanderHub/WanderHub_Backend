@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
 import wanderhub.server.global.audit.Auditable;
 
 import javax.persistence.*;
@@ -67,5 +68,10 @@ public class Member extends Auditable {
         this.imgUrl = imgUrl;
         this.local = local;
     }
+
+
+    //table join (Member 일대다 AccompaniedMember)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<AccompanyMember> list = new ArrayList<>();
 
 }

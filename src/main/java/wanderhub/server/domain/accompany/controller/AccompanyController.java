@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
@@ -12,9 +13,11 @@ import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.service.AccompanyService;
+import wanderhub.server.domain.accompany_member.service.AccompanyMemberService;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
 
+import javax.sound.midi.MetaMessage;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,21 +30,20 @@ import java.util.Optional;
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
-    private final MemberService memberService; //나중에 지울 부분
+    private final MemberService memberService;
+    private final AccompanyMemberService accompanyMemberService;
 
     //생성
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity create(Principal principal, @Validated @RequestBody AccompanyDto accompanyDto) {
-        Member member = memberService.findMember(principal.getName()); //나중에 지울 부분, 테스트코드할 때 지워야 함
-        member.setNickName("nicknameeeeee"); //나중에 지울 부분, 테스트코드할 때 지워야 함
+        Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto); //requestDto -> entity
+        entityReq.setAccompanyDate(LocalDate.parse(accompanyDto.getAccompanyDate())); //accompanyDate 형변환 (String->LocalDate)
+        Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName()); //생성
+        AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entityResp); //entity -> responseDto
 
-        Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto);
-
-        entityReq.setAccompanyDate(LocalDate.parse(accompanyDto.getAccompanyDate()));
-
-        Accompany entityResp = accompanyService.createAccompany(entityReq, principal.getName());
-        AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entityResp);
+        //AccompanyMember에 인원수 1명(만든 사람) 추가
+        accompanyMemberService.createAccompanyMember(entityResp.getId(), memberService.findByEmail(principal.getName()).get().getId());
 
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
@@ -89,7 +91,34 @@ public class AccompanyController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAccompany(@PathVariable Long id) {
-        accompanyService.deleteAccompany(id);
+    public void deleteAccompany(Principal principal, @PathVariable Long id) {
+        Accompany accompany = accompanyService.findById(id).get();
+        Member member = memberService.findByEmail(principal.getName()).get();
+
+        if(member.getNickName().equals(accompany.getNickname())) { //생성한 사람만 지울 수 있음
+            accompanyService.deleteAccompany(id);
+        }
     }
+
+    //남이 생성한 동행에 참여하기 기능
+    @PostMapping("/{id}/join")
+    public void joinAccompany(Principal principal, @PathVariable Long id) {
+
+        String userEmail = principal.getName();
+        Member member = memberService.findByEmail(userEmail).get();
+
+        accompanyMemberService.createAccompanyMember(id, member.getId());
+    }
+
+    //남이 생성한 동행에서 나오기 기능
+    @DeleteMapping("/{id}/quit")
+    public void quitAccompany(Principal principal, @PathVariable Long id) {
+
+        String userEmail = principal.getName();
+        Member member = memberService.findByEmail(userEmail).get();
+
+        accompanyMemberService.deleteAccompanyMember(id, member.getId());
+    }
+
+
 }
