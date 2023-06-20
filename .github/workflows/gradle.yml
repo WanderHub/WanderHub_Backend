@@ -9,9 +9,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "ImUnderSilver" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "ImUnderSilver" ]
+    branches: [ "main" ]
 
 
 permissions:
