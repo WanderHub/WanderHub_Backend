@@ -56,9 +56,17 @@ public class BoardService {
         boardRepository.delete(findBoard);                              //  개시판 삭제
     }
 
+    // 게시판 단일 조회
     public Board getBoard(Long boardId) {
         Optional<Board> board = boardRepository.findById(boardId);
-        return board.orElseThrow(() -> new CustomLogicException(ExceptionCode.BOARD_NOT_FOUND));
+        if(board.isPresent()) { // 게시판이 있으면
+            Board findBoard = board.get();  // 실제 게시판 객체 추출
+            Long currentViewPoint = findBoard.getViewPoint(); // 현재 조회수를 추출한다.
+            findBoard.setViewPoint(currentViewPoint+1L);      // 조회수를 1 증가시킨다. // Long타입이기때문에 1L.
+            return findBoard;   // Board를 반환한다.
+        } else {
+            throw new CustomLogicException(ExceptionCode.BOARD_NOT_FOUND);  // 없으면 예외던진다.
+        }
     }
 
     // 게시판을 찾을 떄 없으면 예외 발생

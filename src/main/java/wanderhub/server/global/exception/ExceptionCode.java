@@ -5,6 +5,8 @@ import lombok.Getter;
 @Getter
 public enum ExceptionCode {
 
+    LOCAL_ILLEGAL_ARGUMENT_LOCAL(404, "Local is ILLEGAL_ARGUMENT"),
+
     NICKNAME_REQUIRED(400,"Nickname is required"),
     NICKNAME_NOT_UPDATE(400, "Nickname is never update"),
     NICKNAME_DUPLICATED(404, "Nickname Duplicated"),
