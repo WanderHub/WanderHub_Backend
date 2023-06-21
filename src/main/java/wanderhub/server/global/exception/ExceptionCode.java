@@ -17,7 +17,10 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
 
     BOARD_NOT_FOUND(404, "Board is not found"),
-    BOARD_WRITER_DIFFERENT(404, "Writer Different");
+    BOARD_WRITER_DIFFERENT(404, "Writer Different"),
+
+    BOARD_COMMENT_NOT_FOUND(404, "BoardComment is not found"),
+    BOARD_COMMNET_WRITER_DIFFERENT(404, "Witer Different");
 
     @Getter
     private final int status;

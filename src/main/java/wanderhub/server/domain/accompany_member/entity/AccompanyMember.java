@@ -26,5 +26,4 @@ public class AccompanyMember {
     @JoinColumn(name = "MEMBER_ID", updatable = false)
     private Member member;
 
-
 }
