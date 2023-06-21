@@ -1,11 +1,13 @@
 package wanderhub.server.domain.accompany.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
@@ -16,28 +18,24 @@ import wanderhub.server.domain.accompany.service.AccompanyService;
 import wanderhub.server.domain.accompany_member.service.AccompanyMemberService;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
-import javax.sound.midi.MetaMessage;
-import wanderhub.server.domain.member.entity.Member;
-import wanderhub.server.domain.member.service.MemberService;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/accompany")
+@RequestMapping("/v1/accompany")
 @RequiredArgsConstructor
-@Slf4j
 public class AccompanyController {
 
     private final AccompanyService accompanyService;
     private final AccompanyMemberService accompanyMemberService;
-    private final MemberService memberService; //나중에 지울 부분
+    private final MemberService memberService;
 
     //생성
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity create(Principal principal, @Validated @RequestBody AccompanyDto accompanyDto) {
         Accompany entityReq = AccompanyMapper.INSTANCE.toEntity(accompanyDto); //requestDto -> entity
         entityReq.setAccompanyDate(LocalDate.parse(accompanyDto.getAccompanyDate())); //accompanyDate 형변환 (String->LocalDate)
@@ -55,12 +53,25 @@ public class AccompanyController {
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
         return ResponseEntity.ok(dtoList);
     }
+//    @GetMapping
+//    public ResponseEntity<List<AccompanyResponseDto>> findAll(Pageable pageable) {
+//        List<Accompany> entityList = accompanyService.findAll(pageable);
+//        List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
+//        return ResponseEntity.ok(dtoList);
+//    }
+//    @GetMapping
+//    public ResponseEntity<List<AccompanyResponseDto>> findAll(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+//        Page<Accompany> entityPage = accompanyService.findAll(pageable);
+//        List<Accompany> entityList = entityPage.getContent();
+//        List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
+//
+//        return ResponseEntity.ok(dtoList);
+//    }
 
     //accompanyId로 조회
     @GetMapping("/{id}")
     public ResponseEntity<Optional<AccompanyResponseDto>> findById(@PathVariable Long id) {
-        Accompany entity = accompanyService.findById(id)
-                .orElseThrow(NullPointerException::new); //Optional에 담긴 값이 없다면 throw 던져줌=에러 발생 (Exception 커스텀 가능)
+        Accompany entity = accompanyService.findById(id).get();
         AccompanyResponseDto dto = AccompanyMapper.INSTANCE.toDto(entity);
 
         return ResponseEntity.ok(Optional.of(dto));
@@ -69,8 +80,9 @@ public class AccompanyController {
     //지역 별 조회
     @GetMapping("/bylocal")
     public ResponseEntity<List<AccompanyResponseDto>> findByLocal(@RequestParam(value = "accompanyLocal") String local) {
-        List<Accompany> entityList = accompanyService.findByLocal(local);
-        List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
+        List<Accompany> ent = accompanyService.findByLocal(local);
+        List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(ent);
+
         return ResponseEntity.ok(dtoList);
     }
 
@@ -92,19 +104,13 @@ public class AccompanyController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccompany(Principal principal, @PathVariable Long id) {
-        Accompany accompany = accompanyService.findById(id).get();
-        Member member = memberService.findByEmail(principal.getName()).get();
-
-        if(member.getNickName().equals(accompany.getNickname())) { //생성한 사람만 지울 수 있음
-            accompanyService.deleteAccompany(id);
-        }
+        accompanyService.deleteAccompany(id, principal.getName());
     }
 
     //남이 생성한 동행에 참여하기 기능
-    @PostMapping("/{id}/join")
+    @PostMapping("/join/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void joinAccompany(Principal principal, @PathVariable Long id) {
-
         String userEmail = principal.getName();
         Member member = memberService.findByEmail(userEmail).get();
 
@@ -112,10 +118,9 @@ public class AccompanyController {
     }
 
     //남이 생성한 동행에서 나오기 기능
-    @DeleteMapping("/{id}/quit")
+    @DeleteMapping("/quit/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void quitAccompany(Principal principal, @PathVariable Long id) {
-
         String userEmail = principal.getName();
         Member member = memberService.findByEmail(userEmail).get();
 
