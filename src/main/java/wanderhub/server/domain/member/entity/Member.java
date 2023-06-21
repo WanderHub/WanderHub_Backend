@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
 import wanderhub.server.global.audit.Auditable;
+import wanderhub.server.global.utils.Local;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -39,8 +40,9 @@ public class Member extends Auditable {
     private String imgUrl;
 
     @Setter
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "LOCAL", length = 16)
-    private String local;
+    private Local local;
 
     @Setter
     @ElementCollection(fetch = FetchType.EAGER) // N + 1 일부터 마주치기 위해서 EAGER // 권한은 값이 하나 이상일 수 있기에 사용.
@@ -62,7 +64,7 @@ public class Member extends Auditable {
     }
 
     @Builder
-    public Member(String name, String nickName, String imgUrl, String local) {
+    public Member(String name, String nickName, String imgUrl, Local local) {
         this.name = name;
         this.nickName = nickName;
         this.imgUrl = imgUrl;

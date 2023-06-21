@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import wanderhub.server.domain.community.entity.BoardLocal;
+import wanderhub.server.global.utils.Local;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ public class BoardDto {
         private String title;
         @NotBlank
         private String content;
-        private BoardLocal local;
+        private String local;;
     }
 
     @Builder
@@ -30,7 +30,7 @@ public class BoardDto {
     public static class Patch {
         private String title;
         private String content;
-        private BoardLocal local;
+        private String local;
     }
 
     @Builder
@@ -42,7 +42,7 @@ public class BoardDto {
         private String nickName;
         private String title;
         private String content;
-        private BoardLocal local;
+        private String local;
         private Long viewPoint;
         //        private Long likePoint;
         private LocalDateTime createdAt;

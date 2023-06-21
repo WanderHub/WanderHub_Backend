@@ -1,11 +1,9 @@
 package wanderhub.server.domain.community.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.global.audit.Auditable;
+import wanderhub.server.global.utils.Local;
 
 import javax.persistence.*;
 
@@ -35,7 +33,7 @@ public class Board extends Auditable {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "LOCAL")
     @Setter
-    private BoardLocal local;
+    private Local local;
 
 
     @Column(name = "VIEW_POINT")
@@ -53,4 +51,11 @@ public class Board extends Auditable {
 
     // 댓글
 //////
+
+    @Builder
+    public Board(String title, String content, Local local) {
+        this.title = title;
+        this.content = content;
+        this.local = local;
+    }
 }
