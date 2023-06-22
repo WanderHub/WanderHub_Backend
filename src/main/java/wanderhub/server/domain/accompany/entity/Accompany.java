@@ -7,6 +7,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.global.audit.Auditable;
+import wanderhub.server.global.utils.Local;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -27,34 +29,28 @@ public class Accompany extends Auditable {
     @Column(name="ACCOMPANY_ID")
     private Long id;
 
-    //tmp
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
-    @Setter
-    @Column(name="NICKNAME", nullable=false)
+    @Column(name="NICKNAME", nullable=false, length = 50)
     private String nickname;
 
-    @Column(name="LOCAL", nullable=false)
+    @Column(name="LOCAL", nullable=false, length = 16)
     private String accompanyLocal;
 
     @Setter
-    @Column(name="ACCOMPANY_DATE")
+    @Column(name="ACCOMPANY_DATE", nullable=false)
     private LocalDate accompanyDate;
 
     @Column(name="MAX_NUM", nullable=false)
     private int maxNum;
 
-    @Column(name="TITLE", nullable=false)
+    @Column(name="TITLE", nullable=false, length = 100)
     private String accompanyTitle;
 
-    @Column(name="CONTENT", nullable=false)
+    @Column(name="CONTENT", nullable=false, length = 500)
     private String accompanyContent;
 
     @Setter
-    @Column(name="STATUS", columnDefinition = "boolean default true")
+    @Column(name="STATUS", nullable=false, columnDefinition = "boolean default true")
     private boolean openStatus;
 
     @Column(name = "COORD_X")
@@ -63,13 +59,11 @@ public class Accompany extends Auditable {
     @Column(name = "COORD_Y")
     private double coordY;
 
-    @Column(name = "PLACE_TITLE")
+    @Column(name = "PLACE_TITLE", length = 50)
     private String placeTitle;
-
 
     @Formula("(select count(1) from accompany_member am where am.accompany_id = accompany_id)")
     private int registeredMembers;
-
 
     //table join (Accompany 일대다 AccompaniedMember)
     @OneToMany(mappedBy = "accompany", cascade = CascadeType.ALL)

@@ -1,16 +1,18 @@
 package wanderhub.server.domain.accompany.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.repository.AccompanyRepository;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
+import wanderhub.server.global.exception.CustomLogicException;
+import wanderhub.server.global.exception.ExceptionCode;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,42 +25,55 @@ public class AccompanyServiceImpl implements AccompanyService {
 
     @Override
     public Accompany createAccompany(Accompany accompany, String userEmail) {
-        accompany.setMember(memberService.findByEmail(userEmail).get()); //tmp
-        accompany.setNickname(memberService.findByEmail(userEmail).get().getNickName());
+        Member member = memberService.findMember(userEmail);
+        memberService.verificationMember(member); //회원 검증
+        accompany.setNickname(member.getNickName());
         accompany.setOpenStatus(true);
         return accompanyRepository.save(accompany);
     }
 
     @Override
-    public List<Accompany> findAll() {
-        return accompanyRepository.findAll();
+    public Page<Accompany> findAll(Pageable pageable) {
+        return accompanyRepository.findAll(pageable);
     }
 
     @Override
     public Optional<Accompany> findById(Long id) {
-        return accompanyRepository.findById(id);
+        Optional<Accompany> accompany = accompanyRepository.findById(id);
+        if(accompany.isPresent()) {
+            return accompany;
+        } else {
+            throw new CustomLogicException(ExceptionCode.ACCOMPANY_NOT_FOUND);
+        }
     }
 
     @Override
-    public List<Accompany> findByLocal(String accompanyLocal) {
-        return accompanyRepository.findByAccompanyLocal(accompanyLocal);
+    public Page<Accompany> findByLocal(String accompanyLocal, Pageable pageable) {
+        return accompanyRepository.findByAccompanyLocal(accompanyLocal, pageable);
     }
 
     @Override
-    public List<Accompany> findByDate(String accompanyDate) {
-        return accompanyRepository.findByAccompanyDate(LocalDate.parse(accompanyDate));
+    public Page<Accompany> findByDate(String accompanyDate, Pageable pageable) {
+        return accompanyRepository.findByAccompanyDate(LocalDate.parse(accompanyDate), pageable);
     }
 
     @Override
-    public List<Accompany> findByLocalAndDate(String accompanyLocal, String accompanyDate) {
-        return accompanyRepository.findByAccompanyLocalAndAccompanyDate(accompanyLocal, LocalDate.parse(accompanyDate));
+    public Page<Accompany> findByLocalAndDate(String accompanyLocal, String accompanyDate, Pageable pageable) {
+        return accompanyRepository.findByAccompanyLocalAndAccompanyDate(accompanyLocal, LocalDate.parse(accompanyDate), pageable);
     }
 
     @Override
-    public void deleteAccompany(Long id) {
-        Accompany entity = accompanyRepository.findById(id)
-                .orElseThrow(NullPointerException::new);
+    public void deleteAccompany(Long id, String userEmail) {
+        Member member = memberService.findByEmail(userEmail).get();
+        memberService.verificationMember(member); //회원 검증
 
-        accompanyRepository.delete(entity);
+        Accompany accompany = accompanyRepository.findById(id)
+                .orElseThrow(()->new CustomLogicException(ExceptionCode.ACCOMPANY_NOT_FOUND));
+
+        if(member.getNickName().equals(accompany.getNickname())) { //생성한 사람만 지울 수 있음
+            accompanyRepository.delete(accompany);
+        } else {
+            throw new CustomLogicException(ExceptionCode.ACCOMPANY_WRITER_DIFFERENT);
+        }
     }
 }

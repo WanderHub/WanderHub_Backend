@@ -1,10 +1,19 @@
 package wanderhub.server.domain.member.dto;
 
 import lombok.*;
+import wanderhub.server.domain.accompany.dto.AccompanyDto;
+import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
+import wanderhub.server.domain.accompany_member.dto.AccompanyMemberResponseDto;
+import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
+import wanderhub.server.domain.community.dto.BoardDto;
+import wanderhub.server.domain.community.entity.Board;
+import wanderhub.server.domain.community_comment.dto.BoCommentDto;
+import wanderhub.server.domain.community_comment.entity.BoComment;
 import wanderhub.server.domain.member.entity.MemberStatus;
 
 import javax.persistence.Lob;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MemberDto {
 
@@ -34,7 +43,35 @@ public class MemberDto {
         private String imgUrl;
         private String local;
         private MemberStatus memberStatus;
+        private boolean newbie;
+
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
+
+    // 마이페이지 조회시
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GetResponse {
+        private String name;
+        private String email;
+        private String nickName;
+        @Lob
+        private String imgUrl;
+        private String local;
+        private MemberStatus memberStatus;
+        private boolean newbie;
+        @Setter   // 동행 완료시
+        private List<AccompanyMemberResponseDto> accompanyMembers;
+        @Setter
+        private List<BoardDto.Response> boardList;
+        @Setter
+        private List<BoCommentDto.Response> boCommentList;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+    }
+
+
 }
