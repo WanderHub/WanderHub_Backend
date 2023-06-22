@@ -10,6 +10,8 @@ import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
 import wanderhub.server.domain.accompany_member.repository.AccompanyMemberRepository;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
+import wanderhub.server.global.exception.CustomLogicException;
+import wanderhub.server.global.exception.ExceptionCode;
 
 import java.util.List;
 
@@ -23,23 +25,21 @@ public class AccompanyMemberService {
     private final MemberService memberService;
 
     public void createAccompanyMember(Long accompanyId, Long memberId) {
+        Member member = memberService.findMember(memberId);
+        memberService.verificationMember(member); //회원 검증
+
         //인원수 체크
         Accompany accompany = accompanyService.findById(accompanyId).get();
-
         List<AccompanyMember> memberList = accompanyMemberRepository.findByAccompany(accompany);
         if(!memberList.isEmpty() && memberList.size()>=accompany.getMaxNum()) {
-            System.out.println("maxNum 초과!");
-            return;
+            throw new CustomLogicException(ExceptionCode.ACCOMPANY_JOIN_MAX_NUM_OVER);
         }
 
         //이미 가입되어있으면 안되게 처리
-        Member member = memberService.findMember(memberId);
-
         List<AccompanyMember> accompanyList = accompanyMemberRepository.findByMember(member);
         for(AccompanyMember chk : accompanyList) {
             if(chk.getAccompany().getId()==accompanyId) {
-                System.out.println("이미 참여 중인 동행!");
-                return;
+                throw new CustomLogicException(ExceptionCode.ACCOMPANY_JOIN_ALREADY_JOINED);
             }
         }
 
@@ -52,23 +52,26 @@ public class AccompanyMemberService {
 
     //남이 생성한 동행에서 나오기 기능
     public void deleteAccompanyMember(Long accompanyId, Long memberId) {
+        Member member = memberService.findMember(memberId);
+        memberService.verificationMember(member); //회원 검증
+
         Accompany accompany = accompanyService.findById(accompanyId).get();
 
         //본인이 생성한 동행글인지 검증
-        Member member = memberService.findMember(memberId);
-
         if(accompany.getNickname().equals(member.getNickName())) {
-            System.out.println("자기가 생성한 동행글에서는 나올 수 없음!");
-            return;
+            throw new CustomLogicException(ExceptionCode.ACCOMPANY_JOIN_CANNOT_QUIT);
         }
 
         List<AccompanyMember> memberList = accompanyMemberRepository.findByAccompany(accompany);
         for (AccompanyMember tmp : memberList) {
             if(tmp.getMember().getId()==memberId) {
                 accompanyMemberRepository.delete(tmp);
-                break;
+                return;
             }
         }
+
+        //들어가있던 사람 아니면 예외처리
+        throw new CustomLogicException(ExceptionCode.ACCOMPANY_JOIN_NOT_A_MEMBER);
     }
 
 
