@@ -1,11 +1,13 @@
 package wanderhub.server.domain.community.entity;
 
-import lombok.*;
+import wanderhub.server.domain.community_comment.entity.BoComment;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.global.audit.Auditable;
 import wanderhub.server.global.utils.Local;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -43,6 +45,7 @@ public class Board extends Auditable {
     // 좋아요 추가하면서 좋아요 수 넣기
 //////
 
+
     @ManyToOne        // EAGER 기본값 N+1이 보고싶다..
     @JoinColumn(name = "MEMBER_ID")
     @Setter
@@ -50,7 +53,8 @@ public class Board extends Auditable {
 
 
     // 댓글
-//////
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board", orphanRemoval = true) // orphanRemoval 연관관계가 끊어지면 자동으로 삭제
+    private List<BoComment> boComments = new ArrayList<>();
 
     @Builder
     public Board(String title, String content, Local local) {

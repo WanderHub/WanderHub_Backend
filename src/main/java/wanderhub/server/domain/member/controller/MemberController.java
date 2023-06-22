@@ -14,7 +14,7 @@ import wanderhub.server.global.response.SingleResponse;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/v1/members")
 @Slf4j
 public class MemberController {
 
@@ -39,7 +39,7 @@ public class MemberController {
     @GetMapping
     public ResponseEntity getMember(Principal principal) {
         Member member = memberService.getMember(principal.getName());
-        return ResponseEntity.ok(new SingleResponse<>(mapper.memberToMemberResponse(member)));
+        return ResponseEntity.ok(new SingleResponse<>(mapper.getMemberToMemberResponse(member)));
     }
 
 

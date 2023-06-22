@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
+import wanderhub.server.domain.community.entity.Board;
+import wanderhub.server.domain.community_comment.entity.BoComment;
 import wanderhub.server.global.audit.Auditable;
 import wanderhub.server.global.utils.Local;
 
@@ -59,6 +61,18 @@ public class Member extends Auditable {
     @Column(name = "NEWBIE")
     private Boolean newbie;
 
+//     table join (Member 일대다 AccompaniedMember)
+   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+   private List<AccompanyMember> accompanyMembers = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Board> boardList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<BoComment> boCommentList = new ArrayList<>();
+
+
     public Member(String email, Boolean newbie) {   // 이메일로 멤버 생성
         this.email = email;
         this.newbie = newbie;
@@ -72,8 +86,5 @@ public class Member extends Auditable {
         this.local = local;
     }
 
-    //table join (Member 일대다 AccompaniedMember)
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<AccompanyMember> accompanyMembers = new ArrayList<>();
 
 }

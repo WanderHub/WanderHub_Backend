@@ -1,6 +1,5 @@
 package wanderhub.server.domain.community.controller;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import java.security.Principal;
 @Slf4j
 @RestController
 @Validated
-@RequestMapping("/community")
+@RequestMapping("/v1/community")
 public class BoardController {
 
     private final BoardService boardService;
