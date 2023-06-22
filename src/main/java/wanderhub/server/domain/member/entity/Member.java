@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
 import wanderhub.server.domain.community.entity.Board;
 import wanderhub.server.domain.community_comment.entity.BoComment;
@@ -60,9 +61,9 @@ public class Member extends Auditable {
     @Column(name = "NEWBIE")
     private Boolean newbie;
 
-    //table join (Member 일대다 AccompaniedMember)
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-//    private List<AccompanyMember> accompanyMembers = new ArrayList<>();
+//     table join (Member 일대다 AccompaniedMember)
+   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+   private List<AccompanyMember> accompanyMembers = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -84,4 +85,6 @@ public class Member extends Auditable {
         this.imgUrl = imgUrl;
         this.local = local;
     }
+
+
 }

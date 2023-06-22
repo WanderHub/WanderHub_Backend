@@ -22,6 +22,15 @@ public enum ExceptionCode {
     BOARD_COMMENT_NOT_FOUND(404, "BoardComment is not found"),
     BOARD_COMMNET_WRITER_DIFFERENT(404, "Witer Different");
 
+    ACCOMPANY_NOT_FOUND(404, "Accompany not found"),
+    ACCOMPANY_WRITER_DIFFERENT(404, "Writer Different"),
+
+    ACCOMPANY_JOIN_MAX_NUM_OVER(404, "Max num over"),
+    ACCOMPANY_JOIN_ALREADY_JOINED(404, "Already joined"),
+    ACCOMPANY_JOIN_CANNOT_QUIT(404, "Cannot quit as you made"),
+    ACCOMPANY_JOIN_NOT_A_MEMBER(404, "Cannot quit as not a member");
+
+
     @Getter
     private final int status;
 

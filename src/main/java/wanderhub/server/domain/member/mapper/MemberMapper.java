@@ -11,6 +11,7 @@ import wanderhub.server.global.utils.Local;
 
 import java.util.stream.Collectors;
 
+
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
 
@@ -73,9 +74,9 @@ public interface MemberMapper {
             if(member.getBoCommentList()!=null) {
                 response.setBoCommentList(boardCommentMapper.boCommentsToBoCommentDtoResponseList(member.getBoCommentList()));
             }
-//            if(member.getAccompanyMembers()!=null) {
-//                response.setAccompanyMembers(accompanyMemberMapper.accompanyMemberToAccompanyMemberDtoResponseList(member.getAccompanyMembers()));
-//            }
+           if(member.getAccompanyMembers()!=null) {
+               response.setAccompanyMembers(accompanyMemberMapper.accompanyMemberToAccompanyMemberDtoResponseList(member.getAccompanyMembers()));
+           }
             return response;
 
 
