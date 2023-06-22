@@ -20,7 +20,7 @@ public enum ExceptionCode {
     BOARD_WRITER_DIFFERENT(404, "Writer Different"),
 
     BOARD_COMMENT_NOT_FOUND(404, "BoardComment is not found"),
-    BOARD_COMMNET_WRITER_DIFFERENT(404, "Witer Different");
+    BOARD_COMMNET_WRITER_DIFFERENT(404, "Witer Different"),
 
     ACCOMPANY_NOT_FOUND(404, "Accompany not found"),
     ACCOMPANY_WRITER_DIFFERENT(404, "Writer Different"),

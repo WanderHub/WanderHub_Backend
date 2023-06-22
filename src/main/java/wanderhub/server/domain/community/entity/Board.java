@@ -1,5 +1,6 @@
 package wanderhub.server.domain.community.entity;
 
+import lombok.*;
 import wanderhub.server.domain.community_comment.entity.BoComment;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.global.audit.Auditable;

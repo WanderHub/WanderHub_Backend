@@ -3,6 +3,7 @@ package wanderhub.server.domain.member.dto;
 import lombok.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
 import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
+import wanderhub.server.domain.accompany_member.dto.AccompanyMemberResponseDto;
 import wanderhub.server.domain.accompany_member.entity.AccompanyMember;
 import wanderhub.server.domain.community.dto.BoardDto;
 import wanderhub.server.domain.community.entity.Board;
@@ -62,10 +63,8 @@ public class MemberDto {
         private String local;
         private MemberStatus memberStatus;
         private boolean newbie;
-//        @Setter   // 동행 완료시
-//        private List<AccompanyMemberDto.Response> accompanyMembers;
-//        @Setter   // 동행 완료시 주석해제
-//        private List<AccompanyResponseDto> accompanyList;
+        @Setter   // 동행 완료시
+        private List<AccompanyMemberResponseDto> accompanyMembers;
         @Setter
         private List<BoardDto.Response> boardList;
         @Setter
