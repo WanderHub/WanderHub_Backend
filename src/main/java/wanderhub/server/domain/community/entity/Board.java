@@ -52,7 +52,6 @@ public class Board extends Auditable {
     @Setter
     private Member member;
 
-
     // 댓글
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "board", orphanRemoval = true) // orphanRemoval 연관관계가 끊어지면 자동으로 삭제
     private List<BoComment> boComments = new ArrayList<>();

@@ -35,9 +35,6 @@ public class Accompany extends Auditable {
 
     @Column(name="LOCAL", nullable=false, length = 16)
     private String accompanyLocal;
-//    @Enumerated(value = EnumType.STRING)
-//    @Column(name="LOCAL")
-//    private Local accompanyLocal;
 
     @Setter
     @Column(name="ACCOMPANY_DATE", nullable=false)

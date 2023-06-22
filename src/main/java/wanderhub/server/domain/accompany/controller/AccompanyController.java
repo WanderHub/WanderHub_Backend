@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wanderhub.server.domain.accompany.dto.AccompanyDto;
@@ -14,6 +15,9 @@ import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.mapper.AccompanyMapper;
 import wanderhub.server.domain.accompany.service.AccompanyService;
 import wanderhub.server.domain.accompany_member.service.AccompanyMemberService;
+import wanderhub.server.domain.member.entity.Member;
+import wanderhub.server.domain.member.service.MemberService;
+import javax.sound.midi.MetaMessage;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
 
