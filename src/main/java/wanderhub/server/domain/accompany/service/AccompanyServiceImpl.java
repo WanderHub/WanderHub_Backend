@@ -2,11 +2,9 @@ package wanderhub.server.domain.accompany.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wanderhub.server.domain.accompany.dto.AccompanyResponseDto;
 import wanderhub.server.domain.accompany.entity.Accompany;
 import wanderhub.server.domain.accompany.repository.AccompanyRepository;
 import wanderhub.server.domain.member.entity.Member;
@@ -14,11 +12,7 @@ import wanderhub.server.domain.member.service.MemberService;
 import wanderhub.server.global.exception.CustomLogicException;
 import wanderhub.server.global.exception.ExceptionCode;
 
-import javax.swing.text.html.Option;
-import java.awt.print.Pageable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,18 +33,9 @@ public class AccompanyServiceImpl implements AccompanyService {
     }
 
     @Override
-    public List<Accompany> findAll() {
-        return accompanyRepository.findAll();
+    public Page<Accompany> findAll(Pageable pageable) {
+        return accompanyRepository.findAll(pageable);
     }
-//    @Override
-//    public List<Accompany> findAll(Pageable pageable) {
-//        List<Accompany> list = accompanyRepository.findAll(pageable).getContent();
-//        return list;
-//    }
-//    @Override
-//    public Page<Accompany> findAll(Pageable pageable) {
-//        return accompanyRepository.findAll(pageable);
-//    }
 
     @Override
     public Optional<Accompany> findById(Long id) {
@@ -63,8 +48,8 @@ public class AccompanyServiceImpl implements AccompanyService {
     }
 
     @Override
-    public List<Accompany> findByLocal(String accompanyLocal) {
-        return accompanyRepository.findByAccompanyLocal(accompanyLocal);
+    public Page<Accompany> findByLocal(String accompanyLocal, Pageable pageable) {
+        return accompanyRepository.findByAccompanyLocal(accompanyLocal, pageable);
     }
 //    @Override
 //    public List<Accompany> findByLocal(String accompanyLocal, Pageable pageable) {
@@ -72,13 +57,13 @@ public class AccompanyServiceImpl implements AccompanyService {
 //    }
 
     @Override
-    public List<Accompany> findByDate(String accompanyDate) {
-        return accompanyRepository.findByAccompanyDate(LocalDate.parse(accompanyDate));
+    public Page<Accompany> findByDate(String accompanyDate, Pageable pageable) {
+        return accompanyRepository.findByAccompanyDate(LocalDate.parse(accompanyDate), pageable);
     }
 
     @Override
-    public List<Accompany> findByLocalAndDate(String accompanyLocal, String accompanyDate) {
-        return accompanyRepository.findByAccompanyLocalAndAccompanyDate(accompanyLocal, LocalDate.parse(accompanyDate));
+    public Page<Accompany> findByLocalAndDate(String accompanyLocal, String accompanyDate, Pageable pageable) {
+        return accompanyRepository.findByAccompanyLocalAndAccompanyDate(accompanyLocal, LocalDate.parse(accompanyDate), pageable);
     }
 
     @Override

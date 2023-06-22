@@ -1,10 +1,8 @@
 package wanderhub.server.domain.accompany.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,6 @@ import wanderhub.server.domain.accompany_member.service.AccompanyMemberService;
 import wanderhub.server.domain.member.entity.Member;
 import wanderhub.server.domain.member.service.MemberService;
 
-import java.awt.print.Pageable;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,25 +45,13 @@ public class AccompanyController {
 
     //전체 조회 (경로 임시)
     @GetMapping
-    public ResponseEntity<List<AccompanyResponseDto>> findAll() {
-        List<Accompany> entityList = accompanyService.findAll();
+    public ResponseEntity<List<AccompanyResponseDto>> findAll(@PageableDefault(sort = "id") Pageable pageable) {
+        Page<Accompany> entityPage = accompanyService.findAll(pageable);
+        List<Accompany> entityList = entityPage.getContent();
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
+
         return ResponseEntity.ok(dtoList);
     }
-//    @GetMapping
-//    public ResponseEntity<List<AccompanyResponseDto>> findAll(Pageable pageable) {
-//        List<Accompany> entityList = accompanyService.findAll(pageable);
-//        List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
-//        return ResponseEntity.ok(dtoList);
-//    }
-//    @GetMapping
-//    public ResponseEntity<List<AccompanyResponseDto>> findAll(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-//        Page<Accompany> entityPage = accompanyService.findAll(pageable);
-//        List<Accompany> entityList = entityPage.getContent();
-//        List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
-//
-//        return ResponseEntity.ok(dtoList);
-//    }
 
     //accompanyId로 조회
     @GetMapping("/{id}")
@@ -79,8 +64,9 @@ public class AccompanyController {
 
     //지역 별 조회
     @GetMapping("/bylocal")
-    public ResponseEntity<List<AccompanyResponseDto>> findByLocal(@RequestParam(value = "accompanyLocal") String local) {
-        List<Accompany> ent = accompanyService.findByLocal(local);
+    public ResponseEntity<List<AccompanyResponseDto>> findByLocal(@RequestParam(value = "accompanyLocal") String local,
+                                                                  @PageableDefault(sort = "id") Pageable pageable) {
+        List<Accompany> ent = accompanyService.findByLocal(local, pageable).getContent();
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(ent);
 
         return ResponseEntity.ok(dtoList);
@@ -88,15 +74,18 @@ public class AccompanyController {
 
     //일
     @GetMapping("/bydate")
-    public ResponseEntity<List<AccompanyResponseDto>> findByDate(@RequestParam(value = "accompanyDate") String date) {
-        List<Accompany> entityList = accompanyService.findByDate(date);
+    public ResponseEntity<List<AccompanyResponseDto>> findByDate(@RequestParam(value = "accompanyDate") String date,
+                                                                 @PageableDefault(sort = "id") Pageable pageable) {
+        List<Accompany> entityList = accompanyService.findByDate(date, pageable).getContent();
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
         return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/bylocalanddate")
-    public ResponseEntity<List<AccompanyResponseDto>> findByLocalAndDate(@RequestParam(value = "accompanyLocal") String local, @RequestParam(value = "accompanyDate") String date) {
-        List<Accompany> entityList = accompanyService.findByLocalAndDate(local, date);
+    public ResponseEntity<List<AccompanyResponseDto>> findByLocalAndDate(@RequestParam(value = "accompanyLocal") String local,
+                                                                         @RequestParam(value = "accompanyDate") String date,
+                                                                         @PageableDefault(sort = "id") Pageable pageable) {
+        List<Accompany> entityList = accompanyService.findByLocalAndDate(local, date, pageable).getContent();
         List<AccompanyResponseDto> dtoList = AccompanyMapper.INSTANCE.toDtoList(entityList);
         return ResponseEntity.ok(dtoList);
     }

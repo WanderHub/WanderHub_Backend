@@ -1,23 +1,19 @@
 package wanderhub.server.domain.accompany.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import wanderhub.server.domain.accompany.entity.Accompany;
 
-import java.awt.print.Pageable;
-import java.util.List;
 import java.util.Optional;
 
 public interface AccompanyService {
 
     Accompany createAccompany(Accompany accompany, String userEmail);
-    List<Accompany> findAll();
-//    List<Accompany> findAll(Pageable pageable);
-//    Page<Accompany> findAll(Pageable pageable);
+    Page<Accompany> findAll(Pageable pageable);
     Optional<Accompany> findById(Long id);
-    List<Accompany> findByLocal(String accompanyLocal);
-//    List<Accompany> findByLocal(String accompanyLocal, Pageable pageable);
-    List<Accompany> findByDate(String accompanyDate);
-    List<Accompany> findByLocalAndDate(String accompanyLocal, String accompanyDate);
+    Page<Accompany> findByLocal(String accompanyLocal, Pageable pageable);
+    Page<Accompany> findByDate(String accompanyDate, Pageable pageable);
+    Page<Accompany> findByLocalAndDate(String accompanyLocal, String accompanyDate, Pageable pageable);
 
     void deleteAccompany(Long id, String userEmail);
 }
