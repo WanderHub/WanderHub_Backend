@@ -17,12 +17,12 @@ public class BoComment extends Auditable {
     @Column(name = "BOCOMMENT_ID")
     private Long boCommentId;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", nullable = false)
     @Lob
     @Setter
     private String content;
 
-    @Column(name = "NICKNAME")
+    @Column(name = "NICKNAME",length = 50, nullable = false)
     @Setter
     private String nickName;
 
