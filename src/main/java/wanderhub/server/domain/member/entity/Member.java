@@ -86,5 +86,4 @@ public class Member extends Auditable {
         this.local = local;
     }
 
-
 }

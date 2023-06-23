@@ -74,5 +74,4 @@ public class AccompanyMemberService {
         throw new CustomLogicException(ExceptionCode.ACCOMPANY_JOIN_NOT_A_MEMBER);
     }
 
-
 }
