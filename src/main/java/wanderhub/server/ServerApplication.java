@@ -1,17 +1,16 @@
 package wanderhub.server;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@Slf4j
+@EnableJpaAuditing // JPA의 Auditing 기능 활성화
 @SpringBootApplication
 public class ServerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
+
     }
 
 }

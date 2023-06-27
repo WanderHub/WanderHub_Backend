@@ -4,11 +4,12 @@ spring:
       enabled: true           # 콘솔 활성화 여부
       path: /h2               # 콘솔을 사용할 수 있는 경로
   datasource:
-    url: jdbc:h2:mem:test     # 데이터베이스의 JDBC URL
+    url: jdbc:h2:~/whlocal     # 데이터베이스의 JDBC URL
+    username: sa
   jpa:
     hibernate:                # jpa의 구현체로 hibernate 사용
       ddl-auto: create        # DDL 모드.
-    show-sql: true            # SQL 문의 로깅 활성화 여부.
+    show-sql: true            # SQL문 logging 활성화 여부.
     properties:               # JPA 공급자에 설정할 추가 기본 속성입니다.
       hibernate:              # jpa 내부의 Hibernate의 추가적인 속성 설정
         format_sql: true      # 로그 및 콘솔에서 SQL을 예쁘게 인쇄합니다. (기본값 false)
@@ -25,6 +26,7 @@ spring:
             scope:
               - email
               - profile
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
           kakao: # 카카오는 스프링이 지원하는 서비스가 아니기 때문에, 보다 자세한 정보로 설정해줘야 한다. # https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html 여기서 확인 가능
             clientId: ${K_CLIENT_ID}          # 카카오 클라이언트 ID
             client-secret: ${K_CLIENT_SECRET}   # 카카오 시크릿 키
@@ -41,3 +43,22 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token              # 권한 부여 서버의 토큰 endPoint URI # 카카오에서 토큰 갱신
             user-info-uri: https://kapi.kakao.com/v2/user/me            # 인증된 사용자의 정보에 접근하는데 사용되는 user정보 endPoint URI # 카카오에서 사용자 정보 가져오기
             user-name-attribute: id                                     # 인증된 사용자의 이름 또는 식별자를 참조하는 유저정보 응답에 반환된 속성의 이름 # 카카오에서 회원번호를 반환
+
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+
+admin:
+  email: ${ADMIN_EMAIL}
+
+
+jwt:
+  key:
+    secret: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 1440
+
+type: local
