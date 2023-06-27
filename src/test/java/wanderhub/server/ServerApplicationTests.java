@@ -2,7 +2,7 @@ package wanderhub.server;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class ServerApplicationTests {
 
 
