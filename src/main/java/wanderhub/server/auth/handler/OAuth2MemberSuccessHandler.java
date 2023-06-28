@@ -110,7 +110,6 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
 
 //         http://localhost/receive-token?access_token=accessToken&refresh_token=refreshToken
-
 //          return UriComponentsBuilder
 //                  .newInstance()
 //                  .scheme("http")

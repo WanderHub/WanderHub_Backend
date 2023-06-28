@@ -51,10 +51,6 @@ public class AccompanyServiceImpl implements AccompanyService {
     public Page<Accompany> findByLocal(String accompanyLocal, Pageable pageable) {
         return accompanyRepository.findByAccompanyLocal(accompanyLocal, pageable);
     }
-//    @Override
-//    public List<Accompany> findByLocal(String accompanyLocal, Pageable pageable) {
-//        return accompanyRepository.findByAccompanyLocal(accompanyLocal, pageable);//.getContent();
-//    }
 
     @Override
     public Page<Accompany> findByDate(String accompanyDate, Pageable pageable) {
