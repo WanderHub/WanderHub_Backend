@@ -1,6 +1,8 @@
 package wanderhub.server.domain.community.service;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +69,11 @@ public class BoardService {
         } else {
             throw new CustomLogicException(ExceptionCode.BOARD_NOT_FOUND);  // 없으면 예외던진다.
         }
+    }
+
+    // 게시판 전체 조회
+    public Page<Board> findBorrows(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     // 게시판을 찾을 떄 없으면 예외 발생

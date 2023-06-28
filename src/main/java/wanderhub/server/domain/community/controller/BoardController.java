@@ -1,6 +1,9 @@
 package wanderhub.server.domain.community.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -9,6 +12,8 @@ import wanderhub.server.domain.community.dto.BoardDto;
 import wanderhub.server.domain.community.entity.Board;
 import wanderhub.server.domain.community.mapper.BoardMapper;
 import wanderhub.server.domain.community.service.BoardService;
+import wanderhub.server.global.response.PageInfo;
+import wanderhub.server.global.response.PageResponseDto;
 import wanderhub.server.global.response.SingleResponse;
 
 import java.security.Principal;
@@ -64,7 +69,13 @@ public class BoardController {
     }
 
 
-//     게시판 전체 조회
-//     페이지 처리 물어보기
+    //  게시판 전체 조회
+    @GetMapping
+    public ResponseEntity getBoards(@PageableDefault Pageable pageable){
+        Page<Board> boards = boardService.findBorrows(pageable);
+        return  new ResponseEntity<>(
+                new PageResponseDto<>(boardMapper.boardsToBoardDtoResponseList(boards.getContent()),
+                        new PageInfo(boards.getPageable(), boards.getTotalElements())), HttpStatus.OK);
+    }
 
 }
